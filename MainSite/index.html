@@ -9,6 +9,11 @@
          var w = Math.max(document.documentElement.clientWidth, window.innerWidth || 0)
          var h = Math.max(document.documentElement.clientHeight, window.innerHeight || 0)
          console.log("%d x %d", w, h);
+         $(document).ready(function() {
+            var fSize = parseFloat($('#placeholderText').css('font-size'))
+            console.log("%f px or %f em", fSize, fSize/16);
+        });
+         
       </script>
    </head>
    <body>
@@ -18,6 +23,15 @@
             <center><img src="images/PCkit-logo-trans.png" id="logoImage" alt=""></center>
            <p id="placeholderText">Coming Soon</p>
          </div> 
+         <div id="siteNavDiv">
+            <center>
+            <ul id="siteNavLinks">
+            	<li class="siteNavItem"><a class="siteNavLink" href="#">Home</a></li>
+            	<li class="siteNavItem"><a class="siteNavLink" href="#">About PCkit</a></li>
+            	<li class="siteNavItem"><a class="siteNavLink" href="#">Stay Notified</a></li>
+            </ul>
+            </center>
+         </div>
          
       </div>
       

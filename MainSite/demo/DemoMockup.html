@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html>
+   <head>
+      <title>PCKit Mockup Demo</title>
+      <style type="text/css">
+         @font-face {
+            font-family: "RobotoCondensed";
+            src: url(../fonts/roboto-condensed/RobotoCondensed-Regular.ttf) format("truetype");
+         }
+    
+         @font-face {
+            font-family: "RobotoCondensedBold";
+            src: url(../fonts/roboto-condensed/RobotoCondensed-Bold.ttf) format("truetype");
+         }
+      
+         input:focus, input:active { 
+            outline: none;
+         }
+         
+         div.fill-screen {
+            position: fixed;
+            left: 0;
+            right: 0;
+            top: 0;
+            bottom: 0;
+            width: 100vw;
+            z-index: -1;
+          }
+
+          img.make-it-fit {
+             max-width: 100vw;
+             max-height: 100vh;
+             width: inherit;
+          }
+         
+         
+         #pageDiv {
+            position: fixed; 
+            top: -50%; 
+            left: -50%; 
+            width: 200%; 
+            height: 200%;
+         }
+         
+         #restrictSection {
+            display: block;
+            width: 30%;
+            position: absolute;
+            top: 36vh;
+            left:35vw;
+         }
+         
+         #restrictedButton {
+            border: none;
+            border-radius: 7px;
+            background-color: #F1C93E;
+   			font-family: "RobotoCondensedBold";
+   			font-size: 5vh;
+   			color: #FFFFFF;
+   			word-break: keep-all;
+         }
+         
+         #restrictedInfo {
+            width: 100%;
+   			font-family: "RobotoCondensed";
+   			font-size: 3vh;
+   			color: #FFFFFF;
+   			word-break: keep-all;
+         }
+          
+      </style>
+      
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js" type="text/javascript"></script>
+      <script type="text/javascript">
+         
+
+         $(document).ready(function() {
+            var imgName = $("#bgImage").attr("src");
+            
+            $(document.body).append('<div id="restrictSection"><center><form><input id="restrictedButton" type="button" value="Enter Protected Area" onClick="passWord()"></form><p id="restrictedInfo"></p></center></div>');
+            $("#restrictedInfo").append("You are about to view unfinished or private content which is not ready to be made public or only intended for PCKit internal use. ")
+         });
+         
+         function passWord() {
+		   var testV = 1;
+		   var pass1 = prompt('Please Enter Your Password',' ');
+		   while (testV < 3) {
+		      if (!pass1) {
+		         history.go(-1);
+		      }
+			  if (pass1 == "Y_4p}Q6P3pTr3J\"~") {
+			     alert('You Got it Right!');
+			     $("#bgImage").attr("src", "images/Mockup1.png");
+			     $("#restrictSection").remove();
+			     $(document.body).append('<input id="next" type="submit" onclick="goToNextPage()" style="color: transparent; background-color: transparent; border-color: transparent; cursor: default; position: fixed; top: 61vh; left: 31.5vw; width: 37vw; height: 9.6vh;">');
+                 $(document.body).append('<input id="prev" type="submit" onclick="goToPrevPage()" style="color: yellow; background-color: yellow; border-color: transparent; cursor: default; position: fixed; top: -30vh; left: -30vw;">');
+		         break;
+		      } 
+			  testV+=1;
+			  var pass1 = prompt('Access Denied - Password Incorrect, Please Try Again.','Password');
+		   }
+		   if (pass1.toLowerCase()!="password" & testV ==3) {
+		      history.go(-1);
+		   }
+		   return " ";
+	     } 
+         
+         //dynamic background image resize
+         /*$(window).load(function() { 
+            var theWindow = $(window);
+            var theBGImage = $("#bgImage");
+            var aspectRatio = theBGImage.width() /theBGImage.height();
+            
+            function resizeBg() {
+		
+		       if ( (theWindow.width() / theWindow.height()) < aspectRatio ) {
+		          theBGImage.removeClass().addClass('bgheight');
+		          
+		       } else {
+		          theBGImage.removeClass().addClass('bgwidth');
+		       }
+					
+	         }
+	         
+	         theWindow.resize(resizeBg).trigger("resize");
+         });*/
+      
+         function goToNextPage() {
+            var imgName = $("#bgImage").attr("src");
+            if (imgName == "images/Mockup1.png") {
+               $("#bgImage").attr("src", "images/Mockup2.png");
+               $("#next").attr("style", "color: transparent; background-color: transparent; border-color: transparent; cursor: default; position: fixed; top: 89vh; left: 91.5vw; width: 3.8vw; height: 5vh;");
+               $("#prev").attr("style", "color: transparent; background-color: transparent; border-color: transparent; cursor: default; position: fixed; top: 89vh; left: 4.5vw; width: 3.8vw; height: 5vh;");
+               //#f8a838 = orange
+            } 
+            else if (imgName == "images/Mockup2.png") {
+               $("#bgImage").attr("src", "images/Mockup3.png");
+            }
+            else if (imgName == "images/Mockup3.png") {
+               $("#bgImage").attr("src", "images/Mockup4.png");
+            }
+            else if (imgName == "images/Mockup4.png") {
+               $("#bgImage").attr("src", "images/Mockup5.png");
+            }
+            else if (imgName == "images/Mockup5.png") {
+               $("#bgImage").attr("src", "images/Mockup6.png");
+               $("#next").attr("style", "color: transparent; background-color: transparent; border-color: transparent; cursor: default; position: fixed; top: 86.5vh; left: 67.8vw; width: 26.8vw; height: 7.7vh;");
+            }
+            else if (imgName == "images/Mockup6.png") {
+               $("#bgImage").attr("src", "images/Mockup7.png");
+               $("#next").attr("style", "color: transparent; background-color: transparent; border-color: transparent; cursor: default; position: fixed; top: -30vh; left: -30vw; width: 26.8vw; height: 7.7vh;");
+               $("#prev").attr("style", "font-size: 16px; color: #f8a838; background-color: transparent; border-color: transparent; cursor: default; position: fixed; top: 89vh; left: 4.5vw; width: 6vw; height: 5vh;");
+               $("#prev").attr("value", "Back"); 
+            }
+            else if (imgName == "images/Mockup7.png") {
+               
+            }
+         }
+         
+         function goToPrevPage() {
+            var imgName = $("#bgImage").attr("src");
+            
+            if (imgName == "images/Mockup2.png") {
+               $("#bgImage").attr("src", "images/Mockup1.png");
+               $("#next").attr("style", "color: transparent; background-color: transparent; border-color: transparent; cursor: default; position: fixed; top: 61vh; left: 31.5vw; width: 37vw; height: 9.6vh;");
+               $("#prev").attr("style", "color: transparent; background-color: transparent; border-color: transparent; cursor: default; position: fixed; top: -30vh; left: -30vw; width: 5vw; height: 9.6vh;");
+            }
+            else if (imgName == "images/Mockup3.png") {
+               $("#bgImage").attr("src", "images/Mockup2.png");
+            }
+            else if (imgName == "images/Mockup4.png") {
+               $("#bgImage").attr("src", "images/Mockup3.png");
+            }
+            else if (imgName == "images/Mockup5.png") {
+               $("#bgImage").attr("src", "images/Mockup4.png");
+            }
+            else if (imgName == "images/Mockup6.png") {
+               $("#bgImage").attr("src", "images/Mockup5.png");
+               $("#next").attr("style", "color: transparent; background-color: transparent; border-color: transparent; cursor: default; position: fixed; top: 89vh; left: 91.5vw; width: 3.8vw; height: 5vh;");
+            }
+            else if (imgName == "images/Mockup7.png") {
+               $("#bgImage").attr("src", "images/Mockup6.png");
+               $("#prev").attr("value", ""); 
+               $("#next").attr("style", "color: transparent; background-color: transparent; border-color: transparent; cursor: default; position: fixed; top: 86.5vh; left: 67.8vw; width: 26.8vw; height: 7.7vh;");
+               $("#prev").attr("style", "color: transparent; background-color: transparent; border-color: transparent; cursor: default; position: fixed; top: 89vh; left: 4.5vw; width: 3.8vw; height: 5vh;");
+            }
+         }
+         
+      </script>
+   </head>
+   <body>
+      <div class="fill-screen">
+         <img class="make-it-fit" src="../images/background.png" id="bgImage" alt="">
+      </div>
+      
+      <!--hidden button style = "color: transparent; background-color: transparent; border-color: transparent; cursor: default;"
+      <input id="next" type="submit" style="color: red; background-color: red; border-color: transparent; cursor: default;">
+      <input id="prev" type="submit" style="color: green; background-color: green; border-color: transparent; cursor: default;">-->
+   </body>
+</html>
