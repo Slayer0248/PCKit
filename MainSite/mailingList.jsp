@@ -164,13 +164,13 @@
                   
                      if (updateQuery != 0) { 
             %>
-            <p id="form-description">Success!</p>
+            <p id="form-description">Your information has been added to our mailing list!</p>
             
             
             <%       }
                   }
                   catch (SQLException e) { %>
-            <p id="form-description">Failure!</p>    
+            <p id="form-description">An error occurred while adding your data to the mailing list! Please try again later.</p>    
                    
             <%    }
                   finally {
@@ -237,8 +237,8 @@
          <div id="siteNavDiv">
             <center>
             <ul id="siteNavLinks">
-            	<li class="siteNavItem"><a class="siteNavLink" href="#">Home</a></li>
-            	<li class="siteNavItem"><a class="siteNavLink" href="index.html">About PCkit</a></li>
+            	<li class="siteNavItem"><a class="siteNavLink" href=".">Home</a></li>
+            	<li class="siteNavItem"><a class="siteNavLink" href="about.html">About PCkit</a></li>
             	<li class="siteNavItem"><a class="siteNavLink" href="#">Stay Notified</a></li>
             </ul>
             </center>
