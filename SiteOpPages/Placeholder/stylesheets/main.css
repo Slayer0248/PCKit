@@ -1,0 +1,122 @@
+@font-face {
+   font-family: "RobotoCondensed";
+   src: url(../fonts/roboto-condensed/RobotoCondensed-Regular.ttf) format("truetype");
+}
+@font-face {
+   font-family: "RobotoCondensedBold";
+   src: url(../fonts/roboto-condensed/RobotoCondensed-Bold.ttf) format("truetype");
+}
+
+input:focus, input:active {
+   outline: none;
+}
+
+div.fill-screen {
+   position: fixed;
+   left: 0;
+   right: 0;
+   top: 0;
+   bottom: 0;
+   width: 100%;
+   z-index: -1;
+   overflow-y: visible;
+}
+
+img.make-it-fit {
+   width: 100vw;
+   max-height: 100vh;
+   height: 100vh;
+   width: inherit;
+   z-index: -1;
+}
+
+.centerHorizontally {
+   margin: 0 auto;
+   display: block;
+}
+
+.scrollable {
+   overflow-y: scroll;
+}
+
+#pageDiv {
+   position: fixed;
+   top: -50%;
+   left: -50%;
+   width: 200%;
+   height: 200%;
+}
+
+#mainContentDiv {
+   display: block;
+   z-index: 1;
+   position: fixed;
+   left: 0;
+   right: 0;
+   top: 0;
+   bottom: 0;
+   width: 100%;
+}
+
+
+#logoImage {
+   display: inline-block;
+   position: absolute;
+   width: 20vw;
+   height: 20vw;
+   top: 120px;
+   left: 40vw;
+}
+
+#logoImageHeader {
+   display: inline-block;
+   position: absolute;
+   width: 170px;
+   height: 170px;
+   top: 70px;
+   left: calc(50% - 85px);
+}
+
+#placeholderText {
+   display: inline-block;
+   position: absolute;
+   margin: 0 auto;
+   top: calc(160px + 20vw);
+   width: 100%;
+   font-family: "RobotoCondensed";
+   font-size: 10.56vh;
+   color: #FFFFFF;
+   text-align: center;
+   
+}
+
+#siteNavDiv {
+   display: block;
+   position: absolute;
+   background-color: #000000;
+   z-index: 1;
+   max-width: 100%;
+   max-height: 4vh;
+   width: 100%;
+   height: 4vh;
+   top: 96vh;
+}
+
+#siteNavLinks {
+   list-style-type: none;
+   margin: 0;
+   padding: 0;
+   
+}
+
+.siteNavItem {
+   display: inline;
+   padding: 0px 10px;
+}
+
+.siteNavLink {
+   color: #FFFFFF;
+   font-family: "RobotoCondensedBold";
+   font-size: 3vh;
+   text-decoration: none;
+}
