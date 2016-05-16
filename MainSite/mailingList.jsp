@@ -212,7 +212,7 @@
                  <label class="mailField" for="AdMedium" id="adMediumLabel"><font id="requiredStar">*</font>How did you hear about PCKit?</label>
                  <select id="adMediumSelect" name="AdMedium" onfocus="this.oldvalue = this.value;" onChange="adMediumChanged(this); this.oldvalue = this.value;">
                     <option value="none"></option>
-                    <option value="talking">Word of mouth</option>
+                    <option value="word">Word of mouth</option>
                     <option value="search">Web Search</option>
                     <option value="link">Link shared/Redirect</option>
                     <option value="other">Other</option>
