@@ -150,7 +150,7 @@
                   Class.forName("com.mysql.jdbc.Driver");
                   int updateQuery = 0;
                   try {
-                     connection = DriverManager.getConnection("jdbc:mysql://ec2-52-9-55-58.us-west-1.compute.amazonaws.com:80/PCKitDB","root","Potter11a");
+                     connection = DriverManager.getConnection("jdbc:mysql://localhost/PCKitDB","root","Potter11a");
                      String queryString = "INSERT INTO mailList(first,last,email,company,relationship,publicity,otherInfo) VALUES (?, ?, ?, ?, ?, ?, ?)";
                      pstatement = connection.prepareStatement(queryString);
                      pstatement.setString(1, firstName);
