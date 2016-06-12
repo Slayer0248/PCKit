@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-
+@WebServlet("/response")
 public class MailingListServlet extends HttpServlet {
     private String host;
     private String port;
@@ -25,20 +25,18 @@ public class MailingListServlet extends HttpServlet {
         pass = context.getInitParameter("pass");
     }
    
-    
-   
    /*@Override
    public void doGet(HttpServletRequest request, HttpServletResponse response)
          throws IOException, ServletException {
          
-        doPost(request, response);
-   
+        String pageMessage = "This page's content can't be accessed as specified.";
+        String address = "/WEB-INF/mailingList.jsp";
+        request.getRequestDispatcher(address).forward(request, response);
    }*/
    
    @Override
-   protected void doPost(HttpServletRequest request, HttpServletResponse response)
+   public void doPost(HttpServletRequest request, HttpServletResponse response)
          throws IOException, ServletException {
-      System.out.println("got here");
       String pageMessage = "Invalid Post Request.";
       String mailMessage = "";
       String action = request.getParameter("action");
@@ -76,9 +74,9 @@ public class MailingListServlet extends HttpServlet {
                EmailUtility.sendEmail(host, port, user, pass, email, "PCKit Mailing List Confirmation",
                     mailMessage);
                pageMessage = "Your information has been added to our mailing list!";
-               //request.setAttribute("Message", pageMessage);
-               //getServletContext().getRequestDispatcher("/PCKit/MailingList/response.jsp").forward(
-               //     request, response);
+               request.setAttribute("Message", pageMessage);
+               getServletContext().getRequestDispatcher("/response.jsp").forward(
+                    request, response);
                
             }
             
@@ -86,17 +84,13 @@ public class MailingListServlet extends HttpServlet {
          }
          catch (Exception e) {
             pageMessage = "An error occurred while adding your data to the mailing list! Please try again later.";
-            //request.setAttribute("Message", pageMessage);
-            
-            //getServletContext().getRequestDispatcher("/PCKit/MailingList/response.jsp").forward(
-            //    request, response);
-        
+            request.setAttribute("Message", pageMessage);
+            getServletContext().getRequestDispatcher("/response.jsp").forward(
+                request, response);
          }
          request.setAttribute("Message", pageMessage);
-         request.getRequestDispatcher("../response.jsp").forward(request, response);
-         
-         
-        
+         getServletContext().getRequestDispatcher("/response.jsp").forward(
+            request, response);
       }
       
       
