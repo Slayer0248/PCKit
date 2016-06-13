@@ -139,12 +139,12 @@
          <div class="scrollable" id="mainContentDiv">
            <center><img src="../images/PCkit-logo-trans.png" id="logoImageHeader" alt=""></center>
           
-           <p id="form-description"><c:if test="${empty Message}">
+           <p id="form-description"><% String msg = (String)request.getAttribute("Message");
+            if(msg == null || msg.equals("")) {%>
               This page can't be accessed in this manner.
-           </c:if>
-           <c:if test="${not empty Message}">
-              ${Message}
-           </c:if></p><br>
+           <% } else {%>
+              <%=msg%>
+           <% } %></p><br>
               
            
          </div> 

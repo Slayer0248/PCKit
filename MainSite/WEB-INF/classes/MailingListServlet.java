@@ -73,8 +73,8 @@ public class MailingListServlet extends HttpServlet {
                   
             if (updateQuery != 0) {
                mailMessage = mailMessage + "Hello " + firstName + " " + lastName + ",<br><br>&emsp; Your information has been added to PCkit's mailing list! Click here to <a href='mailto:PCKitCompany@gmail.com?subject=UNSUBSCRIBE'>unsubscribe</a> at any time";
-               EmailUtility.sendEmail(host, port, user, pass, email, "PCKit Mailing List Confirmation",
-                    mailMessage);
+               /*EmailUtility.sendEmail(host, port, user, pass, email, "PCKit Mailing List Confirmation",
+                    mailMessage);*/
                pageMessage = "Your information has been added to our mailing list!";
                //request.setAttribute("Message", pageMessage);
                //getServletContext().getRequestDispatcher("/PCKit/MailingList/response.jsp").forward(

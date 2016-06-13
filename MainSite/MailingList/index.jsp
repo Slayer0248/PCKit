@@ -107,7 +107,7 @@
      	      console.log(inData);
      	      $.ajax({
                  type: 'POST',
-                 url: '/PCKit/MailingList/response/',
+                 url: '/MailingList/response/',
                  data: inData
               }).done(function(data) {document.write(data);});
      	   }
