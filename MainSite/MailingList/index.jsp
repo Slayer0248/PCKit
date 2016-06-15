@@ -240,8 +240,8 @@
          <div id="siteNavDiv">
             <center>
             <ul id="siteNavLinks">
-            	<li class="siteNavItem"><a class="siteNavLink" href="/PCKit">Home</a></li>
-            	<li class="siteNavItem"><a class="siteNavLink" href="/PCKit/about.html">About PCkit</a></li>
+            	<li class="siteNavItem"><a class="siteNavLink" href="..">Home</a></li>
+            	<li class="siteNavItem"><a class="siteNavLink" href="../about.html">About PCkit</a></li>
             	<li class="siteNavItem"><a class="siteNavLink" href="#">Stay Notified</a></li>
             </ul>
             </center>
