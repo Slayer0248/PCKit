@@ -7,10 +7,23 @@
     version="3.0">
     <!-- id="WebApp_ID" -->
     
+    <filter>
+      <filter-name>GenerateCsrfTokenFilter</filter-name>
+      <filter-class>GenerateCsrfTokenFilter</filter-class>
+   </filter>
+    
     <servlet>
       <servlet-name>MailingList</servlet-name>
       <servlet-class>MailingListServlet</servlet-class>
    </servlet>
+   
+   
+   
+   <filter-mapping>
+      <filter-name>GenerateCsrfTokenFilter</filter-name>
+      <url-pattern>/MailingList/index.jsp</url-pattern>
+   </filter-mapping>
+   
    <servlet-mapping>
       <servlet-name>MailingList</servlet-name>
       <url-pattern>/MailingList/response/</url-pattern>
@@ -37,6 +50,8 @@
         <param-name>pass</param-name>
         <param-value>BuildIt!</param-value>
     </context-param>
+    
+    
    
     <!-- <context-param>
         <param-name>pass</param-name>
