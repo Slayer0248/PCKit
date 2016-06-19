@@ -147,7 +147,7 @@
      	      //$("#form-description").html($('#mailingForm').serialize());
      	      csrfToken = docCookies.getItem("csrf");
      	      inData = $('#mailingForm').serialize();
-     	      inData = inData + "&action=AddEmail&csrf=" + csrf;
+     	      inData = inData + "&action=AddEmail&csrf=" + csrfToken;
      	      console.log(inData);
      	      $.ajax({
                  type: 'POST',
