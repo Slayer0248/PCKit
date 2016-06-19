@@ -11,7 +11,7 @@ public class VerifyCsrfToken {
       
       String tokenFromCookie = null;
       Cookie cookies[] = req.getCookies();
-      for (int i=0; i<cookies.length(); i++) {
+      for (int i=0; i<cookies.length; i++) {
          if (cookies[i].getName().equals("csrf")) {
             tokenFromCookie = cookies[i].getValue();
          }
