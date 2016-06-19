@@ -7,6 +7,10 @@ import java.security.SecureRandom;
  
 // Implements Filter class
 public class GenerateCsrfTokenFilter implements Filter  {
+   public void  init(FilterConfig config) 
+                         throws ServletException{
+   }
+
    public void doFilter(ServletRequest req, ServletResponse resp,
             FilterChain chain) throws IOException, ServletException {
       HttpServletRequest httpReq = (HttpServletRequest) req;
