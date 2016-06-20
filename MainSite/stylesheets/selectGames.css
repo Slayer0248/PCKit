@@ -38,6 +38,12 @@
   width: 100%;
 }
 
+#gameSelect {
+   display: inline-block;
+   position: absolute;
+   width: 100%;
+}
+
 #qualitySelect {
    display: inline-block;
    position: absolute;
