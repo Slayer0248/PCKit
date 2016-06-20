@@ -40,7 +40,7 @@
            <button id="BuildPCBuuton" onclick="location.href='selectGames.jsp';">Build your PC</button>-->
            <div id="gameSelect">
               <c:choose>
-              <c:when test="${count > 0}"></c:when>
+              <c:when test="${count > 0}">
                 <p id="selectGamesP" class="actionText">Select the games you want to play.</p>
                 <table id="gamesTable" border="1" width="100%">
                    <% int i =0;
