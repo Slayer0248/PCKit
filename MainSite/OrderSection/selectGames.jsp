@@ -28,6 +28,7 @@
       <sql:setDataSource var="snapshot" driver="com.mysql.jdbc.Driver"
      url="jdbc:mysql://localhost/PCKitDB" user="root"  password="Potter11a"/>
       <sql:query dataSource="${snapshot}" var="count">SELECT COUNT(*) AS count from Games;</sql:query>
+      <c:set var="count" value="${count.rowByIndex[0][0]}"/>
       <sql:query dataSource="${snapshot}" var="result">SELECT * from Games;</sql:query>
       
    
@@ -38,7 +39,7 @@
            <p id="descriptionText">Build a custom PC to play the games you want to play at the quality you want to play.</p>
            <button id="BuildPCBuuton" onclick="location.href='selectGames.jsp';">Build your PC</button>-->
            <div id="gameSelect">
-              <% if (pageContext.getAttribute("count").rowByIndex[0][0] > 0) { %>
+              <% if (pageContext.getAttribute("count") > 0) { %>
                 <p id="selectGamesP" class="actionText">Select the games you want to play.</p>
                 <table id="gamesTable" border="1" width="100%">
                    <% int i =0;
