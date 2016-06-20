@@ -7,7 +7,8 @@
    <head>
       <title>PCKit Subscription</title>
       <link rel="stylesheet" href="../stylesheets/main.css">
-      
+      <link rel="stylesheet" href="../stylesheets/mailingList.css">
+      <link rel="stylesheet" href="../stylesheets/fonts.css">
       <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js" type="text/javascript"></script>
       <script type="text/javascript">
          var w = Math.max(document.documentElement.clientWidth, window.innerWidth || 0)

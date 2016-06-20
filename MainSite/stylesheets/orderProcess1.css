@@ -1,0 +1,35 @@
+/*Start order styles
+1163 x 710
+*/
+#descriptionText {
+   display: block;
+   position: absolute;
+   width: 628.02px;
+   /*height: 24vw;*/
+   top: 120px;
+   left: 50%;
+   font-family: "RobotoThin";
+   font-size: 49.7px;
+   color: #FFFFFF;
+   margin-left: -314.01px;
+   text-align: center;
+}
+
+
+#BuildPCBuuton {
+   display: block;
+   position: absolute;
+   border: none;
+   margin-left: -209.34px;
+   top: calc(160px + 279.12px);
+   font-family: "Roboto";
+   font-size: 49.7px;
+   background-color:#F9A825;
+   color: #FFFFFF;
+   border-radius: 8px;
+   left: 50%;
+   width: 418.68px;
+   height: 70.29px;
+   text-align: center;
+   
+}

@@ -19,6 +19,7 @@ public class GenerateCsrfTokenFilter implements Filter  {
       
       SecureRandom random = new SecureRandom();
       Cookie cookie = new Cookie("csrf", "" + random.nextLong());
+      cookie.setHttpOnly(true);
       httpResp.addCookie(cookie);
       chain.doFilter(httpReq, httpResp);
         

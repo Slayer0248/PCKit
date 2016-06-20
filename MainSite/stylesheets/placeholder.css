@@ -1,0 +1,23 @@
+/*Placeholder Page Styles*/
+#logoImage {
+   display: inline-block;
+   position: absolute;
+   width: 20vw;
+   height: 20vw;
+   top: 120px;
+   left: 40vw;
+}
+
+
+#placeholderText {
+   display: inline-block;
+   position: absolute;
+   margin: 0 auto;
+   top: calc(160px + 20vw);
+   width: 100%;
+   font-family: "RobotoCondensed";
+   font-size: 10.56vh;
+   color: #FFFFFF;
+   text-align: center;
+   
+}

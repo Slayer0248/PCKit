@@ -53,6 +53,7 @@
       
          var w = Math.max(document.documentElement.clientWidth, window.innerWidth || 0)
          var h = Math.max(document.documentElement.clientHeight, window.innerHeight || 0)
+         var csrf;
          console.log("%d x %d", w, h);
          $(document).ready(function() {
             //var fSize = parseFloat($('#placeholderText').css('font-size'))
@@ -65,6 +66,7 @@
             //var pos1 = $('#interestSelect').position().left;
             //var pos2 = $('#adMediumSelect').position().left;
             console.log("%d px", textLen);
+            csrf = 
         });
         
         function interestChanged(select) {
@@ -147,7 +149,7 @@
      	      //$("#form-description").html($('#mailingForm').serialize());
      	      csrfToken = docCookies.getItem("csrf");
      	      inData = $('#mailingForm').serialize();
-     	      inData = inData + "&action=AddEmail&csrf=" + csrfToken;
+     	      inData = inData + "&action=AddEmail";
      	      console.log(inData);
      	      $.ajax({
                  type: 'POST',
@@ -272,7 +274,7 @@
                     <label class="mailField" for="Notes" id="notesLabel">Anything else you'd like us to know?</label><br>
                     <textarea rows="8" cols="50" maxlength="500" wrap="hard" id="notesText" name="Notes" onkeyup="updateCharCount(this)"></textarea><br>
                     <center><font id="charCounter">0/500<font></center>
-                 </p>
+                 </p> 
               <p><input type="submit" id="submitFormButton" value="Add to Mailing List"></p>
               </div>
            </form>
