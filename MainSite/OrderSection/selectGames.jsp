@@ -28,7 +28,7 @@
       <sql:setDataSource var="snapshot" driver="com.mysql.jdbc.Driver"
      url="jdbc:mysql://localhost/PCKitDB" user="root"  password="Potter11a"/>
       <sql:query dataSource="${snapshot}" var="count">SELECT COUNT(*) AS count from Games;</sql:query>
-      <c:set var="count" value="${count.rowByIndex[0][0]}"/>
+      <c:set var="count" value="${count.rowsByIndex[0][0]}"/>
       <sql:query dataSource="${snapshot}" var="result">SELECT * from Games;</sql:query>
       
    
