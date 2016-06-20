@@ -39,7 +39,8 @@
            <p id="descriptionText">Build a custom PC to play the games you want to play at the quality you want to play.</p>
            <button id="BuildPCBuuton" onclick="location.href='selectGames.jsp';">Build your PC</button>-->
            <div id="gameSelect">
-              <% if (pageContext.getAttribute("count") > 0) { %>
+              <c:choose>
+              <c:when test="${count > 0}"></c:when>
                 <p id="selectGamesP" class="actionText">Select the games you want to play.</p>
                 <table id="gamesTable" border="1" width="100%">
                    <% int i =0;
@@ -57,9 +58,10 @@
                       i++;
                       %>
                    </c:forEach>
-              <% } else { %>
-               <p id="selectGamesP" class="actionText">No games to select from.</p>
-              <% } %>
+              </c:when><c:otherwise>
+                  <p id="selectGamesP" class="actionText">No games to select from.</p>
+              </c:otherwise>
+              </c:choose>
            </div>  
            <p id="selectQualityP" class="actionText">Choose your preferred graphics quality.</p>
            <div id="qualitySelect">
