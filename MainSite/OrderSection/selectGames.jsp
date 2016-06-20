@@ -38,13 +38,14 @@
            <p id="descriptionText">Build a custom PC to play the games you want to play at the quality you want to play.</p>
            <button id="BuildPCBuuton" onclick="location.href='selectGames.jsp';">Build your PC</button>-->
            <div id="gameSelect">
-              <% if (count.rowByIndex[0][0] > 0) { %>
+              <% if (pageContext.getAttribute("count").rowByIndex[0][0] > 0) { %>
                 <p id="selectGamesP" class="actionText">Select the games you want to play.</p>
                 <table id="gamesTable" border="1" width="100%">
-                   <% i =0;
-                    rowNum=1; %>
+                   <% int i =0;
+                    int rowNum=1; %>
                    <c:forEach var="row" items="${result.rows}">
-                      <% if (i%8==0) { %>
+                      <% 
+                      if (i%8==0) { %>
                          <tr id="gameRow${rowNum}" class="gamesTableRow">
                       <% } %>
                          <td id="game${i}" class="gameCell"><img src="images/game${row.gameId}.png" width="120" height="200"></td>
