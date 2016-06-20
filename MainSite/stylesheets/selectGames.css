@@ -20,8 +20,9 @@
 
 .qualityOption {
    display: inline-block;
-   position: absolute;
-   float: center;
+   width: 90px;
+   height: 20px;
+   float: left:
 }
 
 #backButton {
@@ -30,6 +31,8 @@
 }
 
 #nextButton {
+  
+  position: fixed;
   right: 1.5vw;
 }
 
@@ -39,13 +42,23 @@
 }
 
 #gameSelect {
-   display: inline-block;
+   display: block;
    position: absolute;
    width: 100%;
 }
 
-#qualitySelect {
+#gamesTable {
    display: inline-block;
+   position: absolute;
+}
+
+#selectQualityP {
+  width: 100%;
+}
+
+
+#qualitySelect {
+   display: block;
    position: absolute;
    width: 100%;
 }

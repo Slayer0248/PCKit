@@ -1,5 +1,5 @@
 <%@ page import="java.io.*,java.util.*,java.sql.*"%>
-<%@ page import="javax.servlet.http.*,javax.servlet.*" %>
+<%@ page import="javax.servlet.http.*,javax.servlet.*,java.security.SecureRandom" %>
 <!DOCTYPE html>
 <html>
    <head>
@@ -8,6 +8,13 @@
       <link rel="stylesheet" href="../stylesheets/mailingList.css">
       <link rel="stylesheet" href="../stylesheets/fonts.css">
       
+     <%SecureRandom random = new SecureRandom();
+      Cookie cookie = new Cookie("csrf", "" + random.nextLong());
+      cookie.setHttpOnly(true);
+      response.addCookie(cookie);
+     %>
+
+
       <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js" type="text/javascript"></script>
       <script type="text/javascript">
       
@@ -65,8 +72,7 @@
             //var endPos2 = $('#lastNameText').position().left + $('#lastNameText').width();
             //var pos1 = $('#interestSelect').position().left;
             //var pos2 = $('#adMediumSelect').position().left;
-            console.log("%d px", textLen);
-            csrf = 
+            console.log("%d px", textLen); 
         });
         
         function interestChanged(select) {
@@ -158,6 +164,7 @@
               }).done(function(data) {document.write(data);});
      	   }
      	   else {
+              docCookies.removeItem("csrf");
      	      if ($("#formErrorsDiv").length) {
      	         $("#errorsList").children().remove();
      	          $("#errorsList").html(errorList);
@@ -170,7 +177,7 @@
      	      
      	      var formTop = 280 + $("#formErrorsDiv").height();
      	      $("#mailingForm").css("top", formTop.toString() +"px");
-     	      
+     	      return false; 
      	   }
      	   
 		   //return false;

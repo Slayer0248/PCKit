@@ -1,5 +1,5 @@
 <%@ page import="java.io.*,java.util.*,java.sql.*"%>
-<%@ page import="javax.servlet.http.*,javax.servlet.*" %>sudo service tomcat6 start
+<%@ page import="javax.servlet.http.*,javax.servlet.*" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/sql" prefix="sql" %>
 <!DOCTYPE html>
@@ -19,7 +19,7 @@
          $(document).ready(function() {
             var fSize = parseFloat($('#placeholderText').css('font-size'))
             console.log("%f px or %f em", fSize, fSize/16);
-        
+            setPositions();
         });
          
       </script>
@@ -58,31 +58,43 @@
                       i++;
                       %>
                    </c:forEach>
+                 <% if (i%8!=0) { %>
+                     </tr>
+                 <% } %>
+                  </table>
+                   <script type="text/javascript"> 
+                      function setPositions() { 
+                         var curHeight = $("#selectGamesP").offset().top + $("#selectGamesP").height() + 10;
+                         $("#gamesTable").css("top", curHeight + "px");
+                         curHeight = curHeight + $("#gamesTable").height() + 10;
+                         $("#selectQualityP").css("top", curHeight + "px");
+                         curHeight = curHeight + $("#selectQualityP").height() + 55;
+                         $("#qualitySelect").css("top", curHeight + "px");
+                      }
+                   </script>
               </c:when><c:otherwise>
                   <p id="selectGamesP" class="actionText">No games to select from.</p>
               </c:otherwise>
               </c:choose>
-           </div>  
+           </div>
            <p id="selectQualityP" class="actionText">Choose your preferred graphics quality.</p>
-           <div id="qualitySelect">
+           <center><div id="qualitySelect">
              <button class="qualityOption">Low</button>
              <button class="qualityOption">Medium</button>
              <button class="qualityOption">High</button>
              <button class="qualityOption">Ultra</button>
-           </div>
+           </div></center>
          </div> 
          <img src="../images/BackArrow.png" id="backButton" class="orderNavButton" onclick="location.href='orderProcess.html';"/>
          <img src="../images/NextArrow.png" id="nextButton" class="orderNavButton" onclick="location.href='selectBuild.jsp';"/>
+         
          <div id="siteNavDiv">
-            <center>
-            <ul id="siteNavLinks">
+            <center><ul id="siteNavLinks">
             	<li class="siteNavItem"><a class="siteNavLink" href="..">Home</a></li>
             	<li class="siteNavItem"><a class="siteNavLink" href="../about.html">About PCkit</a></li>
             	<li class="siteNavItem"><a class="siteNavLink" href="../MailingList/">Stay Notified</a></li>
-            </ul>
-            </center>
+            </ul></center>
          </div>
-
          
       </div>
       
