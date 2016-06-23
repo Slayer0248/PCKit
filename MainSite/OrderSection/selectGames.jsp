@@ -21,6 +21,122 @@
             console.log("%f px or %f em", fSize, fSize/16);
             setPositions();
         });
+
+        function selectQuality(element) {
+           var lastSelected = $(".qualitySelected");
+           var isUnselect = false;
+           if (lastSelected.length == 1) {
+              if ($(lastSelected[0]).is(element)) {
+                 isUnselect = true;
+              }
+              $(lastSelected[0]).hide().removeClass("qualitySelected").addClass("qualityUnselected").show();
+           }
+           if (isUnselect == false) {
+              $(element).hide().removeClass("qualityUnselected").addClass("qualitySelected").show();
+           }
+        }
+
+        function selectGame(element) {
+           var clickedImage = element;
+           if ($(clickedImage).hasClass("gameSelected")) {
+              $(clickedImage).removeClass("gameSelected");
+           }
+           else {
+              $(clickedImage).addClass("gameSelected");
+           }
+
+        }
+
+        function goToNextPage() {
+           var errors="";
+           var gamesSelected = "";
+           var cumMinTier = -1;
+           if ($("#gamesTable").length == 1) {
+              if ($(".gameSelected").length > 0) {
+                 for (i=0; i<$(".gameSelected").length; i++) {
+                    $(".gameSelected").each(function (i, obj){
+                    var gameId = $(obj).parent().attr('id');
+                    var hardwareTier = parseInt($(obj).parent().val(), 10);
+                    gameId = parseInt(gameId.replace(/[^0-9\.]/g, ''), 10);
+                    if (gamesSelected.length == 0) {
+                       gamesSelected = gamesSelected + gameId;
+                    }
+                    else {
+                       gamesSelected = gamesSelected + "," + gameId;
+                    }
+
+                    if (cumMinTier < 0 || (cumMinTier >=0 && hardwareTier > cumMinTier)) {
+                       cumMinTier = hardwareTier;
+                    }
+                    
+                    });
+                 }
+              }
+              else {
+                 errors= errors+"<li class='formErrorReason'>At least one game must be selected.</li>";  
+              }
+           }
+           else {
+             gamesSelected = "None";
+           }
+           
+           var qualitySelected=null;
+           if ($(".qualitySelected").length == 1) {
+              var quality=$(".qualitySelected").html();
+
+              if (quality == "Low") {
+                 qualitySelected=-1;
+              } 
+              else if (quality == "Medium") {
+                 qualitySelected=0;
+              }
+              else if (quality == "High") {
+                 qualitySelected=1;
+              }
+              else if (quality == "Ultra") {
+                 qualitySelected=2;
+              }
+           }
+           else {
+              errors= errors+"<li class='formErrorReason'>Gameplay quality wasn't selected.</li>";
+           }
+
+
+           if (errors.length == 0) {
+              //max tier = ??? , (5 for testing)
+              var adjustedTier = Math.max(1, Math.min(5, cumMinTier+qualitySelected))
+              //TODO: create csrf cookie in here to be sure next page is accessed only by this page
+
+              console.log("got here");
+              $.ajax({
+                 url: './selectBuild.jsp',
+                 data: JSON.stringify({"minTier": adjustedTier}),
+                 type: 'POST'
+              }).done(function(data) {document.write(data); console.log("ajax worked");});  
+
+           }
+           else {
+              if ($("#formErrorsDiv").length > 0) {
+     	         $("#errorsList").children().remove();
+     	          $("#errorsList").html(errors);
+     	      }
+              else {
+     	         fullErrorOutput = '<div id="formErrorsDiv"><p id="formErrorsInfo">Can\'t proceed due to the following errors:</p><ul id="errorsList" type="disc">';
+     	         fullErrorOutput = fullErrorOutput + errors + '</ul></div>';
+     	         $(fullErrorOutput).insertBefore($("#gameSelect"));
+     	      }
+              var curHeight = 50;
+              console.log("%d", $("#formErrorsDiv").height());
+
+              $("#gameSelect").css("top", curHeight.toString() + "px");
+              $("#selectGamesP").css("top", curHeight.toString() + "px");
+              curHeight = curHeight + $("#gameSelect").height() + 10;
+              $("#selectQualityP").css("top", curHeight + "px");
+              curHeight = curHeight + $("#selectQualityP").height() + 30;
+              $("#qualitySelect").css("top", curHeight + "px");
+              $("#qualitySelect").css("margin-top", curHeight + "px");
+           }
+        }
          
       </script>
    </head>
@@ -42,18 +158,18 @@
               <c:choose>
               <c:when test="${count > 0}">
                 <p id="selectGamesP" class="actionText">Select the games you want to play.</p>
-                <table id="gamesTable" border="1" width="100%">
+                <table id="gamesTable">
                    <% int i =0;
                     int rowNum=1; %>
                    <c:forEach var="row" items="${result.rows}">
                       <% 
                       if (i%8==0) { %>
-                         <tr id="gameRow${rowNum}" class="gamesTableRow">
-                      <% } %>
-                         <td id="game${i}" class="gameCell"><img src="images/game${row.gameId}.png" width="120" height="200"></td>
+                        <center><tr id="gameRow<%=rowNum %>" class="gamesTableRow"><center>
+                       <% } %>
+                         <td id="game<%=i %>" class="gameCell" value="${row.minHardwareTier}"><img onclick="selectGame(this)" src="images/game${row.gameId}.png" width="120" height="200"></td>
                       <% if (i%8==7) { 
                          rowNum++; %>
-                         </tr>
+                         </center></tr></center>
                       <% } 
                       i++;
                       %>
@@ -66,10 +182,26 @@
                       function setPositions() { 
                          var curHeight = $("#selectGamesP").offset().top + $("#selectGamesP").height() + 10;
                          $("#gamesTable").css("top", curHeight + "px");
-                         curHeight = curHeight + $("#gamesTable").height() + 10;
+                         var numGames = $(".gameCell").length;
+                         var numRows = Math.floor(numGames/8) + ((numGames%8>0)?1:0);
+                         var maxRowLength = 0;
+                         if (numRows >1) {
+                            maxRowLength = 8 * 140;
+                         }
+                         else {
+                            maxRowLength = numGames * 140;
+                         }
+                         $("#gamesTable").height(numRows * 210).width(maxRowLength).css("margin-top", curHeight+"px");
+                         $(".gamesTableRow").height(numRows * 210).width(maxRowLength);
+                         $("#gameSelect").css("margin-bottom", 0);
+                         $("#selectQualityP").css("margin-top", 20);
+                         $("#selectQualityP").css("margin-bottom", 0);
+                         $("#selectQualityP").css("padding-bottom", 0);
+                         curHeight = curHeight + $("#gamesTable").height();
                          $("#selectQualityP").css("top", curHeight + "px");
-                         curHeight = curHeight + $("#selectQualityP").height() + 55;
+                         curHeight = curHeight + $("#selectQualityP").height() + 30;
                          $("#qualitySelect").css("top", curHeight + "px");
+                         $("#qualitySelect").css("margin-top", curHeight + "px");
                       }
                    </script>
               </c:when><c:otherwise>
@@ -78,15 +210,15 @@
               </c:choose>
            </div>
            <p id="selectQualityP" class="actionText">Choose your preferred graphics quality.</p>
-           <center><div id="qualitySelect">
-             <button class="qualityOption">Low</button>
-             <button class="qualityOption">Medium</button>
-             <button class="qualityOption">High</button>
-             <button class="qualityOption">Ultra</button>
-           </div></center>
+           <div id="qualitySelect"><center>
+             <button class="qualityOption qualityUnselected" onclick="selectQuality(this)">Low</button>
+             <button class="qualityOption qualityUnselected" onclick="selectQuality(this)">Medium</button>
+             <button class="qualityOption qualityUnselected" onclick="selectQuality(this)">High</button>
+             <button class="qualityOption qualityUnselected" onclick="selectQuality(this)">Ultra</button></center>
+           </div>
          </div> 
          <img src="../images/BackArrow.png" id="backButton" class="orderNavButton" onclick="location.href='orderProcess.html';"/>
-         <img src="../images/NextArrow.png" id="nextButton" class="orderNavButton" onclick="location.href='selectBuild.jsp';"/>
+         <img src="../images/NextArrow.png" id="nextButton" class="orderNavButton" onclick="goToNextPage()"/>
          
          <div id="siteNavDiv">
             <center><ul id="siteNavLinks">

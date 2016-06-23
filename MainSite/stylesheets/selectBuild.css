@@ -1,0 +1,77 @@
+.orderNavButton {
+  display: inline-block;
+  position: absolute;
+  width: 50px;
+  height: 50px;
+  top: 87vh;
+  z-index: 2;
+}
+
+.actionText {
+  display: inline-block;
+  position: absolute;
+  font-family: "Roboto";
+  font-size: 49.7px;
+  color: #F9A825;
+  text-align: center;
+}
+
+.subtitleText {
+  display: inline-block;
+  position: absolute;
+  font-family: "Roboto";
+  font-size: 18px;
+  color: #F1C93E;
+  text-align: center;
+}
+
+
+#selectPCP {
+   top: 30px;
+   width: 100%;
+}
+
+#noticeP {
+  top: 115px;
+  width: 100%;
+}
+
+#backButton {
+  position: fixed;
+  left: 1.5vw;
+}
+
+#nextButton {
+
+  position: fixed;
+  right: 1.5vw;
+}
+
+/*Build select form error styling*/
+
+#formErrorsDiv {
+   display: inline-block;
+   position: absolute;
+   margin: 0 auto;
+   top: 30px;
+   left: calc(180px);
+}
+
+#formErrorsInfo {
+   font-family: "Roboto";
+   font-size: 15px;
+   color: #FFFFFF;
+   margin-bottom: 5px;
+
+}
+
+#errorsList {
+   margin-top: 0px;
+}
+
+.formErrorReason {
+   font-family: "Roboto";
+   font-size: 15px;
+   color: #FF0000;
+}
+
