@@ -19,13 +19,13 @@
 }
 
 .gameCell {
-   padding-left: 10px;
-   padding-right: 10px;
+   margin-left: 10px;
+   margin-right: 10px;
 }
 
 .gameTableRow {
-   padding-top: 5px;
-   padding-bottom: 5px;
+   margin-top: 5px;
+   margin-bottom: 5px;
    margin: 0 auto;
    /*text-align: left;*/
 }
@@ -96,6 +96,8 @@
    /*display: inline-block;
    position: absolute;*/
    margin: 0 auto;
+   border-collapse: collapse;
+   border-spacing: 20px;
   /* margin-top: 160px;*/
    /*text-align: center;*/
 }

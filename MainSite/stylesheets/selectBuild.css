@@ -25,6 +25,84 @@
   text-align: center;
 }
 
+.buildDescriptionShort {
+   font-family: "RobotoThin";
+   font-size: 40px;
+   margin: 0px;
+   padding: 0px;
+   top: 0px;
+   width: 100%;
+   position: absolute;
+   text-align: center;
+   display:  table-cell;
+}
+
+.buildIcon {
+   top: 50px;
+   position: absolute;
+   display: inline-block;
+}
+
+.buildPrice {
+   font-family: "RobotoBold";
+   font-size: 50px;
+   top: 88px;
+   position: absolute;
+   display: inline-block;
+   color: #FFFFFF;
+   position: absolute;
+   width: 100%;
+   text-align: center;
+   display:  table-cell;
+}
+
+.buildDescriptionMed {
+   top: 197px;
+   font-family: "Roboto";
+   font-size: 16px;
+   width: 100%;
+   margin: 0px;
+   padding: 0px;
+   position: absolute;
+   text-align: center;
+   display: inline-block;
+}
+
+.buildDivider {
+   top: 215px;
+   height: 2px;
+   background-color: #000000;
+   width: 99%;
+   position: absolute;
+   text-align: center;
+   display: inline-block;
+}
+
+.buyKitButton {
+   top: 235px;
+   width: 175px;
+   height: 30px;
+   left:12.5px;
+   position: absolute;
+   background-color: #F1C93E;
+   display: inline-block;
+   font-family: "RobotoBold";
+   border-radius: 10px;
+    moz-border-radius: 10px;
+    webkit-border-radius: 10px;
+  font-size: 18px;
+   border: none;
+}
+
+.buildSpecs {
+   top: 265px;
+   left:15px;
+   width: 180px;
+    font-family: "Roboto";
+    font-size: 10px;
+   position: absolute;
+   display: inline-block;
+}
 
 #selectPCP {
    top: 30px;
@@ -45,6 +123,31 @@
 
   position: fixed;
   right: 1.5vw;
+}
+
+#buildsTable {
+   /*display: block;
+   position: absolute;*/
+   margin-left: auto;
+   margin-right: auto;
+   margin-top: 170px;
+   border-collapse: collapse;
+   border-spacing: 20px;
+   
+}
+
+.buildsTableRow {
+   margin-top: 5px;
+   margin-bottom: 5px;
+   
+}
+
+.buildCell {
+   width: 200px;
+   height: 420px;
+   background-color: #FFFFFF;
+   position: relative;
+   
 }
 
 /*Build select form error styling*/

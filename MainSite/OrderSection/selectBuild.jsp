@@ -34,6 +34,23 @@
            <p id="selectPCP" class="actionText">Select a PCKit</p>
            <p id="noticeP" class="subtitleText">Every kit ships with tools and our custom builder's guide!</p>
 
+           <table id="buildsTable" align="center">
+              <tr class="buildsTableRow">
+                  <td class="buildCell">
+                     <p class="buildDescriptionShort">playable</p>
+                     <img class="buildIcon" src="images/BuildIcon.png" width="200px" height="140px">
+                     <p class="buildPrice">$500</p>
+                     <p class="buildDescriptionMed">for casual gamers</p>
+                     <hr class="buildDivider">
+                     <button class="buyKitButton">BUY THIS KIT</button>
+                     <!--<ul></ul>-->
+                     <p class="buildSpecs">AMD FX-6300 3.5GHz 6-Core Processor<br><br>
+                     G.Skill Ripjaws Series 8GB (2 x 4GB) DDR3-1600 Memory<br><br>
+                     Seagate Barracuda 1TB 3.5" 7200RPM Internal Hard Drive<br><br>
+                     EVGA GeForce GTX 950 2GB Superclocked Video Card</p>
+                  </td>
+              </tr>
+           </table>
 
          </div> 
          <img src="../images/BackArrow.png" id="backButton" class="orderNavButton" onclick="location.href='selectGames.jsp';"/>
