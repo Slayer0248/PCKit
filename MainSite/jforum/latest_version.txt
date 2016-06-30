@@ -1,0 +1,12 @@
+2.1.9
+
+<p>New icons / small fixes</p>
+
+<ul>
+<li>Changed icon package</li>
+<li>Some importante fixes</li>
+</ul>
+
+<p>
+<span color="red"><b>Upgrading is HIGHLY recomended</span>
+</p> 
