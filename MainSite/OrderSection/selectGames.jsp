@@ -107,12 +107,11 @@
               var adjustedTier = Math.max(1, Math.min(5, cumMinTier+qualitySelected))
               //TODO: create csrf cookie in here to be sure next page is accessed only by this page
 
-              console.log("got here");
               $.ajax({
                  url: './selectBuild.jsp',
                  data: JSON.stringify({"minTier": adjustedTier}),
                  type: 'POST'
-              }).done(function(data) {document.write(data); console.log("ajax worked");});  
+              }).done(function(data) {document.write(data); history.pushState({}, null, "http://www.pckit.org/OrderSection/selectBuild.jsp");});  
 
            }
            else {

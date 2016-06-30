@@ -6,7 +6,18 @@
         http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
     version="3.0">
     <!-- id="WebApp_ID" -->
-    
+
+    <!--<security-constraint>
+    <web-resource-collection>
+      <web-resource-name>All Apps</web-resource-name>
+      <url-pattern>/*</url-pattern>
+      <http-method>GET</http-method>
+        <http-method>POST</http-method>
+    </web-resource-collection>
+    <user-data-constraint>
+      <transport-guarantee>CONFIDENTIAL</transport-guarantee>
+    </user-data-constraint>
+  </security-constraint>-->
     
     <servlet>
       <servlet-name>MailingList</servlet-name>

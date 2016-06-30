@@ -42,8 +42,8 @@ public class MailingListServlet extends HttpServlet {
       String pageMessage = "Invalid Post Request.";
       String mailMessage = "";
       String action = request.getParameter("action");
-      boolean validRequest = VerifyCsrfToken.isValidToken(request, response);
-      if (action.equals("AddEmail") && validRequest) {
+      //boolean validRequest = VerifyCsrfToken.isValidToken(request, response);
+      if (action.equals("AddEmail")) {
          String firstName = request.getParameter("firstName");
          String lastName = request.getParameter("lastName");
          String email = request.getParameter("Email");
