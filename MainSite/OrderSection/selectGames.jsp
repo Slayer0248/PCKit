@@ -111,7 +111,7 @@
                  url: './selectBuild.jsp',
                  data: JSON.stringify({"minTier": adjustedTier}),
                  type: 'POST'
-              }).done(function(data) {document.write(data); history.pushState({}, null, "http://www.pckit.org/OrderSection/selectBuild.jsp");});  
+              }).done(function(data) { window.location.href="http://www.pckit.org/OrderSection/selectBuild.jsp"; /*document.write(data); history.pushState({}, null, "http://www.pckit.org/OrderSection/selectBuild.jsp");*/ });  
 
            }
            else {

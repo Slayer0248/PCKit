@@ -14,7 +14,7 @@ INSERT INTO jforum_groups ( group_id, group_name, group_description ) VALUES (@A
 # Users
 #
 INSERT INTO jforum_users ( user_id, username, user_password, user_regdate ) VALUES (@ANONYMOUS_ID, 'Anonymous', 'nopass', NOW());
-INSERT INTO jforum_users ( user_id, username, user_password, user_regdate, user_posts ) VALUES (@ADMIN_ID, 'Admin', '21232f297a57a5a743894a0e4a801fc3', NOW(), 1);
+INSERT INTO jforum_users ( user_id, username, user_password, user_regdate, user_posts ) VALUES (@ADMIN_ID, 'Admin', 'cf72eb30aba20ebb93a25698931ad37b', NOW(), 1);
 
 #
 # User Groups

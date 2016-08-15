@@ -295,6 +295,7 @@
             <center>
             <ul id="siteNavLinks">
             	<li class="siteNavItem"><a class="siteNavLink" href="..">Home</a></li>
+                <li class="siteNavItem"><a class="siteNavLink" href="../forums/list.page">Forums</a></li>
             	<li class="siteNavItem"><a class="siteNavLink" href="../about.html">About PCkit</a></li>
             	<li class="siteNavItem"><a class="siteNavLink" href="#">Stay Notified</a></li>
             </ul>
