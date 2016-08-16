@@ -29,19 +29,21 @@ public class RegisterServlet extends HttpServlet {
       PreparedStatement pstatement = null;
       
       try {
-        byte[] encryptedPass = seTest.encryptToBytes(password, "AES");
+        //byte[] encryptedPass = seTest.encryptToBytes(password, "AES");
+        String encryptedPass = seTest.encryptToString(password, "AES");
         Class.forName("com.mysql.jdbc.Driver");
         int updateQuery = 0;
         connection = DriverManager.getConnection("jdbc:mysql://localhost/PCKitDB","root","Potter11a");
         String queryString = "INSERT INTO PCKitAccounts(email, password, firstName, lastName) VALUES (?, ?, ?, ?)";
         pstatement = connection.prepareStatement(queryString);
         pstatement.setString(1, email);
-        pstatement.setBytes(2, encryptedPass);
+        //pstatement.setBytes(2, encryptedPass);
+        pstatement.setString(2, encryptedPass);
         pstatement.setString(3, firstName);
         pstatement.setString(4, lastName);
         updateQuery = pstatement.executeUpdate();
         if (updateQuery != 0) {
-           pageMessage="Your account has been created!";
+           pageMessage="Your account has been created! <a href='Login.jsp'>Click here</a> to login.";
         }
       }
       catch (Exception e) {
@@ -49,6 +51,6 @@ public class RegisterServlet extends HttpServlet {
       }
       
       request.setAttribute("Message", pageMessage);
-      request.getRequestDispatcher("registered.jsp").forward(request, response);
+      request.getRequestDispatcher("../registered.jsp").forward(request, response);
    }
 }

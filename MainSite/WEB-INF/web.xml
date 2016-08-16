@@ -18,6 +18,14 @@
       <transport-guarantee>CONFIDENTIAL</transport-guarantee>
     </user-data-constraint>
   </security-constraint>-->
+  <session-config> 
+    <cookie-config>
+    <!--<secure>true</secure>-->
+    <http-only>true</http-only>
+  </cookie-config>
+      <session-timeout>30</session-timeout> 
+      <tracking-mode>COOKIE</tracking-mode> 
+  </session-config>
     
 	<!-- Clickstream -->
 	<filter>

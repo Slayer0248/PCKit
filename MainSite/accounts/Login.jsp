@@ -30,13 +30,6 @@
      	      if($("#passwordText").val().length == 0 || $("#passwordText").val() == null) {
      	         errorList = errorList + "<li class='formErrorReason'>Password field is empty</li><br>";
      	      }
-     	      else if($("#passwordMatchText").val().length == 0 || $("#passwordMatchText").val() == null) {
-     	         errorList = errorList + "<li class='formErrorReason'>Confirm Password field is empty</li><br>";
-     	      }
-     	      else if($("#passwordText").val() != $("#passwordMatchText").val()) {
-     	         errorList = errorList + "<li class='formErrorReason'>Passwords don't match</li><br>";
-     	         
-     	      }
      	      
      	      
      	      if (errorList.length == 0) {
@@ -46,12 +39,15 @@
      	            data: "email=" + encodeURIComponent($("#emailText").val()) + "&password=" + encodeURIComponent($("#passwordText").val()),
      	            success: function (data) {
      	               if (data == "Yes") {
-     	                  nextData = "email=" + encodeURIComponent($("#emailText").val()) + "&password=" + encodeURIComponent($("#passwordText").val());
+                          console.log("got here");
+     	                  nextData = "Email=" + encodeURIComponent($("#emailText").val()) + "&Password=" + encodeURIComponent($("#passwordText").val());
      	                  $.ajax({
      	                    type : "POST",
-     	                    url: "/accounts/login/",
+     	                    url: "./login/",
      	                    data: nextData
-     	                  });
+     	                  }).done(function(outData) { console.log(outData); 
+                                                      /*document.write(outData);*/
+                                                        window.location.href="https://www.pckit.org/"; });
      	               }
      	               else {
      	                  if (data == "No") {
@@ -117,15 +113,13 @@
                       <input type="password" id="passwordText" name="Password">
                    </span>
                    <span id="linkSpan">
-                      <a id="loginAction" class="loginLink" href="Signup.jsp" onclick="updatePage(this); return false;">Login</a>
+                      <a id="loginAction" class="loginLink" href="javascript: void(0)">Login</a>
                       <a id="signUpAction" class="loginLink" href="Signup.jsp">Sign up</a>
                    </span>
                 </form>
              </div></center>
 
          </div> 
-         <img src="../images/BackArrow.png" id="backButton" class="orderNavButton" onclick="location.href='selectGames.jsp';"/>
-         <img src="../images/NextArrow.png" id="nextButton" class="orderNavButton" onclick="location.href='orderProcess.html';"/>
          <div id="siteNavDiv">
             <center>
             <ul id="siteNavLinks">
