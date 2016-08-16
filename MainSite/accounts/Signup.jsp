@@ -50,7 +50,7 @@
      	      if (errorList.length == 0) {
      	         $.ajax({
      	            type : "POST",
-     	            url: "./account-exists/",
+     	            url: "/accounts/account-exists/",
      	            data: "email=" + encodeURIComponent($("#emailText").val()),
      	            success: function (data) {
      	               console.log(data);
