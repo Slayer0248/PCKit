@@ -79,3 +79,32 @@
 
 }
 
+/*Mailing List form error styling*/
+
+#formErrorsDiv {
+   display: block;
+   margin-bottom: 20px;
+   
+}
+
+#formErrorsInfo {
+   font-family: "Roboto";
+   font-size: 15px;
+   color: #FFFFFF;
+   margin-bottom: 5px;
+   
+}
+
+#errorsList {
+   margin-top: 0px;
+   margin-left: 80px;
+}
+
+.formErrorReason {
+   font-family: "Roboto";
+   font-size: 15px;
+   color: #FF0000;
+   float: left;
+}
+
+

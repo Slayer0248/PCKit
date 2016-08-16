@@ -53,7 +53,29 @@
      	            url: "/accounts/account-exists/",
      	            data: "email=" + encodeURIComponent($("#emailText").val()),
      	            success: function (data) {
-     	               console.log(data);
+     	               if (data == "No") {
+     	                  nextData = "Email=" + encodeURIComponent($("#emailText").val()) +"&Password="+encodeURIComponent($("#passwordText").val())+ "&firstName="+encodeURIComponent($("#firstNameText").val()) +  "&lastName="+encodeURIComponent($("#lastNameText").val());
+     	                  $.ajax({
+     	                    type : "POST",
+     	                    url: "/accounts/register/",
+     	                    data: nextData
+     	                  });
+     	               }
+     	               else {
+     	                  if (data == "Yes") {
+     	                     errorList = errorList + "<li class='formErrorReason'>Account already exists.</li><br>";
+     	                  }
+     	                  else {
+     	                     errorList = errorList + "<li class='formErrorReason'>" + data + "</li><br>";
+     	                  }
+     	                  fullErrorOutput = '<div id="formErrorsDiv"><ul id="errorsList" type="disc">';
+     	                  fullErrorOutput = fullErrorOutput +errorList + '</ul></div>';
+     	                  $(fullErrorOutput).insertBefore($("#signUpForm"));
+     	                  var shift= 20 +$("#formErrorsDiv").height();
+     	         
+     	                  $("#signUpDiv").css("height", (233+shift).toString()+ "px");
+     	                  $("#signUpDiv").css("margin-top", (250-shift).toString()+ "px");
+     	               }
      	            }
      	         });
      	       

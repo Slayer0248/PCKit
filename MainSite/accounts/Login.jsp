@@ -16,6 +16,82 @@
             console.log("%f px or %f em", fSize, fSize/16);
         });
          
+        $(function(){
+           $("#loginForm").on("submit", function(e) {
+              e.preventDefault();
+              var errorList="";
+     	      if($("#emailText").val().length == 0 || $("#emailText").val() == null) {
+     	         errorList = errorList + "<li class='formErrorReason'>Email field is empty</li><br>";
+     	      }
+     	      else if($("#emailText").val().includes("@") == false) {
+     	         errorList = errorList + "<li class='formErrorReason'>Email value isn't a valid email address.</li><br>";
+     	      }
+     	      
+     	      if($("#passwordText").val().length == 0 || $("#passwordText").val() == null) {
+     	         errorList = errorList + "<li class='formErrorReason'>Password field is empty</li><br>";
+     	      }
+     	      else if($("#passwordMatchText").val().length == 0 || $("#passwordMatchText").val() == null) {
+     	         errorList = errorList + "<li class='formErrorReason'>Confirm Password field is empty</li><br>";
+     	      }
+     	      else if($("#passwordText").val() != $("#passwordMatchText").val()) {
+     	         errorList = errorList + "<li class='formErrorReason'>Passwords don't match</li><br>";
+     	         
+     	      }
+     	      
+     	      
+     	      if (errorList.length == 0) {
+     	         $.ajax({
+     	            type : "POST",
+     	            url: "/accounts/login-exists/",
+     	            data: "email=" + encodeURIComponent($("#emailText").val()) + "&password=" + encodeURIComponent($("#passwordText").val()),
+     	            success: function (data) {
+     	               if (data == "Yes") {
+     	                  nextData = "email=" + encodeURIComponent($("#emailText").val()) + "&password=" + encodeURIComponent($("#passwordText").val());
+     	                  $.ajax({
+     	                    type : "POST",
+     	                    url: "/accounts/login/",
+     	                    data: nextData
+     	                  });
+     	               }
+     	               else {
+     	                  if (data == "No") {
+     	                     errorList = errorList + "<li class='formErrorReason'>Username/password was incorrect.</li><br>";
+     	                  }
+     	                  else {
+     	                     errorList = errorList + "<li class='formErrorReason'>" + data + "</li><br>";
+     	                  }
+     	                  fullErrorOutput = '<div id="formErrorsDiv"><ul id="errorsList" type="disc">';
+     	                  fullErrorOutput = fullErrorOutput +errorList + '</ul></div>';
+     	                  $(fullErrorOutput).insertBefore($("#loginForm"));
+     	                  var shift= 20 +$("#formErrorsDiv").height();
+     	         
+     	                  $("#loginDiv").css("height", (233+shift).toString()+ "px");
+     	                  $("#loginDiv").css("margin-top", (250-shift).toString()+ "px");
+     	               }
+     	            }
+     	         });
+     	       
+     	      
+     	      }
+     	      else {
+     	         fullErrorOutput = '<div id="formErrorsDiv"><ul id="errorsList" type="disc">';
+     	         fullErrorOutput = fullErrorOutput + errorList + '</ul></div>';
+     	         $(fullErrorOutput).insertBefore($("loginForm"));
+     	         var shift= 20 +$("#formErrorsDiv").height();
+     	         
+     	         $("#loginDiv").css("height", (233+shift).toString()+ "px");
+     	         $("#loginDiv").css("margin-top", (250-shift).toString()+ "px");
+     	          
+     	         
+     	      }
+     	      
+     	      
+           });
+           
+           $("#loginAction").bind("click",function(){
+              $("#loginForm").submit();  // consider idOfYourForm `id` of your form which you are going to submit
+           });
+        });
       </script>
    </head>
    <body>
