@@ -79,6 +79,63 @@
       <url-pattern>/MailingList/response/</url-pattern>
    </servlet-mapping>
 
+      <servlet>
+      <servlet-name>AccountExists</servlet-name>
+      <servlet-class>accounts.AccountExistsServlet</servlet-class>
+   </servlet>
+   
+   
+   <servlet-mapping>
+      <servlet-name>AccountExists</servlet-name>
+      <url-pattern>/accounts/account-exists/</url-pattern>
+   </servlet-mapping>
+
+
+   <servlet>
+      <servlet-name>LoginExists</servlet-name>
+      <servlet-class>accounts.LoginExistsServlet</servlet-class>
+   </servlet>
+   
+   
+   <servlet-mapping>
+      <servlet-name>LoginExists</servlet-name>
+      <url-pattern>/accounts/login-exists/</url-pattern>
+   </servlet-mapping>
+   
+   <servlet>
+      <servlet-name>Register</servlet-name>
+      <servlet-class>accounts.RegisterServlet</servlet-class>
+   </servlet>
+   
+   
+   <servlet-mapping>
+      <servlet-name>Register</servlet-name>
+      <url-pattern>/accounts/register/</url-pattern>
+   </servlet-mapping>
+   
+   
+   <servlet>
+      <servlet-name>Login</servlet-name>
+      <servlet-class>accounts.LoginServlet</servlet-class>
+   </servlet>
+   
+   
+   <servlet-mapping>
+      <servlet-name>Login</servlet-name>
+      <url-pattern>/accounts/login/</url-pattern>
+   </servlet-mapping>
+   
+   
+    <servlet>
+      <servlet-name>Logout</servlet-name>
+      <servlet-class>accounts.LogoutServlet</servlet-class>
+   </servlet>
+   
+   
+   <servlet-mapping>
+      <servlet-name>Logout</servlet-name>
+      <url-pattern>/accounts/logout/</url-pattern>
+   </servlet-mapping>
  
     <!-- SMTP settings -->
     <context-param>
