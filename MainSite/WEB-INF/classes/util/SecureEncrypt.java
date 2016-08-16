@@ -14,6 +14,7 @@ import java.util.*;
 import javax.crypto.Cipher;
 import java.security.Key;
 import javax.crypto.spec.SecretKeySpec;
+import javax.xml.bind.DatatypeConverter;
 
 public class SecureEncrypt {
 
@@ -52,7 +53,8 @@ public class SecureEncrypt {
    public String encryptToString(String text, String algorithm) 
     throws NoSuchAlgorithmException, InvalidKeyException, IllegalBlockSizeException, BadPaddingException, NoSuchPaddingException  { 
       byte[] encryptedData = encrypt(text.getBytes(), algorithm, secret);
-      String result = new String(Base64.getEncoder().encode(encryptedData)); 
+      //String result = new String(Base64.getEncoder().encode(encryptedData)); 
+      String result = DatatypeConverter.printBase64Binary(encryptedData);
       return result;
    }
    
@@ -63,14 +65,17 @@ public class SecureEncrypt {
    
    public String decryptToString(String text, String algorithm)
     throws NoSuchAlgorithmException, InvalidKeyException, IllegalBlockSizeException, BadPaddingException, NoSuchPaddingException  {
-      byte[] dataBase64 = Base64.getDecoder().decode(text.getBytes());
+      //byte[] dataBase64 = Base64.getDecoder().decode(text.getBytes());
+      String inText = new String(text);
+      byte[] dataBase64 = DatatypeConverter.parseBase64Binary(inText);
       String result = new String(decrypt(dataBase64, algorithm, secret));
       return result;
    }
    
    public byte[] decryptRawToBytes(byte[] text, String algorithm)
     throws NoSuchAlgorithmException, InvalidKeyException, IllegalBlockSizeException, BadPaddingException, NoSuchPaddingException  { 
-      byte[] dataBase64 = Base64.getDecoder().decode(Base64.getEncoder().encode(text));
+      //byte[] dataBase64 = Base64.getDecoder().decode(Base64.getEncoder().encode(text));
+      byte[] dataBase64 = DatatypeConverter.parseBase64Binary(DatatypeConverter.printBase64Binary(text));
       return decrypt(dataBase64, algorithm, secret);
       
    }
@@ -83,7 +88,8 @@ public class SecureEncrypt {
    
    public byte[] recrypt(byte[] text, String algorithm, String nextKey)
     throws NoSuchAlgorithmException, InvalidKeyException, IllegalBlockSizeException, BadPaddingException, NoSuchPaddingException  { 
-      byte[] dataBase64 = Base64.getDecoder().decode(Base64.getEncoder().encode(text));
+      //byte[] dataBase64 = Base64.getDecoder().decode(Base64.getEncoder().encode(text));
+      byte[] dataBase64 = DatatypeConverter.parseBase64Binary(DatatypeConverter.printBase64Binary(text));
       byte[] decrypted = decrypt(dataBase64, algorithm, secret);
       return encrypt(decrypted, algorithm, nextKey);
    }
