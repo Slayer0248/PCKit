@@ -1,0 +1,81 @@
+#loginDiv {
+    background-color: #575757;
+    margin-top: 250px;
+    width: 400px;
+    height:140px;
+}
+
+#loginHeader {
+    color: #F9A825;
+    font-size: 25px;
+    font-family: "RobotoCondensedBold";
+    margin-bottom: 20px;
+}
+
+#loginForm {
+
+}
+
+#emailSpan {
+   display: block;
+   padding-left: 30px;
+   margin-bottom: 5px;
+}
+
+#passwordSpan {
+   display: block;
+   margin-bottom: 10px;
+}
+
+#linkSpan {
+
+}
+
+.loginField {
+
+}
+
+#emailLabel {
+   color: #F9A825;
+   font-size: 18px;
+   font-family: "RobotoCondensedBold";
+}
+
+#emailText {
+   width:300px;
+    font-size: 14px;
+    font-family: "RobotoCondensedBold";
+}
+
+#passwordLabel {
+   color: #F9A825;
+   font-size: 18px;
+   font-family: "RobotoCondensedBold";
+}
+
+#passwordText {
+   width:300px;
+    font-size: 14px;
+    font-family: "RobotoCondensedBold";
+}
+
+
+.loginLink {
+   text-decoration: none;
+}
+
+
+#loginAction {
+   color: #FFFFFF;
+   font-size: 18px;
+   font-family: "RobotoCondensedBold";
+   padding-right:60px;
+}
+
+#signUpAction {
+   color: #FFFFFF;
+   font-size: 18px;
+   font-family: "RobotoCondensedBold";
+
+}
+

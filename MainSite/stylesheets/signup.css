@@ -1,0 +1,162 @@
+#signUpDiv {
+    background-color: #575757;
+    margin-top: 250px;
+    width: 410px;
+    height:233px;
+}
+
+#signUpHeader {
+    color: #F9A825;
+    font-size: 25px;
+    font-family: "RobotoCondensedBold";
+    margin-bottom: 20px;
+}
+
+#signUpForm {
+
+}
+
+#firstNameSpan {
+   display: block;
+   margin-bottom: 5px;
+}
+
+#lastNameSpan {
+   display: block;
+   margin-bottom: 5px;
+}
+
+#emailSpan {
+   display: block;
+   padding-left: 37px;
+   margin-bottom: 5px;
+}
+
+#passwordSpan {
+   display: block;
+   padding-left: 7px;
+   margin-bottom: 5px;
+}
+
+#passwordMatchSpan {
+   display: block;
+   padding-left: 18px;
+   margin-bottom: 10px;
+}
+
+#linkSpan {
+
+}
+
+.signUpField {
+
+}
+
+#firstNameLabel {
+   color: #F9A825;
+   font-size: 18px;
+   font-family: "RobotoCondensedBold";
+}
+
+#firstNameText {
+   width:300px;
+    font-size: 14px;
+    font-family: "RobotoCondensedBold";
+}
+
+#lastNameLabel {
+   color: #F9A825;
+   font-size: 18px;
+   font-family: "RobotoCondensedBold";
+}
+
+#lastNameText {
+   width:300px;
+    font-size: 14px;
+    font-family: "RobotoCondensedBold";
+}
+
+#emailLabel {
+   color: #F9A825;
+   font-size: 18px;
+   font-family: "RobotoCondensedBold";
+}
+
+#emailText {
+   width:300px;
+    font-size: 14px;
+    font-family: "RobotoCondensedBold";
+}
+
+#passwordLabel {
+   color: #F9A825;
+   font-size: 18px;
+   font-family: "RobotoCondensedBold";
+}
+
+#passwordText {
+   width:300px;
+    font-size: 14px;
+    font-family: "RobotoCondensedBold";
+}
+
+#passwordMatchLabel {
+   color: #F9A825;
+   font-size: 18px;
+   font-family: "RobotoCondensedBold";
+}
+
+#passwordMatchText {
+   width:300px;
+    font-size: 14px;
+    font-family: "RobotoCondensedBold";
+}
+
+
+.signUpLink {
+   text-decoration: none;
+}
+
+
+#loginAction {
+   color: #FFFFFF;
+   font-size: 18px;
+   font-family: "RobotoCondensedBold";
+   padding-right:60px;
+}
+
+#signUpAction {
+   color: #FFFFFF;
+   font-size: 18px;
+   font-family: "RobotoCondensedBold";
+
+}
+
+/*Mailing List form error styling*/
+
+#formErrorsDiv {
+   display: block;
+   margin-bottom: 20px;
+   
+}
+
+#formErrorsInfo {
+   font-family: "Roboto";
+   font-size: 15px;
+   color: #FFFFFF;
+   margin-bottom: 5px;
+   
+}
+
+#errorsList {
+   margin-top: 0px;
+   margin-left: 80px;
+}
+
+.formErrorReason {
+   font-family: "Roboto";
+   font-size: 15px;
+   color: #FF0000;
+   float: left;
+}
+
