@@ -59,7 +59,7 @@
      	                    type : "POST",
      	                    url: "/accounts/register/",
      	                    data: nextData
-     	                  });
+     	                  }).done(function(data) {window.location.replace('pckit.org/accounts/registered.jsp');});
      	               }
      	               else {
      	                  if (data == "Yes") {
