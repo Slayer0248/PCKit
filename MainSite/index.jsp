@@ -4,6 +4,7 @@
       <title>PCKit</title>
       <link rel="stylesheet" href="stylesheets/fonts.css">
       <link rel="stylesheet" href="stylesheets/main.css">
+      <link rel="stylesheet" href="stylesheets/accountNav.css">
       <link rel="stylesheet" href="stylesheets/placeholder.css">
       
       <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js" type="text/javascript"></script>
@@ -21,6 +22,7 @@
    <body>
       <div class="fill-screen">
          <img class="make-it-fit" src="images/background.png" id="bgImage" alt="">
+         <%@include file="accountAccess.jsp" %>
          <div class="scrollable" id="mainContentDiv">
             <center><img src="images/PCkit-logo-trans.png" id="logoImage" alt=""></center>
            <p id="placeholderText">Coming Soon</p>

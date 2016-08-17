@@ -1,0 +1,70 @@
+#accountAccessDiv {
+   z-index: 2;
+   position: absolute;
+   top: 15px;
+   right: 60px;
+}
+
+.accountAccessText {
+   color: #FFFFFF;
+   font-family: "RobotoCondensedBold";
+   font-size: 22px;
+   text-decoration: none;
+}
+
+/* Triangle styles for drop down menu*/
+
+#arrowDiv {
+    z-index: 2;
+   display: inline-block;
+   margin-left: 8px;
+}
+
+.arrow-up {
+  
+  width: 0px; 
+  height: 0px; 
+  border-left: 7px solid transparent;
+  border-right: 7px solid transparent;
+  
+  border-bottom: 12px solid white;
+}
+
+.arrow-down {
+   
+  
+  width: 0px; 
+  height: 0px; 
+  border-left: 7px solid transparent;
+  border-right: 7px solid transparent;
+  border-bottom: 0px;
+  
+  border-top: 12px solid white;
+}
+
+/* Drop down menu*/
+.dropdown {
+    z-index: 2;
+    position: relative;
+    display: inline-block;
+}
+
+.dropdown-content {
+    z-index: 2;
+    display: none;
+    position: absolute;
+    margin-top:5px;
+    background-color: #000000;
+    box-shadow: 0px 8px 8px 0px rgba(0,0,0,0.2);
+    padding: 8px 16px;
+    
+}
+
+.showDropdown {
+    display: block;
+}
+
+.accessLink {
+   margin:0px;
+   padding:0px ;
+}
