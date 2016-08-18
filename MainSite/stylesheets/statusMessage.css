@@ -1,0 +1,22 @@
+#logoImageHeader {
+   display: inline-block;
+   position: absolute;
+   width: 170px;
+   height: 170px;
+   top: 50px;
+   left: calc(50% - 85px);
+}
+
+#form-description {
+   display: inline-block;
+   position: absolute;
+   margin: 0 auto;
+   top: 230px;
+   left: calc(50% - 312px);
+   width: 625px;
+   font-family: "RobotoCondensed";
+   font-size: 20px;
+   color: #FFFFFF;
+   text-align: center;
+   /*text-indent: 5%;*/
+}

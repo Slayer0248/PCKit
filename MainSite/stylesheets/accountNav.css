@@ -12,6 +12,10 @@
    text-decoration: none;
 }
 
+#accessLoginLink {
+   display: inline-block;
+}
+
 /* Triangle styles for drop down menu*/
 
 #arrowDiv {

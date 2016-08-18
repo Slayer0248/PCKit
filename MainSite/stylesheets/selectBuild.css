@@ -32,6 +32,7 @@
    padding: 0px;
    top: 0px;
    width: 100%;
+   color: #000000;
    position: absolute;
    text-align: center;
    display:  table-cell;
@@ -64,6 +65,7 @@
    font-size: 16px;
    width: 100%;
    margin: 0px;
+   color: #000000;
    padding: 0px;
    position: absolute;
    text-align: center;
@@ -104,6 +106,7 @@
    width: 180px;
     font-family: "Roboto";
     font-size: 10px;
+   color: #000000;
    position: absolute;
    display: inline-block;
    overflow-y: scroll;

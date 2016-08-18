@@ -4,6 +4,7 @@
       <title>PCKit</title>
       <link rel="stylesheet" href="../stylesheets/main.css">
       <link rel="stylesheet" href="../stylesheets/login.css">
+      <link rel="stylesheet" href="../stylesheets/accountNav.css">
       <link rel="stylesheet" href="../stylesheets/fonts.css">
       
       <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js" type="text/javascript"></script>
@@ -99,8 +100,71 @@
          %>
 
          <img class="make-it-fit" src="../images/background.png" id="bgImage" alt="">
-         <div class="scrollable" id="mainContentDiv">
-             
+         <div id="accountAccessDiv">
+           <%
+              Cookie cookie = null;
+              Cookie[] cookies = null;
+              // Get an array of Cookies associated with this domain
+              cookies = request.getCookies();
+              String loggedUser ="";
+              if( cookies != null ) {
+                 for (int i = 0; i < cookies.length; i++){
+                    cookie = cookies[i];
+                    if (cookie.getName().equals("pckitName")) {
+                       loggedUser = (String)cookie.getValue();
+                    }
+                    //out.print("Name : " + cookie.getName( ) + ",  ");
+                    //out.print("Value: " + cookie.getValue( )+" <br/>");
+                 }
+
+
+                if (loggedUser.length() > 0) { %>
+          <script type="text/javascript">
+          function toggleDropdown() {
+             if ($("#arrowDiv").hasClass("arrow-down")) {
+                $("#arrowDiv").removeClass("arrow-down");
+                $("#arrowDiv").addClass("arrow-up");
+                var curWidth = $("#accessLoginLink").width();
+                $(".dropdown-content").width(curWidth);
+                $(".dropdown-content").height(30);
+                $(".dropdown").addClass("showDropdown");
+                $(".dropdown-content").addClass("showDropdown");
+
+             }
+             else {
+                $("#arrowDiv").removeClass("arrow-up");
+                $("#arrowDiv").addClass("arrow-down");
+                $(".dropdown").removeClass("showDropdown");
+                $(".dropdown-content").removeClass("showDropdown");
+             }
+          }
+
+          function logoutUser() {
+              $.ajax({
+                 type:"POST",
+                 url:"./logout/",
+                 data:""
+              }).done(function(data) { /*Reload current page*/ location.reload(); });
+           }
+        </script>
+        <div class="dropdown">
+          <p id="accessLoginLink" class="accountAccessText accessLink"><%= loggedUser%></p><div id="arrowDiv" class="arrow-down" onclick="toggleDropdown();"></div>
+          <div class="dropdown-content">
+            <a id="accessLogoutLink" href="javascript:void(0)" onclick="logoutUser();" class="accountAccessText">Logout</p>
+          </div>
+        </div>
+        <% }
+        else { %>
+
+           <a id="accessLoginLink" href="Login.jsp" class="accountAccessText">Login/Sign up</a>
+
+        <% }
+
+        }else{ %>
+           <a id="accessLoginLink" href="Login.jsp" class="accountAccessText">Login/Sign up</a>
+        <% } %>
+        </div>
+         <div class="scrollable" id="mainContentDiv">             
              <center><div id="loginDiv">
                 <center><p id="loginHeader">PCKit Login</p></center>
                 <form id="loginForm">
@@ -124,7 +188,8 @@
             <center>
             <ul id="siteNavLinks">
             	<li class="siteNavItem"><a class="siteNavLink" href="..">Home</a></li>
-            	<li class="siteNavItem"><a class="siteNavLink" href="../about.html">About PCkit</a></li>
+                <li class="siteNavItem"><a class="siteNavLink" href="../forums/list.page">Forums</a></li>
+            	<li class="siteNavItem"><a class="siteNavLink" href="../about.jsp">About PCkit</a></li>
             	<li class="siteNavItem"><a class="siteNavLink" href="../MailingList/">Stay Notified</a></li>
             </ul>
             </center>

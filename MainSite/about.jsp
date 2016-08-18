@@ -1,16 +1,11 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
-<%@ page import="java.io.*,java.util.*,java.sql.*"%>
-<%@ page import="javax.servlet.http.*,javax.servlet.*" %>
 <!DOCTYPE html>
 <html>
    <head>
       <title>PCKit</title>
-      <link rel="stylesheet" href="stylesheets/fonts.css">
       <link rel="stylesheet" href="stylesheets/main.css">
-      <link rel="stylesheet" href="stylesheets/accountNav.css">
       <link rel="stylesheet" href="stylesheets/placeholder.css">
-      
+      <link rel="stylesheet" href="stylesheets/accountNav.css">
+      <link rel="stylesheet" href="stylesheets/fonts.css">
       <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js" type="text/javascript"></script>
       <script type="text/javascript">
          var w = Math.max(document.documentElement.clientWidth, window.innerWidth || 0)
@@ -99,7 +94,7 @@
             <ul id="siteNavLinks">
             	<li class="siteNavItem"><a class="siteNavLink" href=".">Home</a></li>
                 <li class="siteNavItem"><a class="siteNavLink" href="./forums/list.page">Forums</a></li>
-            	<li class="siteNavItem"><a class="siteNavLink" href="about.jsp">About PCkit</a></li>
+            	<li class="siteNavItem"><a class="siteNavLink" href="#">About PCkit</a></li>
             	<li class="siteNavItem"><a class="siteNavLink" href="./MailingList/">Stay Notified</a></li>
             </ul>
             </center>

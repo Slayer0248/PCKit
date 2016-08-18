@@ -1,15 +1,13 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
-<%@ page import="java.io.*,java.util.*,java.sql.*"%>
-<%@ page import="javax.servlet.http.*,javax.servlet.*" %>
+<%@ page language="java" pageEncoding="UTF-8" contentType="text/html;charset=utf-8"%>
+<%@ page import="javax.servlet.http.*,javax.servlet.*,java.security.SecureRandom" %>
 <!DOCTYPE html>
 <html>
    <head>
       <title>PCKit</title>
-      <link rel="stylesheet" href="stylesheets/fonts.css">
-      <link rel="stylesheet" href="stylesheets/main.css">
-      <link rel="stylesheet" href="stylesheets/accountNav.css">
-      <link rel="stylesheet" href="stylesheets/placeholder.css">
+      <link rel="stylesheet" href="../stylesheets/main.css">
+      <link rel="stylesheet" href="../stylesheets/orderProcess1.css">
+      <link rel="stylesheet" href="../stylesheets/accountNav.css">
+      <link rel="stylesheet" href="../stylesheets/fonts.css">
       
       <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js" type="text/javascript"></script>
       <script type="text/javascript">
@@ -25,7 +23,7 @@
    </head>
    <body>
       <div class="fill-screen">
-         <img class="make-it-fit" src="images/background.png" id="bgImage" alt="">
+         <img class="make-it-fit" src="../images/background.png" id="bgImage" alt="">
          <div id="accountAccessDiv">
            <%
               Cookie cookie = null;
@@ -68,7 +66,7 @@
           function logoutUser() {
               $.ajax({
                  type:"POST",
-                 url:"./accounts/logout/",
+                 url:"../accounts/logout/",
                  data:""
               }).done(function(data) { /*Reload current page*/ location.reload(); });
            }
@@ -82,25 +80,26 @@
         <% }
         else { %>
 
-           <a id="accessLoginLink"href="./accounts/Login.jsp" class="accountAccessText">Login/Sign up</a>
+           <a id="accessLoginLink"href="../accounts/Login.jsp" class="accountAccessText">Login/Sign up</a>
 
         <% }
 
         }else{%>
-           <a id="accessLoginLink"href="./accounts/Login.jsp" class="accountAccessText">Login/Sign up</a>
+           <a id="accessLoginLink"href="../accounts/Login.jsp" class="accountAccessText">Login/Sign up</a>
         <%}%>
         </div>
-         <div class="scrollable" id="mainContentDiv">
-            <center><img src="images/PCkit-logo-trans.png" id="logoImage" alt=""></center>
-           <p id="placeholderText">Coming Soon</p>
+         <div class="scrollable centerHorizontally" id="mainContentDiv">
+            <!--<center><img src="../images/PCkit-logo-trans.png" id="logoImage" alt=""></center>-->
+           <p id="descriptionText">Build a custom PC to play the games you want to play at the quality you want to play.</p>
+           <button id="BuildPCBuuton" onclick="location.href='selectGames.jsp';">Build your PC</button>
          </div> 
          <div id="siteNavDiv">
             <center>
             <ul id="siteNavLinks">
-            	<li class="siteNavItem"><a class="siteNavLink" href=".">Home</a></li>
-                <li class="siteNavItem"><a class="siteNavLink" href="./forums/list.page">Forums</a></li>
-            	<li class="siteNavItem"><a class="siteNavLink" href="about.jsp">About PCkit</a></li>
-            	<li class="siteNavItem"><a class="siteNavLink" href="./MailingList/">Stay Notified</a></li>
+            	<li class="siteNavItem"><a class="siteNavLink" href="..">Home</a></li>
+                <li class="siteNavItem"><a class="siteNavLink" href="../forums/list.page">Forums</a></li>
+            	<li class="siteNavItem"><a class="siteNavLink" href="../about.jsp">About PCkit</a></li>
+            	<li class="siteNavItem"><a class="siteNavLink" href="../MailingList/">Stay Notified</a></li>
             </ul>
             </center>
          </div>
