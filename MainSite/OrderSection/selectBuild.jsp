@@ -58,7 +58,12 @@
                $.ajax({
                  type:"POST",
                  url:"./checkout.jsp",
-                 data:""
+                 data:"",
+error: function (xhr, status, message) {
+                     console.log(xhr.responseText );
+                     console.log('A jQuery error has occurred. Status: ' + status + ' - Message: ' + message);
+                  }
+
                }).done(function(data) { window.location.href = "http://www.pckit.org/OrderSection/checkout.jsp"; });
                
                
@@ -129,14 +134,19 @@
               $.ajax({
                  type:"POST",
                  url:"../accounts/logout/",
-                 data:""
+                 data:"",
+                 error: function (xhr, status, message) {
+                     console.log(xhr.responseText );
+                     console.log('A jQuery error has occurred. Status: ' + status + ' - Message: ' + message);
+                  }
+
               }).done(function(data) { /*Reload current page*/ location.reload(); });
            }
         </script>
         <div class="dropdown">
           <p id="accessLoginLink" class="accountAccessText accessLink"><%= loggedUser%></p><div id="arrowDiv" class="arrow-down" onclick="toggleDropdown();"></div>
           <div class="dropdown-content">
-            <a id="accessLogoutLink" href="javascript:void(0)" onclick="logoutUser();" class="accountAccessText">Logout</p>
+            <a id="accessLogoutLink" href="javascript:void(0)" onclick="logoutUser();" class="accountAccessText">Logout</a>
           </div>
         </div>
         <% }
@@ -158,15 +168,14 @@
 
            <% } else { 
            
-             if (request.getAttribute("minTier") == null) { %>
-             
-             <center><img src="../images/PCkit-logo-trans.png" id="logoImageHeader" alt="">
-            <p id="form-description">This page cannot be accessed in this manner.</p>
-            </center>
-             
-            <% } else { 
-           
-             String tierStr = (String)request.getAttribute("minTier");
+             String tierStr="";
+             if (request.getParameter("minTier") == null || request.getParameter("minTier").length() == 0) {
+                tierStr = "1";
+             }          
+             else { 
+                tierStr = (String)request.getParameter("minTier");
+             }
+
              int buildTier = Integer.parseInt(tierStr);
              
              Connection connection = null;
@@ -180,7 +189,7 @@
                 String queryString = "SELECT * FROM Builds WHERE hardwareTier=? AND buildType=?";
                 pstatement = connection.prepareStatement(queryString);
                 pstatement.setInt(1, buildTier);
-                pstatement.setInt(2, "PC Build");
+                pstatement.setString(2, "PC Build");
                 rs = pstatement.executeQuery();
                 int count=0;
            %>
@@ -207,7 +216,7 @@
                      <p class="buildPrice">$<%= price%></p>
                      <p class="buildDescriptionMed"><%= longDescription%></p>
                      <hr class="buildDivider">
-                     <button id="selectBuild<%= rs.getInt("buildId")%> class="buyKitButton unselectedKitButton" onclick="updateKitStatus(this)">BUY THIS KIT</button>
+                     <button id='selectBuild<%= rs.getInt("buildId")%>' class="buyKitButton unselectedKitButton" onclick="updateKitStatus(this)">BUY THIS KIT</button>
                      <!--<ul></ul>-->
                      <p class="buildSpecs">AMD FX-6300 3.5GHz 6-Core Processor<br><br>
                      G.Skill Ripjaws Series 8GB (2 x 4GB) DDR3-1600 Memory<br><br>
@@ -218,13 +227,13 @@
               </tr>
               
            </table>
+
            <%  }
                catch (Exception e) {%>
                  <center><img src="../images/PCkit-logo-trans.png" id="logoImageHeader" alt="">
             <p id="form-description">An error occurred while reading the database.</p>
             </center>
            <%   }
-              }
            } %>
          </div> 
          <% if (loggedUser.length() > 0) { %>

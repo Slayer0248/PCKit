@@ -33,7 +33,7 @@
         <%
            ClientSide client_side = new ClientSide( "my-pubcert.pem", "my-prvkey.p12", "paypal_cert_pem.txt", "Potter11a" );
 
-		   String result = client_side.getButtonEncryptionValue( "cert_id=SFTMKZFWK2YK8,cmd=_cart,upload=1,business=pckitcompany@gmail.com,item_name_1=Handheld Computer,amount_1=500.00", "/Applications/tomcat/webapps/PCKit/Accounts/my-prvkey.p12", "/Applications/tomcat/webapps/PCKit/Accounts/my-pubcert.pem", "/Applications/tomcat/webapps/PCKit/Accounts/paypal_cert_pem.txt", "Potter11a" );
+		   String result = client_side.getButtonEncryptionValue( "cert_id=SFTMKZFWK2YK8,cmd=_cart,upload=1,business=pckitcompany@gmail.com,item_name_1=Handheld Computer,amount_1=500.00", "/home/ec2-user/pckit/MainSite/OrderSection/my-prvkey.p12", "/home/ec2-user/pckit/MainSite/OrderSection/my-pubcert.pem", "/home/ec2-user/pckit/MainSite/OrderSection/paypal_cert_pem.txt", "Potter11a" );
 		   //String result = client_side.getButtonEncryptionValue( "business=pckitcompany@gmail.com\n    cert_id=SFTMKZFWK2YK8\n    cmd=_cart\n    upload=1\n    item_name=Handheld Computer\n    amount=500.00", "/Applications/tomcat/webapps/PCKit/Accounts/my-prvkey.p12", "/Applications/tomcat/webapps/PCKit/Accounts/my-pubcert.pem", "/Applications/tomcat/webapps/PCKit/Accounts/paypal_cert_pem.txt", "Potter11a" );
         %>
          <img class="make-it-fit" src="../images/background.png" id="bgImage" alt="">

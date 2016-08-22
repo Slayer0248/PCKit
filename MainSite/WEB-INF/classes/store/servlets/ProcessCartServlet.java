@@ -61,7 +61,7 @@ public class ProcessCartServlet extends HttpServlet {
             ShoppingCart cart = cartManager.createFromCartString(cartData, connection);
             
             
-            pageMessage="Success;"cart.getEncryptedStr();
+            pageMessage="Success;"+ cart.getEncryptedStr();
             
          }
          catch (Exception e) {

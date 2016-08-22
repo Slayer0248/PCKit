@@ -111,13 +111,15 @@ public class AddItemServlet extends HttpServlet {
             updateQuery2 = pstatement2.executeUpdate();
             pstatement2.close();
             
-            if (updateQuery == updates.length && updateQuery2 == 0) {
+            if (updateQuery == updates.length && updateQuery2 != 0) {
                pageMessage="Success";
                if( cookies != null ) {
                   for (int i = 0; i < cookies.length; i++){
                      cookie = cookies[i];
                      if (cookie.getName().equals("order")) {
                         cookie.setValue(cart.getCookieStr());
+                        cookie.setMaxAge(30*60);
+                        cookie.setPath("/");
                         response.addCookie(cookie);
                      }
                   }

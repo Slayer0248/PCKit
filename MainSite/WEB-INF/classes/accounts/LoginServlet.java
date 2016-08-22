@@ -50,9 +50,11 @@ public class LoginServlet extends HttpServlet {
         session.setAttribute("name", rs.getString("firstName") + " " + rs.getString("lastName"));
         Cookie userId = new Cookie("pckitUserId", "" + rs.getInt("userId"));
         Cookie name = new Cookie("pckitName", rs.getString("firstName") + " " + rs.getString("lastName"));
+        //userId.setMaxAge(365*60*60*24+ 30*60);
         userId.setMaxAge(30*60);
         userId.setPath("/");
         //userId.setHttpOnly(true);
+        //name.setMaxAge(365*60*60*24+ 30*60);
         name.setMaxAge(30*60);
         name.setPath("/");
         //name.setHttpOnly(true);

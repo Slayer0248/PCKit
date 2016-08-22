@@ -79,11 +79,13 @@ public class DeleteCartServlet extends HttpServlet {
                   cookie = cookies[i];
                   if (cookie.getName().equals("orderId")) {
                      cookie.setMaxAge(0);
+                     cookie.setPath("/");
                      cookie.setValue(null);
                      response.addCookie(cookie);
                   }
                   else if (cookie.getName().equals("order")) {
                      cookie.setMaxAge(0);
+                     cookie.setPath("/");
                      cookie.setValue(null);
                      response.addCookie(cookie);
                   }

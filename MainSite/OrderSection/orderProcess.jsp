@@ -74,7 +74,7 @@
         <div class="dropdown">
           <p id="accessLoginLink" class="accountAccessText accessLink"><%= loggedUser%></p><div id="arrowDiv" class="arrow-down" onclick="toggleDropdown();"></div>
           <div class="dropdown-content">
-            <a id="accessLogoutLink" href="javascript:void(0)" onclick="logoutUser();" class="accountAccessText">Logout</p>
+            <a id="accessLogoutLink" href="javascript:void(0)" onclick="logoutUser();" class="accountAccessText">Logout</a>
           </div>
         </div>
         <% }
@@ -91,7 +91,7 @@
          <div class="scrollable centerHorizontally" id="mainContentDiv">
             <!--<center><img src="../images/PCkit-logo-trans.png" id="logoImage" alt=""></center>-->
            <p id="descriptionText">Build a custom PC to play the games you want to play at the quality you want to play.</p>
-           <button id="BuildPCBuuton" onclick="location.href='selectGames.jsp';">Build your PC</button>
+           <button id="BuildPCBuuton" onclick="location.href='./selectGames.jsp';">Build your PC</button>
          </div> 
          <div id="siteNavDiv">
             <center>

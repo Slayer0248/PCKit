@@ -56,10 +56,12 @@
            if ($("#gamesTable").length == 1) {
               if ($(".gameSelected").length > 0) {
                  for (i=0; i<$(".gameSelected").length; i++) {
-                    $(".gameSelected").each(function (i, obj){
+                    var obj = $(".gameSelected").get(i);
                     var gameId = $(obj).parent().attr('id');
-                    var hardwareTier = parseInt($(obj).parent().val(), 10);
+                    var hardwareTier = parseInt($(obj).parent("td").attr('value'), 10);
+                    //console.log($(obj).parent("td").attr('value'));
                     gameId = parseInt(gameId.replace(/[^0-9\.]/g, ''), 10);
+                    //console.log("gameIdi:%d, tier:%d", gameId, hardwareTier);
                     if (gamesSelected.length == 0) {
                        gamesSelected = gamesSelected + gameId;
                     }
@@ -70,8 +72,6 @@
                     if (cumMinTier < 0 || (cumMinTier >=0 && hardwareTier > cumMinTier)) {
                        cumMinTier = hardwareTier;
                     }
-                    
-                    });
                  }
               }
               else {
@@ -104,9 +104,13 @@
            }
 
 
+           //console.log(qualitySelected);
+           //console.log(cumMinTier);
+
+
            if (errors.length == 0) {
               //max tier = ??? , (5 for testing)
-              var adjustedTier = Math.max(1, Math.min(5, cumMinTier+qualitySelected))
+              var adjustedTier = Math.max(1, Math.min(5, cumMinTier+qualitySelected));
               //TODO: create csrf cookie in here to be sure next page is accessed only by this page
               $.ajax({
                  type:"POST",
@@ -114,17 +118,29 @@
                  data:"" 
                }).done(function(data) {
                   if (data=="Success") {
+                     console.log("in here");
                      $.ajax({
-                        url: './selectBuild.jsp',
-                        data: JSON.stringify({"minTier": adjustedTier}),
-                        type: 'POST'
-                     }).done(function(data) { window.location.href="http://www.pckit.org/OrderSection/selectBuild.jsp"; /*document.write(data); history.pushState({}, null, "http://www.pckit.org/OrderSection/selectBuild.jsp");*/ });  
-                 }
-                 else {
+                 type:"POST",
+                 url:"./selectBuild.jsp",
+                 data:JSON.stringify({"minTier": adjustedTier}),
+                  error: function (xhr, status, message) {
+                     console.log(xhr.responseText );
+                     console.log('A jQuery error has occurred. Status: ' + status + ' - Message: ' + message);
+                  }
+               }).done(function(data) { /*window.location.href = "http://www.pckit.org/OrderSection/selectBuild.jsp";*/
+document.write(data); history.pushState({}, null, "https://www.pckit.org/OrderSection/selectBuild.jsp"); });
+                  }  else {
                     //form errors
                  
                  }
              });
+            // $.post("./selectBuild.jsp",{"minTier": adjustedTier}).done(function(data) {
+     //console.log(data);
+     /*window.location.href="https://www.pckit.org/OrderSection/selectBuild.jsp";*/
+     // document.write(data);
+    /*history.pushState({}, null, "https://www.pckit.org/OrderSection/selectBuild.jsp");*/ 
+    //});
+             // $("html").load("selectBuild.jsp", {"minTier" : "" + adjustedTier});
                   
            }
            else {
@@ -212,7 +228,7 @@
         <div class="dropdown">
           <p id="accessLoginLink" class="accountAccessText accessLink"><%= loggedUser%></p><div id="arrowDiv" class="arrow-down" onclick="toggleDropdown();"></div>
           <div class="dropdown-content">
-            <a id="accessLogoutLink" href="javascript:void(0)" onclick="logoutUser();" class="accountAccessText">Logout</p>
+            <a id="accessLogoutLink" href="javascript:void(0)" onclick="logoutUser();" class="accountAccessText">Logout</a>
           </div>
         </div>
         <% }

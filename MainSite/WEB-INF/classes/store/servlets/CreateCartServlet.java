@@ -72,9 +72,9 @@ public class CreateCartServlet extends HttpServlet {
                response.addCookie(orderIdCookie);
                
                Cookie orderCookie = new Cookie("order", "");
-               orderIdCookie.setMaxAge(30*60);
-               orderIdCookie.setPath("/");
-               response.addCookie(orderIdCookie);
+               orderCookie.setMaxAge(30*60);
+               orderCookie.setPath("/");
+               response.addCookie(orderCookie);
             }
          }
          catch (Exception e) {

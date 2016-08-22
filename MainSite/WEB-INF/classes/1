@@ -30,9 +30,9 @@ public class LogoutServlet extends HttpServlet {
             cookie = cookies[i];
             if (cookie.getName().equals("pckitUserId") || cookie.getName().equals("pckitName") || 
                 cookie.getName().equals("orderId") || cookie.getName().equals("order")) {
-               cookie.setPath("/");
                cookie.setMaxAge(0);
                cookie.setValue(null);
+               cookie.setPath("/");
                response.addCookie(cookie);
             }
             //out.print("Name : " + cookie.getName( ) + ",  ");
