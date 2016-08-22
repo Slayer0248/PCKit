@@ -1,0 +1,155 @@
+/*Checkout styles*/
+
+.orderNavButton {
+  display: inline-block;
+  position: absolute;
+  width: 50px;
+  height: 50px;
+  top: 87vh;
+  z-index: 2;
+}
+
+#backButton {
+  position: fixed;
+  left: 1.5vw;
+}
+
+#nextButton {
+  
+  position: fixed;
+  right: 1.5vw;
+}
+
+#curPageContent {
+   /*display: block;
+   position: absolute;*/
+   /*display: inline-block;
+   position: relative;*/
+   margin-left: auto;
+   margin-right: auto;
+   margin-top: 50px;
+   border-collapse: collapse;
+   border-spacing: 20px;
+   height: 1300px;
+   width: 1000px;
+   background-color: #b7b7b7;
+   
+}
+
+#orderSummaryTable {
+  float: left;
+  border-collapse: collapse;
+}
+
+th {
+   font-family: "Roboto";
+}
+
+td.indexCol {
+  padding-top: 10px;
+  padding-bottom: 10px;
+  font-family: "Roboto";
+}
+
+td.nameCol {
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+td.priceCol {
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+td.quantityCol {
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+.itemRow {
+  
+  border-top: 1px solid black;
+  border-bottom: 1px solid black;
+}
+
+.indexCol {
+  width: 50px
+  
+}
+
+.nameCol {
+  width:550px;
+  padding-left:20px;
+  padding-right:20px;
+  word-wrap: break-word;
+  font-family: "Roboto";
+}
+
+
+
+.priceCol {
+  width:100px;
+  font-family: "Roboto";
+}
+
+.quantityCol {
+  width:200px;
+  font-family: "Roboto";
+}
+
+.removeCol {
+  width:100px;
+  
+}
+
+td.removeCol {
+   font-family: "Roboto";
+   font-size: 25px;
+   transform : scale(1.4,1.3);
+-webkit-transform:scale(1.4,1.3); /* Safari and Chrome */
+-moz-transform:scale(1.4,1.3); /* Firefox */
+-ms-transform:scale(1.4,1.3); /* IE 9+ */
+-o-transform:scale(1.4,1.3); /* Opera */
+}
+
+.imgButton {
+   width: 20px;
+   height: 20px;
+}
+
+#payPalForm {
+   float: right;
+   padding-top: 20px;
+   padding-right: 20px;
+}
+
+
+
+/*Game select form error styling*/
+
+#formErrorsDiv {
+   display: inline-block;
+   position: absolute;
+   margin: 0 auto;
+   top: 60px;
+   left: calc(180px);
+}
+
+#formErrorsInfo {
+   font-family: "Roboto";
+   font-size: 15px;
+   color: #FFFFFF;
+   margin-bottom: 5px;
+   
+}
+
+#errorsList {
+   margin-top: 0px;
+}
+
+.formErrorReason {
+   font-family: "Roboto";
+   font-size: 15px;
+   color: #FF0000;
+}
+
