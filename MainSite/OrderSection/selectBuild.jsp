@@ -1,4 +1,5 @@
 <%@ page language="java" pageEncoding="UTF-8" contentType="text/html;charset=utf-8"%>
+<%@ page import="java.io.*,java.util.*,java.sql.*"%>
 <%@ page import="javax.servlet.http.*,javax.servlet.*,java.security.SecureRandom" %>
 <!DOCTYPE html>
 <html>
@@ -20,14 +21,66 @@
             console.log("%f px or %f em", fSize, fSize/16);
         });
          
+        function updateKitStatus(selected) {
+           if ($(selected).hasClass("unselectedKitButton")) {
+              $(selected).removeClass("unselectedKitButton");
+              $(selected).addClass("selectedKitButton");
+              $(selected).html("REMOVE FROM CART");
+              
+              $.ajax({
+                 type:"POST",
+                 url:"./addToCart/",
+                 data:"updates=" + encodeURIComponent($(selected).prop("id").substring(11) + ":1")
+               }).done(function(data) {});
+           }
+           else if ($(selected).hasClass("selectedKitButton")) {
+              $(selected).removeClass("selectedKitButton");
+              $(selected).addClass("unselectedKitButton");
+              $(selected).html("BUY THIS KIT");
+              
+              $.ajax({
+                 type:"POST",
+                 url:"./removeFromCart/",
+                 data:"updates=" + encodeURIComponent($(selected).prop("id").substring(11) + ":1")
+               }).done(function(data) {});
+           }
+        }
+        
+        function goToNextPage() {
+           if ($(".selectedKitButton").length ==0) {
+              //show form error
+           }
+           else {
+               var builds = $(".selectedKitButton");
+               var cartStr = "";
+               var i;
+               for (i=0; i<builds.length; i++) {
+                  var build=builds[i];
+                  if (i==builds.length - 1) {
+                    cartStr = cartStr + $(build).prop("id").substring(11) + ":1";
+                  }
+                  else {
+                    cartStr = cartStr + $(build).prop("id").substring(11) + ":1,";
+                  }
+               }
+               
+               $.ajax({
+                 type:"POST",
+                 url:"./checkout.jsp",
+                 data:""
+               }).done(function(data) { window.location.href = "http://www.pckit.org/OrderSection/checkout.jsp"; });
+               
+               
+           }
+        }
       </script>
    </head>
    <body>
       <div class="fill-screen">
 
-         <%
+         <% 
          //TODO: check for csrf cookie and csrf token in POST so we can display the page
-
+             
          %>
 
          <img class="make-it-fit" src="../images/background.png" id="bgImage" alt="">
@@ -101,7 +154,34 @@
             <p id="form-description">You must be logged in to view this page.</p>
             </center>
 
-           <% } else { %>
+           <% } else { 
+           
+             if (request.getAttribute("minTier") == null) { %>
+             
+             <center><img src="../images/PCkit-logo-trans.png" id="logoImageHeader" alt="">
+            <p id="form-description">This page cannot be accessed in this manner.</p>
+            </center>
+             
+            <% } else { 
+           
+             String tierStr = (String)request.getAttribute("minTier");
+             int buildTier = Integer.parseInt(tierStr);
+             
+             Connection connection = null;
+             PreparedStatement pstatement = null;
+             ResultSet rs = null;
+             
+             try {
+             
+                Class.forName("com.mysql.jdbc.Driver");
+                connection = DriverManager.getConnection("jdbc:mysql://localhost/PCKitDB","root","Potter11a");
+                String queryString = "SELECT * FROM Builds WHERE hardwareTier=? AND buildType=?";
+                pstatement = connection.prepareStatement(queryString);
+                pstatement.setInt(1, buildTier);
+                pstatement.setInt(2, "PC Build");
+                rs = pstatement.executeQuery();
+                int count=0;
+           %>
             <!--<center><img src="../images/PCkit-logo-trans.png" id="logoImage" alt=""></center>
            <p id="descriptionText">Build a custom PC to play the games you want to play at the quality you want to play.</p>
            <button id="BuildPCBuuton" onclick="location.href='selectGames.jsp';">Build your PC</button>-->
@@ -109,23 +189,41 @@
            <p id="noticeP" class="subtitleText">Every kit ships with tools and our custom builder's guide!</p>
 
            <table id="buildsTable" align="center">
+           
+           
+              
               <tr class="buildsTableRow">
-                  <td class="buildCell">
-                     <p class="buildDescriptionShort">playable</p>
+              <% while (rs.next()) {
+                String[] descriptions =rs.getString("buildDescriptions").split(":");
+                String shortDescription = descriptions[0];
+                String longDescription = descriptions[1];
+                double price= rs.getInt("price")/100.00;
+                 %>
+                  <td class="buildCell" id="build<%= rs.getInt("buildId")%>">
+                     <p class="buildDescriptionShort"><%= shortDescription%></p>
                      <img class="buildIcon" src="images/BuildIcon.png" width="200px" height="140px">
-                     <p class="buildPrice">$500</p>
-                     <p class="buildDescriptionMed">for casual gamers</p>
+                     <p class="buildPrice">$<%= price%></p>
+                     <p class="buildDescriptionMed"><%= longDescription%></p>
                      <hr class="buildDivider">
-                     <button class="buyKitButton">BUY THIS KIT</button>
+                     <button id="selectBuild<%= rs.getInt("buildId")%> class="buyKitButton unselectedKitButton" onclick="updateKitStatus(this)">BUY THIS KIT</button>
                      <!--<ul></ul>-->
                      <p class="buildSpecs">AMD FX-6300 3.5GHz 6-Core Processor<br><br>
                      G.Skill Ripjaws Series 8GB (2 x 4GB) DDR3-1600 Memory<br><br>
                      Seagate Barracuda 1TB 3.5" 7200RPM Internal Hard Drive<br><br>
                      EVGA GeForce GTX 950 2GB Superclocked Video Card</p>
                   </td>
+              <% } %>
               </tr>
+              
            </table>
-           <% } %>
+           <%  }
+               catch (Exception e) {%>
+                 <center><img src="../images/PCkit-logo-trans.png" id="logoImageHeader" alt="">
+            <p id="form-description">An error occurred while reading the database.</p>
+            </center>
+           <%   }
+              }
+           } %>
          </div> 
          <% if (loggedUser.length() > 0) { %>
             <img src="../images/BackArrow.png" id="backButton" class="orderNavButton" onclick="location.href='selectGames.jsp';"/>

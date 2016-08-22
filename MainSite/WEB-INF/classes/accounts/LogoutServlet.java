@@ -21,6 +21,23 @@ public class LogoutServlet extends HttpServlet {
       session.setAttribute("userid", null);
       session.setAttribute("name", null);
       session.invalidate();
+      Cookie cookie = null;
+      Cookie[] cookies = null;
+      if( cookies != null ) {
+         for (int i = 0; i < cookies.length; i++){
+            cookie = cookies[i];
+            if (cookie.getName().equals("pckitUserId") || cookie.getName().equals("pckitName") || 
+                cookie.getName().equals("orderId") || cookie.getName().equals("order")) {
+               cookie.setMaxAge(0);
+               cookie.setValue(null);
+               response.addCookie(cookie);
+            }
+            //out.print("Name : " + cookie.getName( ) + ",  ");
+            //out.print("Value: " + cookie.getValue( )+" <br/>");
+         }
+      }
+      
+      
       response.sendRedirect(".");
    }
 }

@@ -87,7 +87,10 @@
       <url-pattern>/MailingList/response/</url-pattern>
    </servlet-mapping>
 
-      <servlet>
+
+
+   <!-- Account Servlets -->
+    <servlet>
       <servlet-name>AccountExists</servlet-name>
       <servlet-class>accounts.AccountExistsServlet</servlet-class>
    </servlet>
@@ -144,6 +147,125 @@
       <servlet-name>Logout</servlet-name>
       <url-pattern>/accounts/logout/</url-pattern>
    </servlet-mapping>
+   
+   
+   <!-- OrderServlets -->
+   
+   <servlet>
+      <servlet-name>CreateCart</servlet-name>
+      <servlet-class>store.servlets.CreateCartServlet</servlet-class>
+   </servlet>
+   
+   
+   <servlet-mapping>
+      <servlet-name>CreateCart</servlet-name>
+      <url-pattern>/OrderSection/createCart/</url-pattern>
+   </servlet-mapping>
+   
+   
+   <servlet>
+      <servlet-name>DeleteCart</servlet-name>
+      <servlet-class>store.servlets.DeleteCartServlet</servlet-class>
+   </servlet>
+   
+   
+   <servlet-mapping>
+      <servlet-name>DeleteCart</servlet-name>
+      <url-pattern>/OrderSection/deleteCart/</url-pattern>
+   </servlet-mapping>
+   
+   
+   <servlet>
+      <servlet-name>AddToCart</servlet-name>
+      <servlet-class>store.servlets.AddItemServlet</servlet-class>
+   </servlet>
+   
+   
+   <servlet-mapping>
+      <servlet-name>AddToCart</servlet-name>
+      <url-pattern>/OrderSection/addToCart/</url-pattern>
+   </servlet-mapping>
+   
+   
+   <servlet>
+      <servlet-name>RemoveFromCart</servlet-name>
+      <servlet-class>store.servlets.RemoveItemServlet</servlet-class>
+   </servlet>
+   
+   
+   <servlet-mapping>
+      <servlet-name>RemoveFromCart</servlet-name>
+      <url-pattern>/OrderSection/removeFromCart/</url-pattern>
+   </servlet-mapping>
+   
+   
+   <servlet>
+      <servlet-name>UpdateCartStatus</servlet-name>
+      <servlet-class>store.servlets.UpdateCartServlet</servlet-class>
+   </servlet>
+   
+   
+   <servlet-mapping>
+      <servlet-name>UpdateCartStatus</servlet-name>
+      <url-pattern>/OrderSection/updateCartStatus/</url-pattern>
+   </servlet-mapping>
+   
+   <servlet>
+      <servlet-name>ProcessCart</servlet-name>
+      <servlet-class>store.servlets.ProcessCartServlet</servlet-class>
+   </servlet>
+   
+   
+   <servlet-mapping>
+      <servlet-name>ProcessCart</servlet-name>
+      <url-pattern>/OrderSection/processCart/</url-pattern>
+   </servlet-mapping>
+   
+    <servlet>
+      <servlet-name>RestoreCart</servlet-name>
+      <servlet-class>store.servlets.RestoreCartServlet</servlet-class>
+   </servlet>
+   
+   
+   <servlet-mapping>
+      <servlet-name>RestoreCart</servlet-name>
+      <url-pattern>/OrderSection/restoreCart/</url-pattern>
+   </servlet-mapping>
+   
+   <servlet>
+      <servlet-name>CartExists</servlet-name>
+      <servlet-class>store.servlets.CartExistsServlet</servlet-class>
+   </servlet>
+   
+   
+   <servlet-mapping>
+      <servlet-name>CartExists</servlet-name>
+      <url-pattern>/OrderSection/cartExists/</url-pattern>
+   </servlet-mapping>
+   
+   <servlet>
+      <servlet-name>GetCartTotal</servlet-name>
+      <servlet-class>store.servlets.GetCartCostServlet</servlet-class>
+   </servlet>
+   
+   
+   <servlet-mapping>
+      <servlet-name>GetCartTotal</servlet-name>
+      <url-pattern>/OrderSection/getCartTotal/</url-pattern>
+   </servlet-mapping>
+   
+   <servlet>
+      <servlet-name>GetCartData</servlet-name>
+      <servlet-class>store.servlets.GetCartDataServlet</servlet-class>
+   </servlet>
+   
+   
+   <servlet-mapping>
+      <servlet-name>GetCartData</servlet-name>
+      <url-pattern>/OrderSection/getCartData/</url-pattern>
+   </servlet-mapping>
+   
+   
  
     <!-- SMTP settings -->
     <context-param>
