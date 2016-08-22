@@ -47,22 +47,13 @@
         }
         
         function goToNextPage() {
+           var errors="";
            if ($(".selectedKitButton").length ==0) {
               //show form error
+              errors= errors+"<li class='formErrorReason'>At least one build must be selected.</li>";  
            }
-           else {
-               var builds = $(".selectedKitButton");
-               var cartStr = "";
-               var i;
-               for (i=0; i<builds.length; i++) {
-                  var build=builds[i];
-                  if (i==builds.length - 1) {
-                    cartStr = cartStr + $(build).prop("id").substring(11) + ":1";
-                  }
-                  else {
-                    cartStr = cartStr + $(build).prop("id").substring(11) + ":1,";
-                  }
-               }
+           if (errors.length==0){
+               
                
                $.ajax({
                  type:"POST",
@@ -71,6 +62,17 @@
                }).done(function(data) { window.location.href = "http://www.pckit.org/OrderSection/checkout.jsp"; });
                
                
+           }
+           else {
+              if ($("#formErrorsDiv").length > 0) {
+     	          $("#errorsList").children().remove();
+     	          $("#errorsList").html(errors);
+     	      }
+              else {
+     	         fullErrorOutput = '<div id="formErrorsDiv"><p id="formErrorsInfo">Can\'t proceed due to the following errors:</p><ul id="errorsList" type="disc">';
+     	         fullErrorOutput = fullErrorOutput + errors + '</ul></div>';
+     	         $(fullErrorOutput).insertBefore($("#selectPCP"));
+     	      }
            }
         }
       </script>
@@ -227,7 +229,7 @@
          </div> 
          <% if (loggedUser.length() > 0) { %>
             <img src="../images/BackArrow.png" id="backButton" class="orderNavButton" onclick="location.href='selectGames.jsp';"/>
-            <img src="../images/NextArrow.png" id="nextButton" class="orderNavButton" onclick="location.href='orderProcess.html';"/>
+            <img src="../images/NextArrow.png" id="nextButton" class="orderNavButton" onclick="goToNextPage()"/>
          <% } %>
          <div id="siteNavDiv">
             <center>

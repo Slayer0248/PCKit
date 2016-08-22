@@ -102,10 +102,10 @@ public class ShoppingCart {
          CartItem curItem = items.get(i);
          int quantity = quantities.get(i);
          if (i==items.size()-1) {
-            result = result + curItem.getItemId() + ":" + quantity + ":" + curItem.getInventory() + ":" + curItem.getPrice();
+            result = result + curItem.getItemId() + ":" + quantity + ":" + curItem.getInventory() + ":" + curItem.getPrice()+  ":" + curItem.getName() ;
          }
          else {
-            result = result + curItem.getItemId() + ":" + quantity + ":" + curItem.getInventory() + ":" + curItem.getPrice() + ",";
+            result = result + curItem.getItemId() + ":" + quantity + ":" + curItem.getInventory() + ":" + curItem.getPrice() +  ":" + curItem.getName() + ",";
          }
       }
       return result;
