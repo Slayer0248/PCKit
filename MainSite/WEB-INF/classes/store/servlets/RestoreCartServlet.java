@@ -70,9 +70,9 @@ public class RestoreCartServlet extends HttpServlet {
             response.addCookie(orderIdCookie);
                
             Cookie orderCookie = new Cookie("order", cart.getCookieStr());
-            orderIdCookie.setMaxAge(30*60);
-            orderIdCookie.setPath("/");
-            response.addCookie(orderIdCookie);
+            orderCookie.setMaxAge(30*60);
+            orderCookie.setPath("/");
+            response.addCookie(orderCookie);
             
             pageMessage="Success";
          }
