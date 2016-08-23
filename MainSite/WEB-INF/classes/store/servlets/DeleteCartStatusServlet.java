@@ -47,7 +47,7 @@ public class DeleteCartStatusServlet extends HttpServlet {
          PreparedStatement pstatement = null;
          PreparedStatement pstatement2 = null;
          PreparedStatement pstatement3 = null;
-         ResultSet rs = null
+         ResultSet rs = null;
          try {
          
          
