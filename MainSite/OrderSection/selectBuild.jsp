@@ -19,6 +19,7 @@
          $(document).ready(function() {
             var fSize = parseFloat($('#placeholderText').css('font-size'))
             console.log("%f px or %f em", fSize, fSize/16);
+            setupWithCart();
         });
         
         function setupWithCart() {
