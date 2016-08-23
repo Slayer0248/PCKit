@@ -270,7 +270,7 @@ document.write(data2); history.pushState({}, null, "https://www.pckit.org/OrderS
          <div class="scrollable centerHorizontally" id="mainContentDiv">
             <!--<center><img src="../images/PCkit-logo-trans.png" id="logoImage" alt=""></center>-->
            <p id="descriptionText">Build a custom PC to play the games you want to play at the quality you want to play.</p>
-           <button id="BuildPCBuuton" onclick="location.href='./selectGames.jsp';">Build your PC</button>
+           <button id="BuildPCBuuton" onclick="goToNextPage()">Build your PC</button>
          </div> 
          <div id="siteNavDiv">
             <center>
