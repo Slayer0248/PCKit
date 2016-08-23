@@ -20,6 +20,30 @@
             var fSize = parseFloat($('#placeholderText').css('font-size'))
             console.log("%f px or %f em", fSize, fSize/16);
         });
+        
+        function setupWithCart() {
+           $.ajax({
+               type:"POST",
+               url:"./getCartData/",
+               data:""
+           }).done(function(data) {
+              if(data.indexOf("Success") != -1) {
+                 var cartStr = data.substring(8);
+                 var items = cartStr.split(",");
+                 var i;
+                 for (i=0; i<items.length; i++) {
+                    var itemVals=items[i].split(":");
+                    var buildId = itemVals[0];
+                    if ($("#selectBuild" +buildId).length > 0) {
+                       $("#selectBuild" +buildId).removeClass("unselectedKitButton");
+                       $("#selectBuild" +buildId).addClass("selectedKitButton");
+                       $("#selectBuild" +buildId).html("REMOVE FROM CART");
+                    }
+                 }
+              }
+           });
+           
+        }
          
         function updateKitStatus(selected) {
            if ($(selected).hasClass("unselectedKitButton")) {
