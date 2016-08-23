@@ -161,7 +161,7 @@ document.write(data2); history.pushState({}, null, "https://www.pckit.org/OrderS
                              $("#siteNavDiv").addClass("blur");
                              $("#bgImage").addClass("blur");
                              $("#overlay").show();
-                             $("#popup").html(="span id='msgSpan'><p id='cartMessageText'>You were logged out with a cart in progress. Would you like to proceed with your saved cart?</p></span><span id='linkSpan'><a class='cartActionLink' id='restoreLink' href='javascript: void(0)' onclick='restoreCart();'>Restore Cart</a><a class='cartActionLink' id='deleteLink' href='javascript: void(0)' onclick='deleteCart();'>Delete Cart</a></span>");
+                             $("#popup").html("span id='msgSpan'><p id='cartMessageText'>You were logged out with a cart in progress. Would you like to proceed with your saved cart?</p></span><span id='linkSpan'><a class='cartActionLink' id='restoreLink' href='javascript: void(0)' onclick='restoreCart();'>Restore Cart</a><a class='cartActionLink' id='deleteLink' href='javascript: void(0)' onclick='deleteCart();'>Delete Cart</a></span>");
                              //$(cartMsg).insertBefore($("#bgImage"));
                          }
                          else if (data2 == "Delete") {
