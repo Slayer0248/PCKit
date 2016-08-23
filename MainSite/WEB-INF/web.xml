@@ -176,6 +176,18 @@
    
    
    <servlet>
+      <servlet-name>DeleteCartsWithStatus</servlet-name>
+      <servlet-class>store.servlets.DeleteCartStatusServlet</servlet-class>
+   </servlet>
+   
+   
+   <servlet-mapping>
+      <servlet-name>DeleteCartsWithStatus</servlet-name>
+      <url-pattern>/OrderSection/deleteCartsWithStatus/</url-pattern>
+   </servlet-mapping>
+   
+   
+   <servlet>
       <servlet-name>AddToCart</servlet-name>
       <servlet-class>store.servlets.AddItemServlet</servlet-class>
    </servlet>
@@ -244,9 +256,21 @@
    </servlet-mapping>
    
    <servlet>
+      <servlet-name>HasCart</servlet-name>
+      <servlet-class>store.servlets.HasCartServlet</servlet-class>
+   </servlet>
+   
+   
+   <servlet-mapping>
+      <servlet-name>HasCart</servlet-name>
+      <url-pattern>/OrderSection/hasCart/</url-pattern>
+   </servlet-mapping>
+   
+   <servlet>
       <servlet-name>GetCartTotal</servlet-name>
       <servlet-class>store.servlets.GetCartCostServlet</servlet-class>
    </servlet>
+   
    
    
    <servlet-mapping>

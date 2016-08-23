@@ -7,6 +7,7 @@
       <link rel="stylesheet" href="../stylesheets/main.css">
       <link rel="stylesheet" href="../stylesheets/orderProcess1.css">
       <link rel="stylesheet" href="../stylesheets/accountNav.css">
+      <link rel="stylesheet" href="../stylesheets/existingCartMessage.css">
       <link rel="stylesheet" href="../stylesheets/fonts.css">
       
       <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js" type="text/javascript"></script>
@@ -17,7 +18,184 @@
          $(document).ready(function() {
             var fSize = parseFloat($('#placeholderText').css('font-size'))
             console.log("%f px or %f em", fSize, fSize/16);
+            
         });
+        
+        
+           function restoreCart() {
+              var status;
+              int index =$("#cartMessageText").html().indexOf("purchase");
+              if (index == -1) {
+                 status = "In Progress";
+              }
+              else {
+                 status = "Buying";
+              }
+              
+              $.ajax({
+                 type:"POST",
+                 url:"./restoreCart/",
+                 data:"status="+encodeURIComponent(status) 
+               }).done(function(data) {
+                  if (data == "Reload") {
+                     location.reload();
+                  }
+                  else if (data == "Success") {
+                     result = data;
+                     $.ajax({
+                       type:"POST",
+                       url:"./selectBuild.jsp",
+                       data:JSON.stringify({"minTier": 1})
+                     }).done(function(data2) { /*window.location.href = "http://www.pckit.org/OrderSection/selectBuild.jsp";*/
+document.write(data2); history.pushState({}, null, "https://www.pckit.org/OrderSection/selectBuild.jsp"); });
+                  }
+               });
+              
+              
+           }
+           
+           function restoreAndCheckoutCart() {
+              $.ajax({
+                 type:"POST",
+                 url:"./restoreCart/",
+                 data:"status="+encodeURIComponent("Buying") 
+               }).done(function(data) {
+                  if (data == "Reload") {
+                     location.reload();
+                  }
+                  else if (data == "Success") {
+                     result = data;
+                     $.ajax({
+                       type:"POST",
+                       url:"./checkout.jsp",
+                       data:""
+                     }).done(function(data) { window.location.href = "http://www.pckit.org/OrderSection/checkout.jsp"; });
+                  }
+               });
+           }
+           
+           function deleteCart() {
+              var status;
+              int index =$("#cartMessageText").html().indexOf("purchase");
+              if (index == -1) {
+                 status = "In Progress";
+              }
+              else {
+                 status = "Buying";
+              }
+              
+           
+              $.ajax({
+                type:"POST",
+                url:"./deleteCartsWithStatus/",
+                data:"status="+encodeURIComponent(status) 
+              }).done(function(data) {
+                 if (data =="Reload") {
+                     location.reload();
+                 } 
+                 else if (data == "Successful") {
+                     location.href='./selectGames.jsp';
+                 }
+              });
+           }
+           
+           function hasCart() {
+              var result;
+              $.ajax({
+                 type:"POST",
+                 url:"./hasCart/",
+                 data:""
+               }).done(function(data) {
+                  if (data == "Reload") {
+                     location.reload();
+                  }
+                  else {
+                     result = data;
+                  }
+               });
+              
+              return result;
+           }
+           
+           function goToNextPage() {
+           
+             if ($("#accessLogoutLink").length > 0 && hasCart()=="No") { 
+             $.ajax({
+                 type:"POST",
+                 url:"./cartExists/",
+                 data:"status="+encodeURIComponent("Buying") 
+               }).done(function(data) {
+                  if (data == "Yes") {
+                      //show restore & purchase message & add blur
+                      $("#accountAccessDiv").addClass("blur");
+                      $("#mainContentDiv").addClass("blur");
+                      $("#siteNavDiv").addClass("blur");
+                      $("#bgImage").addClass("blur");
+                      var cartMsg = "<div id='overlay'><div id='popup'><span id='msgSpan'><p id='cartMessageText'>You were logged out while completing a purchase. Would you like to proceed with your saved cart?</p></span><span id='linkSpan'><a class='cartActionLink' id='checkoutLink' href='javascript: void(0)' onclick='restoreAndCheckoutCart();'>Skip to Checkout</a><a class='cartActionLink' id='restoreLink' href='javascript: void(0)' onclick='restoreCart();'>Restore Cart</a><a class='cartActionLink' id='deleteLink' href='javascript: void(0)' onclick='deleteCart();'>Delete Cart</a></span></div></div>";
+                      $(cartMsg).insertBefore($("#bgImage"));
+                  }
+                 
+                  else if (data == "No" || data == "Delete")  {
+                     if (data == "Delete") {
+                     
+                        $.ajax({
+                           type:"POST",
+                           url:"./deleteCartsWithStatus/",
+                           data:"status="+encodeURIComponent("Buying") 
+                         }).done(function(data3) {
+                            if (data3 =="Reload") {
+                               location.reload();
+                            } 
+                        });
+                     } 
+                     $.ajax({
+                       type:"POST",
+                       url:"./cartExists/",
+                       data:"status="+encodeURIComponent("In Progress") 
+                     }).done(function(data2) {
+                         if (data2 == "Yes") {
+                             //show restore message & add blur
+                             $("#accountAccessDiv").addClass("blur");
+                             $("#mainContentDiv").addClass("blur");
+                             $("#siteNavDiv").addClass("blur");
+                             $("#bgImage").addClass("blur");
+                             var cartMsg = "<div id='overlay'><div id='popup'><span id='msgSpan'><p id='cartMessageText'>You were logged out with a cart in progress. Would you like to proceed with your saved cart?</p></span><span id='linkSpan'><a class='cartActionLink' id='restoreLink' href='javascript: void(0)' onclick='restoreCart();'>Restore Cart</a><a class='cartActionLink' id='deleteLink' href='javascript: void(0)' onclick='deleteCart();'>Delete Cart</a></span></div></div>";
+                             $(cartMsg).insertBefore($("#bgImage"));
+                         }
+                         else if (data2 == "Delete") {
+                           //create servlet to delete with status for user here
+                           $.ajax({
+                              type:"POST",
+                              url:"./deleteCartsWithStatus/",
+                              data:"status="+encodeURIComponent("In Progress") 
+                            }).done(function(data3) {
+                                if (data3 =="Successful") {
+                                   location.href='./selectGames.jsp';
+                                }
+                                else if (data3 =="Reload") {
+                                   location.reload();
+                                } 
+                            });
+                     
+                            location.href='./selectGames.jsp';
+                         }
+                         else if (data2 == "No") {
+                             location.href='./selectGames.jsp';
+                         }
+                         else if (data2 == "Reload") {
+                            location.reload();
+                         }
+                     });
+                  }
+                  else if (data == "Reload") {
+                     location.reload();
+                  }
+               });
+              }
+              else {
+                 location.href='./selectGames.jsp';
+              }
+           }
          
       </script>
    </head>
@@ -70,6 +248,7 @@
                  data:""
               }).done(function(data) { /*Reload current page*/ location.reload(); });
            }
+        
         </script>
         <div class="dropdown">
           <p id="accessLoginLink" class="accountAccessText accessLink"><%= loggedUser%></p><div id="arrowDiv" class="arrow-down" onclick="toggleDropdown();"></div>
