@@ -24,7 +24,7 @@
         
            function restoreCart() {
               var status;
-              int index =$("#cartMessageText").text().indexOf("purchase");
+              var index =$("#cartMessageText").text().indexOf("purchase");
               if (index == -1) {
                  status = "In Progress";
               }
@@ -76,7 +76,7 @@ document.write(data2); history.pushState({}, null, "https://www.pckit.org/OrderS
            
            function deleteCart() {
               var status;
-              int index =$("#cartMessageText").text().indexOf("purchase");
+              var index =$("#cartMessageText").text().indexOf("purchase");
               if (index == -1) {
                  status = "In Progress";
               }
