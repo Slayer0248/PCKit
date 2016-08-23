@@ -21,7 +21,7 @@
 #popup {
     position: absolute;
     width: 400px;
-    height: 200px;
+    height: 130px;
     background: #575757;
     left: 0px;
     right: 0px;
@@ -35,26 +35,30 @@
 }
 
 #linkSpan {
-
+   width: 400px;
 }
 
 #deleteLink {
-
+   left: 40px;
+   width: 80px; 
 }
 
 #restoreLink {
-
+   left: 280px;
+   width: 80px;
 }
 
 #checkoutLink {
-
+   left: 160px;
+   width: 80px;
 }
 
 #cartMessageText {
    display: inline-block;
    position: absolute;
    margin: 0 auto;
-   width: 400px;
+   width: 360px;
+   left: 20px;
    font-size: 18px;
    font-family: "RobotoCondensedBold";
    color: #FFFFFF;
@@ -66,12 +70,11 @@
 .cartActionLink {
    display: inline-block;
    position: absolute;
-   margin: 0 auto;
    font-size: 14px;
    font-family: "RobotoCondensedBold";
-   color: #F9A825;;
+   color: #F9A825;
    text-align: center;
-   padding: 0px 20px;
+   /*padding:  30px;*/
    bottom: 25px;
    /*text-indent: 5%;*/
 }

@@ -100,21 +100,20 @@ document.write(data2); history.pushState({}, null, "https://www.pckit.org/OrderS
            }
            
            function hasCart() {
-              var result = $.ajax({
+              var result = "";
+               $.ajax({
                  type:"POST",
                  url:"./hasCart/",
-                 data:""
+                 async:false,
+                 success:function(data) {
+                      result = data; 
+                 }
                });
-               if (result == "Reload") {
-                     location.reload();
-                  }
-                  else {
-                     return result;
-                  }
+               return result;
            }
            
            function goToNextPage() {
-           
+             console.log(hasCart());          
              if ($("#accessLogoutLink").length > 0 && hasCart()=="No") { 
              $.ajax({
                  type:"POST",
@@ -157,7 +156,7 @@ document.write(data2); history.pushState({}, null, "https://www.pckit.org/OrderS
                              $("#siteNavDiv").addClass("blur");
                              $("#bgImage").addClass("blur");
                              $("#overlay").show();
-                             $("#popup").html("span id='msgSpan'><p id='cartMessageText'>You were logged out with a cart in progress. Would you like to proceed with your saved cart?</p></span><span id='linkSpan'><a class='cartActionLink' id='restoreLink' href='javascript: void(0)' onclick='restoreCart();'>Restore Cart</a><a class='cartActionLink' id='deleteLink' href='javascript: void(0)' onclick='deleteCart();'>Delete Cart</a></span>");
+                             $("#popup").html("<span id='msgSpan'><p id='cartMessageText'>You were logged out with a cart in progress. Would you like to proceed with your saved cart?</p></span><span id='linkSpan'><a class='cartActionLink' id='restoreLink' href='javascript: void(0)' onclick='restoreCart();'>Restore Cart</a><a class='cartActionLink' id='deleteLink' href='javascript: void(0)' onclick='deleteCart();'>Delete Cart</a></span>");
                              //$(cartMsg).insertBefore($("#bgImage"));
                          }
                          else if (data2 == "Delete") {
