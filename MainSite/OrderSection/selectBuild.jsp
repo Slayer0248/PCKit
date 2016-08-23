@@ -189,7 +189,7 @@ error: function (xhr, status, message) {
            <a id="accessLoginLink"href="../accounts/Login.jsp" class="accountAccessText">Login/Sign up</a>
         <% } 
         ArrayList<Integer> buildIds = new ArrayList<Integer>();
-        if (orderText.length() == 0) {
+        if (orderText.length() > 0) {
            String[] builds = orderText.split(",");
            for (int i=0; i<builds.length; i++) {
               int buildId = Integer.parseInt(builds[i].split(":")[0]);
