@@ -19,10 +19,10 @@
          $(document).ready(function() {
             var fSize = parseFloat($('#placeholderText').css('font-size'))
             console.log("%f px or %f em", fSize, fSize/16);
-            setupWithCart();
+            //setupWithCart();
         });
         
-        function setupWithCart() {
+        /*function setupWithCart() {
            $.ajax({
                type:"POST",
                url:"./getCartData/",
@@ -44,7 +44,7 @@
               }
            });
            
-        }
+        }*/
          
         function updateKitStatus(selected) {
            if ($(selected).hasClass("unselectedKitButton")) {
@@ -123,11 +123,15 @@ error: function (xhr, status, message) {
               // Get an array of Cookies associated with this domain
               cookies = request.getCookies();
               String loggedUser ="";
+              String orderText = "";
               if( cookies != null ) {
                  for (int i = 0; i < cookies.length; i++){
                     cookie = cookies[i];
                     if (cookie.getName().equals("pckitName")) {
                        loggedUser = (String)cookie.getValue();
+                    }
+                    if (cookie.getName().equals("order")) {
+                       orderText = (String)cookie.getValue();
                     }
                     //out.print("Name : " + cookie.getName( ) + ",  ");
                     //out.print("Value: " + cookie.getValue( )+" <br/>");
@@ -183,7 +187,16 @@ error: function (xhr, status, message) {
 
         } else {%>
            <a id="accessLoginLink"href="../accounts/Login.jsp" class="accountAccessText">Login/Sign up</a>
-        <% } %>
+        <% } 
+        ArrayList<Integer> buildIds = new ArrayList<Integer>();
+        if (orderText.length() == 0) {
+           String[] builds = orderText.split(",");
+           for (int i=0; i<builds.length; i++) {
+              int buildId = Integer.parseInt(builds[i].split(":")[0]);
+              buildIds.add(buildId);
+           }
+        }
+        %>
         </div>
          <div class="scrollable" id="mainContentDiv">
             <%if (loggedUser.length() == 0) { %>
@@ -234,6 +247,13 @@ error: function (xhr, status, message) {
                 String shortDescription = descriptions[0];
                 String longDescription = descriptions[1];
                 double price= rs.getInt("price")/100.00;
+                
+                int isSelected = 0;
+                for (int i=0; i<buildIds.size() && isSelected==0; i++) {
+                   if (rs.getInt("buildId") == buildIds.get(i)) {
+                      isSelected =1;
+                   }
+                }
                  %>
                   <td class="buildCell" id="build<%= rs.getInt("buildId")%>">
                      <p class="buildDescriptionShort"><%= shortDescription%></p>
@@ -241,7 +261,11 @@ error: function (xhr, status, message) {
                      <p class="buildPrice">$<%= price%></p>
                      <p class="buildDescriptionMed"><%= longDescription%></p>
                      <hr class="buildDivider">
+                     <% if (isSelected == 0) { %>
                      <button id='selectBuild<%= rs.getInt("buildId")%>' class="buyKitButton unselectedKitButton" onclick="updateKitStatus(this)">BUY THIS KIT</button>
+                     <% } else { %>
+                     <button id='selectBuild<%= rs.getInt("buildId")%>' class="buyKitButton selectedKitButton" onclick="updateKitStatus(this)">REMOVE FROM CART</button>
+                     <% } %>
                      <!--<ul></ul>-->
                      <p class="buildSpecs">AMD FX-6300 3.5GHz 6-Core Processor<br><br>
                      G.Skill Ripjaws Series 8GB (2 x 4GB) DDR3-1600 Memory<br><br>
