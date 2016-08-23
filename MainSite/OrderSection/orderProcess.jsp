@@ -100,21 +100,17 @@ document.write(data2); history.pushState({}, null, "https://www.pckit.org/OrderS
            }
            
            function hasCart() {
-              var result;
-              $.ajax({
+              var result = $.ajax({
                  type:"POST",
                  url:"./hasCart/",
                  data:""
-               }).done(function(data) {
-                  if (data == "Reload") {
+               });
+               if (result == "Reload") {
                      location.reload();
                   }
                   else {
-                     result = data;
+                     return result;
                   }
-               });
-              
-              return result;
            }
            
            function goToNextPage() {
