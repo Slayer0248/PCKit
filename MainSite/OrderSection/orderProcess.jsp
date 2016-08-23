@@ -18,7 +18,7 @@
          $(document).ready(function() {
             var fSize = parseFloat($('#placeholderText').css('font-size'))
             console.log("%f px or %f em", fSize, fSize/16);
-            
+            $("#overlay").hide();
         });
         
         
@@ -131,8 +131,9 @@ document.write(data2); history.pushState({}, null, "https://www.pckit.org/OrderS
                       $("#mainContentDiv").addClass("blur");
                       $("#siteNavDiv").addClass("blur");
                       $("#bgImage").addClass("blur");
-                      var cartMsg = "<div id='overlay'><div id='popup'><span id='msgSpan'><p id='cartMessageText'>You were logged out while completing a purchase. Would you like to proceed with your saved cart?</p></span><span id='linkSpan'><a class='cartActionLink' id='checkoutLink' href='javascript: void(0)' onclick='restoreAndCheckoutCart();'>Skip to Checkout</a><a class='cartActionLink' id='restoreLink' href='javascript: void(0)' onclick='restoreCart();'>Restore Cart</a><a class='cartActionLink' id='deleteLink' href='javascript: void(0)' onclick='deleteCart();'>Delete Cart</a></span></div></div>";
-                      $(cartMsg).insertBefore($("#bgImage"));
+                      $("#overlay").show();
+                      $("#popup").html("<span id='msgSpan'><p id='cartMessageText'>You were logged out while completing a purchase. Would you like to proceed with your saved cart?</p></span><span id='linkSpan'><a class='cartActionLink' id='checkoutLink' href='javascript: void(0)' onclick='restoreAndCheckoutCart();'>Skip to Checkout</a><a class='cartActionLink' id='restoreLink' href='javascript: void(0)' onclick='restoreCart();'>Restore Cart</a><a class='cartActionLink' id='deleteLink' href='javascript: void(0)' onclick='deleteCart();'>Delete Cart</a></span>");
+                      //$(cartMsg).insertBefore($("#bgImage"));
                   }
                  
                   else if (data == "No" || data == "Delete")  {
@@ -159,8 +160,9 @@ document.write(data2); history.pushState({}, null, "https://www.pckit.org/OrderS
                              $("#mainContentDiv").addClass("blur");
                              $("#siteNavDiv").addClass("blur");
                              $("#bgImage").addClass("blur");
-                             var cartMsg = "<div id='overlay'><div id='popup'><span id='msgSpan'><p id='cartMessageText'>You were logged out with a cart in progress. Would you like to proceed with your saved cart?</p></span><span id='linkSpan'><a class='cartActionLink' id='restoreLink' href='javascript: void(0)' onclick='restoreCart();'>Restore Cart</a><a class='cartActionLink' id='deleteLink' href='javascript: void(0)' onclick='deleteCart();'>Delete Cart</a></span></div></div>";
-                             $(cartMsg).insertBefore($("#bgImage"));
+                             $("#overlay").show();
+                             $("#popup").html(="span id='msgSpan'><p id='cartMessageText'>You were logged out with a cart in progress. Would you like to proceed with your saved cart?</p></span><span id='linkSpan'><a class='cartActionLink' id='restoreLink' href='javascript: void(0)' onclick='restoreCart();'>Restore Cart</a><a class='cartActionLink' id='deleteLink' href='javascript: void(0)' onclick='deleteCart();'>Delete Cart</a></span>");
+                             //$(cartMsg).insertBefore($("#bgImage"));
                          }
                          else if (data2 == "Delete") {
                            //create servlet to delete with status for user here
@@ -201,6 +203,7 @@ document.write(data2); history.pushState({}, null, "https://www.pckit.org/OrderS
    </head>
    <body>
       <div class="fill-screen">
+         <div id='overlay'><div id='popup'><span id='msgSpan'><p id='cartMessageText'></p></span></div></div>
          <img class="make-it-fit" src="../images/background.png" id="bgImage" alt="">
          <div id="accountAccessDiv">
            <%
