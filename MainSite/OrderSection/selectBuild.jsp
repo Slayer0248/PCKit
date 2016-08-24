@@ -66,7 +66,7 @@
               $.ajax({
                  type:"POST",
                  url:"./removeFromCart/",
-                 data:"updates=" + encodeURIComponent($(selected).prop("id").substring(11) + ":1")
+                 data:"updates=" + encodeURIComponent($(selected).prop("id").substring(11) + ":0")
                }).done(function(data) {});
            }
         }

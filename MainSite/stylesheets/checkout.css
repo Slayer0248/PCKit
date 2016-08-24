@@ -123,6 +123,13 @@ td.removeCol {
    padding-right: 20px;
 }
 
+.disabled {
+
+}
+
+.enabled {
+
+}
 
 
 /*Game select form error styling*/
