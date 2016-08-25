@@ -48,6 +48,11 @@ public class LoginServlet extends HttpServlet {
         session.setMaxInactiveInterval(30*60);
         session.setAttribute("userid", rs.getInt("userId"));
         session.setAttribute("name", rs.getString("firstName") + " " + rs.getString("lastName"));
+        
+
+        //request.getServletContext().setAttribute("pckitUserId", rs.getInt("userId"));
+        //request.getServletContext().setAttribute("pckitName", rs.getString("firstName") + " " + rs.getString("lastName"));
+
         Cookie userId = new Cookie("pckitUserId", "" + rs.getInt("userId"));
         Cookie name = new Cookie("pckitName", rs.getString("firstName") + " " + rs.getString("lastName"));
         //userId.setMaxAge(365*60*60*24+ 30*60);
@@ -57,6 +62,8 @@ public class LoginServlet extends HttpServlet {
         //name.setMaxAge(365*60*60*24+ 30*60);
         name.setMaxAge(30*60);
         name.setPath("/");
+        name.setHttpOnly(true);
+        name.setSecure(true);
         //name.setHttpOnly(true);
         response.addCookie(userId);
         response.addCookie(name);
@@ -71,7 +78,7 @@ public class LoginServlet extends HttpServlet {
         else {
            output="Returning user";
         }
-        output= output +"Session id: " + session.getId() + "\nUser id: " + Integer.toString(rs.getInt("userId")) + "\nName: " +rs.getString("firstName") + " " + rs.getString("lastName");
+        //output= output +"Session id: " + session.getId() + "\nUser id: " + Integer.toString(rs.getInt("userId")) + "\nName: " +rs.getString("firstName") + " " + rs.getString("lastName");
 
         response.getWriter().write(output);
       }
@@ -80,7 +87,7 @@ public class LoginServlet extends HttpServlet {
       }
       
 
-      //request.getRequestDispatcher("../../").forward(request, response);
+      request.getRequestDispatcher("../").include(request, response);
       //response.sendRedirect("../../");
    }
 }

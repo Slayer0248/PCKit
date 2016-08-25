@@ -2,6 +2,15 @@
     pageEncoding="ISO-8859-1"%>
 <%@ page import="java.io.*,java.util.*,java.sql.*"%>
 <%@ page import="javax.servlet.http.*,javax.servlet.*" %>
+
+<%@ page session="true" %>
+<%
+response.setHeader("Cache-Control","no-cache"); //HTTP 1.1
+response.setHeader("Pragma","no-cache"); //HTTP 1.0
+response.setDateHeader ("Expires", 0); //prevents caching at the proxy server
+%>
+
+
 <!DOCTYPE html>
 <html>
    <head>
@@ -33,15 +42,18 @@
               // Get an array of Cookies associated with this domain
               cookies = request.getCookies();
               String loggedUser ="";
+              request.getServletContext().removeAttribute("pckitName");
               if( cookies != null ) {
                  for (int i = 0; i < cookies.length; i++){
                     cookie = cookies[i];
                     if (cookie.getName().equals("pckitName")) {
+                       
                        loggedUser = (String)cookie.getValue();
                     }
                     //out.print("Name : " + cookie.getName( ) + ",  ");
                     //out.print("Value: " + cookie.getValue( )+" <br/>");
                  }
+           
 
 
                 if (loggedUser.length() > 0) { %>

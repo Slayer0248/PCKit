@@ -301,14 +301,14 @@
         <%  Connection connection = null;
             PreparedStatement pstatement = null;
             ResultSet rs = null;
-            ShoppingCart cart;
+            ShoppingCart cart = null;
              
              try {
              
                 Class.forName("com.mysql.jdbc.Driver");
                 connection = DriverManager.getConnection("jdbc:mysql://localhost/PCKitDB","root","Potter11a");
                 CartManagerUtil cartManager = new CartManagerUtil();
-                ShoppingCart cart = cartManager.createFullFromCartString(orderText, connection);
+                cart = cartManager.createFullFromCartString(orderText, connection);
 
                 for(int i=0; i<cart.size(); i++) {
                    CartItem curItem = cart.get(i);
@@ -337,17 +337,18 @@
                 </tr>
                  <% } 
                  
-                 }  catch (Exception e) { %>
+                 }  catch (Exception e) {  }%>
                  
                  
-                 <% ) %>
               </table><center>
+                <% if (cart != null) { %>
               <form id="payPalForm" action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
                 <input type="hidden" name="cmd" value="_s-xclick">
                 <input type="hidden" name="encrypted" value="<%= cart.getEncryptedStr()%>">
                 <input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_buynowCC_LG.gif" border="0" name="submit" alt="PayPal - The safer, easier way to pay online!">
                 <img alt="" border="0" src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif" width="1" height="1">
               </form>
+              <% } %>
            </div>
            
            <% 
