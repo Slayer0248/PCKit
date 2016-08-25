@@ -29,16 +29,15 @@
             console.log("%f px or %f em", fSize, fSize/16);
         });
         
-        function getJSONCart() {
-           var cart = [];
+        function getJSONCart(callback, source) {
+           
            $.ajax({
                type:"POST",
                url:"./getCartData/",
-               async:false,
                data:""
            }).done(function(data) {
               if(data.indexOf("Success") != -1) {
-                 
+                 var cart = [];
                  var cartStr = data.substring(8);
                  var items = cartStr.split(",");
                  var i;
@@ -46,16 +45,16 @@
                     var itemVals=items[i].split(":");
                     cart.push({"buildId":itemVals[0], "name":itemVals[4], "price":itemVals[3], "stock":itemVals[2], "quantity":itemVals[1]});
                  }
+                 
+                 callback(source, cart);
               }
            });
-           return cart;
         }
         
-        function increaseQuantity(source) {
+        function increaseQuantity(source, oldCart) {
           
            if ($(source).hasClass("enabled")) {
            var curId = $(source).prop("id").substring(8);
-           var oldCart = getJSONCart();
            var index = -1;
            var i;
            for (i=0; i<oldCart.length && index == -1; i++) {
@@ -89,11 +88,10 @@
             }
         }
         
-        function decreaseQuantity(source) {
+        function decreaseQuantity(source, oldCart) {
            
            if ($(source).hasClass("enabled")) {
            var curId = $(source).prop("id").substring(8);
-           var oldCart = getJSONCart();
            var index = -1;
            var i;
            for (i=0; i<oldCart.length && index == -1; i++) {
@@ -128,9 +126,8 @@
             }
         }
         
-        function removeFromCart(source) {
+        function removeFromCart(source, oldCart) {
             var curId = $(source).prop("id").substring(14);
-            var oldCart = getJSONCart();
             if (oldCart.length >1) {
                var index = -1;
                var i;
@@ -329,11 +326,11 @@
                    <td id="itemQuantityCell<%= curItem.getItemId()%>" class="quantityCol">
                       
                       <center>
-                      <img src="../images/DecreaseButton.png" id="decrease<%= curItem.getItemId()%>" class="imgButton <%= decreaseState%>" onclick="decreaseQuantity(this)"/>
+                      <img src="../images/DecreaseButton.png" id="decrease<%= curItem.getItemId()%>" class="imgButton <%= decreaseState%>" onclick="getJSONCart(decreaseQuantity, this)"/>
                       <font id="quantity<%= curItem.getItemId()%>"><%= quantity%></font>
-                      <img src="../images/IncreaseButton.png" id="increase<%= curItem.getItemId()%>" class="imgButton <%= increaseState%>" onclick="increaseQuantity(this)"/></center>
+                      <img src="../images/IncreaseButton.png" id="increase<%= curItem.getItemId()%>" class="imgButton <%= increaseState%>" onclick="getJSONCart(increaseQuantity, this)"/></center>
                    </td>
-                   <td id="itemRemoveCell<%= curItem.getItemId()%>" class="removeCol" onclick="removeFromCart(this)"><center>X</center></td>
+                   <td id="itemRemoveCell<%= curItem.getItemId()%>" class="removeCol" onclick="getJSONCart(removeFromCart, this)"><center>X</center></td>
                 </tr>
                  <% } 
                  

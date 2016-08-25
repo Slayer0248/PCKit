@@ -24,7 +24,7 @@
             console.log("%f px or %f em", fSize, fSize/16);
             setPositions();
             $("#overlay").hide();
-            promptForCart();
+            hasCart(promptForCart);
         });
         
                 function restoreCart() {
@@ -104,22 +104,18 @@ document.write(data2); history.pushState({}, null, "https://www.pckit.org/OrderS
               });
            }
            
-           function hasCart() {
+           function hasCart(callback) {
               var result = "";
                $.ajax({
                  type:"POST",
                  url:"./hasCart/",
-                 async:false,
-                 success:function(data) {
-                      result = data; 
-                 }
+                 success:callback
                });
-               return result;
            }
            
-           function promptForCart() {
-             console.log(hasCart());          
-             if ($("#accessLogoutLink").length > 0 && hasCart()=="No") { 
+           function promptForCart(isCart) {
+             //console.log(hasCart());          
+             if ($("#accessLogoutLink").length > 0 && isCart=="No") { 
              $.ajax({
                  type:"POST",
                  url:"./cartExists/",
