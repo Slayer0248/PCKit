@@ -40,7 +40,7 @@ response.setDateHeader ("Expires", 0); //prevents caching at the proxy server
          <div id="accountAccessDiv">
            <%
            
-              static Logger logger = Logger.getLogger(index_jsp.class);
+              Logger logger = Logger.getLogger(index_jsp.class);
               AuthJWTUtil authUtil = new AuthJWTUtil();
               long nowMillis = System.currentTimeMillis();
               java.util.Date now = new java.util.Date(nowMillis);
