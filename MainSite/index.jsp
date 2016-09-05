@@ -2,7 +2,7 @@
     pageEncoding="ISO-8859-1"%>
 <%@ page import="java.io.*,java.util.*,java.sql.*"%>
 <%@ page import="javax.servlet.http.*,javax.servlet.*" %>
-
+<%@ page import="java.util.Date,accounts.AuthJWTUtil,accounts.UserLogin" %>
 <%@ page session="true" %>
 <%
 response.setHeader("Cache-Control","no-cache"); //HTTP 1.1
@@ -37,18 +37,37 @@ response.setDateHeader ("Expires", 0); //prevents caching at the proxy server
          <img class="make-it-fit" src="images/background.png" id="bgImage" alt="">
          <div id="accountAccessDiv">
            <%
+              AuthJWTUtil authUtil = new AuthJWTUtil();
+              long nowMillis = System.currentTimeMillis();
+              Date now = new Date(nowMillis);
               Cookie cookie = null;
               Cookie[] cookies = null;
               // Get an array of Cookies associated with this domain
               cookies = request.getCookies();
-              String loggedUser ="";
-              request.getServletContext().removeAttribute("pckitName");
+              UserLogin login = null;
+              loggedUser ="";
+              //request.getServletContext().removeAttribute("pckitName");
               if( cookies != null ) {
                  for (int i = 0; i < cookies.length; i++){
                     cookie = cookies[i];
-                    if (cookie.getName().equals("pckitName")) {
+                    if (cookie.getName().equals("pckitLogin")) {
+                       String token = (String)cookie.getValue();
+                       Connection connection =null;
+                       try {
+                          Class.forName("com.mysql.jdbc.Driver");
+                          connection = DriverManager.getConnection("jdbc:mysql://localhost/PCKitDB","root","Potter11a");
+                          authUtil.refreshAll(now, connection); 
+                          String result = authUtil.validateToken(token, now, connection);
+                          if (result.equals("Valid")) {
+                             login = authUtil.getLoginResult();
+                             loggedUser = login.getFirstName() + " " + login.getLastName();
+                          }
+                       }
+                       catch (Exception e) {
                        
-                       loggedUser = (String)cookie.getValue();
+                       }
+                       
+                       
                     }
                     //out.print("Name : " + cookie.getName( ) + ",  ");
                     //out.print("Value: " + cookie.getValue( )+" <br/>");

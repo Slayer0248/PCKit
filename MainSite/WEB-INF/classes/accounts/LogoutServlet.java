@@ -13,6 +13,7 @@ import javax.servlet.http.HttpSession;
 import javax.servlet.http.Cookie;
 
 import util.SecureEncrypt;
+import java.util.Date;
 
 public class LogoutServlet extends HttpServlet {
    @Override
@@ -28,8 +29,19 @@ public class LogoutServlet extends HttpServlet {
       if( cookies != null ) {
          for (int i = 0; i < cookies.length; i++){
             cookie = cookies[i];
-            if (cookie.getName().equals("pckitUserId") || cookie.getName().equals("pckitName") || 
-                cookie.getName().equals("orderId") || cookie.getName().equals("order")) {
+            if (cookie.getName().equals("pckitLogin")) {
+               String token = (String)cookie.getValue();
+               Connection connection =null;
+               try {
+                  Class.forName("com.mysql.jdbc.Driver");
+                  connection = DriverManager.getConnection("jdbc:mysql://localhost/PCKitDB","root","Potter11a");
+                  authUtil.refreshAll(now, connection); 
+                  authUtil.deauthorize(token, connection);
+               }
+               catch (Exception e) {
+                       
+               }
+               
                cookie.setPath("/");
                cookie.setMaxAge(0);
                cookie.setValue(null);

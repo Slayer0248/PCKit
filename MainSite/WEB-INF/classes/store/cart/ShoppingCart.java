@@ -19,12 +19,15 @@ import javax.servlet.*;
 import javax.servlet.http.*;
 
 public class ShoppingCart {
-   ArrayList<CartItem> items;
-   ArrayList<Integer> quantities;
+   private ArrayList<CartItem> items;
+   private ArrayList<Integer> quantities;
+   private String orderStatus;
+   private int orderId;
    
    public ShoppingCart() {
       items = new ArrayList<CartItem>();
       quantities = new ArrayList<Integer>();
+      orderStatus = "";
    }
    
    public int size() {
@@ -80,6 +83,25 @@ public class ShoppingCart {
       return total;
    }
    
+   public int getOrderId() {
+      return orderId;
+   }
+   
+   public void setOrderId(int id) {
+      orderId = id;
+   }
+   
+   public String getOrderStatus() {
+      return orderStatus;
+   }
+   
+   public void setOrderStatus(String status) {
+      orderStatus = status;
+   }
+   
+   
+   
+   
    public String getCookieStr() {
       String result = "";
       for (int i=0; i<items.size(); i++) {
@@ -116,6 +138,7 @@ public class ShoppingCart {
 	InvalidAlgorithmParameterException, NoSuchAlgorithmException, NoSuchProviderException, CertStoreException, CMSException, OperatorCreationException{
       ClientSide client_side = new ClientSide( "my-pubcert.pem", "my-prvkey.p12", "paypal_cert_pem.txt", "Potter11a" );
       
+      //String basePath = "/Applications/tomcat/webapps/PCKitLive/OrderSection/";
       String basePath = "/home/ec2-user/pckit/MainSite/OrderSection/";
       String rawData = "cert_id=SFTMKZFWK2YK8,cmd=_cart,upload=1,business=pckitcompany@gmail.com,";
       for (int i=0; i<items.size(); i++) {

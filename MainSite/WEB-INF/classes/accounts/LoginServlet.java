@@ -16,13 +16,15 @@ import javax.servlet.*;
 
 import util.SecureEncrypt;
 
+import java.util.Date;
+
 public class LoginServlet extends HttpServlet {
    @Override
    protected void doPost(HttpServletRequest request, HttpServletResponse response)
          throws IOException, ServletException {
       String pageMessage = "Invalid Post Request.";         
       SecureEncrypt seTest= new SecureEncrypt();
-
+      AuthJWTUtil authUtil = new AuthJWTUtil();
 
       String email = request.getParameter("Email");
       String password = request.getParameter("Password");
@@ -44,29 +46,39 @@ public class LoginServlet extends HttpServlet {
         rs = pstatement.executeQuery();
         rs.next();
         
+        int userId = rs.getInt("userId")
+        rs.close();
+        pstatement.close();
+        
+        long nowMillis = System.currentTimeMillis();
+        Date now = new Date(nowMillis);
+        
+       
+        
         HttpSession session=request.getSession(true); 
         session.setMaxInactiveInterval(30*60);
         session.setAttribute("userid", rs.getInt("userId"));
         session.setAttribute("name", rs.getString("firstName") + " " + rs.getString("lastName"));
         
+        authUtil.refreshAll(now, connection); 
+        authUtil.authorize(userId, nowMillis, 30, connection);
 
         //request.getServletContext().setAttribute("pckitUserId", rs.getInt("userId"));
         //request.getServletContext().setAttribute("pckitName", rs.getString("firstName") + " " + rs.getString("lastName"));
 
-        Cookie userId = new Cookie("pckitUserId", "" + rs.getInt("userId"));
-        Cookie name = new Cookie("pckitName", rs.getString("firstName") + " " + rs.getString("lastName"));
+        Cookie login = new Cookie("pckitLogin", authUtil.getJWTResult());
         //userId.setMaxAge(365*60*60*24+ 30*60);
-        userId.setMaxAge(30*60);
-        userId.setPath("/");
+        /*userId.setMaxAge(30*60);
+        userId.setPath("/");*/
         //userId.setHttpOnly(true);
         //name.setMaxAge(365*60*60*24+ 30*60);
-        name.setMaxAge(30*60);
-        name.setPath("/");
-        name.setHttpOnly(true);
-        name.setSecure(true);
+        login.setMaxAge(30*60);
+        login.setPath("/");
+        login.setHttpOnly(true);
+        login.setSecure(true);
         //name.setHttpOnly(true);
-        response.addCookie(userId);
-        response.addCookie(name);
+        //response.addCookie(userId);
+        response.addCookie(login);
         //request.addCookie(userId);
         //request.setAttribute("sessionId", session.getId());
 

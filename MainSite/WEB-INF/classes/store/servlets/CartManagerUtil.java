@@ -12,6 +12,35 @@ public class CartManagerUtil {
    
    }
    
+   public ArrayList<ShoppingCart> getUserCarts(int userId, Connection conn) throws SQLException, ClassNotFoundException  {
+      ArrayList<ShoppingCart> carts = new ArrayList<ShoppingCart>();
+      ArrayList<Integer> orderIds = new ArrayList<Integer>();
+      ArrayList<String> orderStates = new ArrayList<String>();
+      
+      Class.forName("com.mysql.jdbc.Driver");
+      String queryString = "SELECT * FROM Orders WHERE userId=?";
+      PreparedStatement pstatement = conn.prepareStatement(queryString);
+      pstatement.setInt(1, userId);
+      ResultSet rs = pstatement.executeQuery();
+      while(rs.next()) {
+         orderIds.add(rs.getInt("orderId"));
+         orderStates.add(rs.getString("orderStatus"));
+      }
+      rs.close();
+      pstatement.close();
+   
+      for (int i=0; i<orderIds.size(); i++) {
+         int orderId = orderIds.get(i);
+         String status = orderStates.get(i);
+         ShoppingCart cart = createFullFromOrderId(orderId, conn);
+         cart.setOrderId(orderId);
+         cart.setOrderStatus(status);
+         carts.add(cart);
+      }
+      
+      return carts;
+   }
+   
    public ShoppingCart createFromOrderId(int orderId, Connection conn) throws SQLException, ClassNotFoundException  {
       ShoppingCart cart = new ShoppingCart();
       ArrayList<Integer> buildIds = new ArrayList<Integer>();
@@ -55,6 +84,7 @@ public class CartManagerUtil {
       }
       rs.close();
       pstatement.close();
+      
    
       for (int i=0; i<buildIds.size(); i++) {
          int buildId = buildIds.get(i);
@@ -114,7 +144,7 @@ public class CartManagerUtil {
       price = price/100.0;
       pstatement.close();
       
-      CartItem item = new CartItem(buildId, "", "", price, maxInStock);
+      CartItem item = new CartItem(buildId, "", "", "", price, maxInStock);
       return item;
    }
    
@@ -131,12 +161,13 @@ public class CartManagerUtil {
       maxInStock = rs.getInt("numStocked");
       price= (double)(rs.getInt("price"));
       price = price/100.0;
+      
+      String type = rs.getString("buildType");
       String description = rs.getString("buildDescriptions");
-      String name = rs.getString("buildName");
-      pstatement.close();      
-
-
-      CartItem item = new CartItem(buildId, name, description, price, maxInStock);
+      String name = rs.getString("name");
+      pstatement.close();
+      
+      CartItem item = new CartItem(buildId, name, type, description, price, maxInStock);
       return item;
    }
    

@@ -3,6 +3,7 @@ package store.cart;
 public class CartItem {
    private int itemId;
    private String itemName;
+   private String itemType;
    private String itemDescription;
    private double unitPrice;
    private int maxInStock;
@@ -15,9 +16,10 @@ public class CartItem {
       maxInStock = 0;
    }
    
-   public CartItem(int id, String name, String description, double price, int inventory) {
+   public CartItem(int id, String name, String type, String description, double price, int inventory) {
       itemId = id;
       itemName = name;
+      itemType = type;
       itemDescription = description;
       unitPrice=price;
       maxInStock = inventory;
@@ -29,6 +31,11 @@ public class CartItem {
    
    public String getName() {
       return itemName;
+   }
+   
+   
+   public String getType() {
+      return itemType;
    }
    
    public String getDescription() {
@@ -49,6 +56,10 @@ public class CartItem {
    
    public void setName(String name) {
       itemName=name;
+   }
+   
+   public void setType(String type) {
+      itemType=type;
    }
    
    public void setDescription(String description) {
