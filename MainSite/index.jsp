@@ -3,7 +3,9 @@
 <%@ page import="java.io.*,java.util.*,java.sql.*"%>
 <%@ page import="javax.servlet.http.*,javax.servlet.*" %>
 <%@ page import="java.util.Date,accounts.AuthJWTUtil,accounts.UserLogin" %>
+<%@page import="org.apache.log4j.Logger"%>
 <%@ page session="true" %>
+
 <%
 response.setHeader("Cache-Control","no-cache"); //HTTP 1.1
 response.setHeader("Pragma","no-cache"); //HTTP 1.0
@@ -37,6 +39,8 @@ response.setDateHeader ("Expires", 0); //prevents caching at the proxy server
          <img class="make-it-fit" src="images/background.png" id="bgImage" alt="">
          <div id="accountAccessDiv">
            <%
+           
+              static Logger logger = Logger.getLogger(index_jsp.class);
               AuthJWTUtil authUtil = new AuthJWTUtil();
               long nowMillis = System.currentTimeMillis();
               java.util.Date now = new java.util.Date(nowMillis);
@@ -46,12 +50,14 @@ response.setDateHeader ("Expires", 0); //prevents caching at the proxy server
               cookies = request.getCookies();
               UserLogin login = null;
               String loggedUser ="";
+              logger.info("This is a test");
               //request.getServletContext().removeAttribute("pckitName");
               if( cookies != null ) {
                  for (int i = 0; i < cookies.length; i++){
                     cookie = cookies[i];
                     if (cookie.getName().equals("pckitLogin")) {
                        String token = (String)cookie.getValue();
+                       logger.info("This is a test 2");
                        Connection connection =null;
                        try {
                           Class.forName("com.mysql.jdbc.Driver");
@@ -64,7 +70,7 @@ response.setDateHeader ("Expires", 0); //prevents caching at the proxy server
                           }
                        }
                        catch (Exception e) {
-                       
+                          
                        }
                        
                        
