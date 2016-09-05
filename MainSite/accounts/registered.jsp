@@ -2,6 +2,7 @@
     pageEncoding="ISO-8859-1"%>
 <%@ page import="java.io.*,java.util.*,java.sql.*"%>
 <%@ page import="javax.servlet.http.*,javax.servlet.*" %>
+<%@ page import="java.util.Date,accounts.AuthJWTUtil,accounts.UserLogin" %>
 <!DOCTYPE html>
 <html>
    <head>
@@ -140,16 +141,35 @@
          <img class="make-it-fit" src="../images/background.png" id="bgImage" alt="">
          <div id="accountAccessDiv">
            <%
+              AuthJWTUtil authUtil = new AuthJWTUtil();
+              long nowMillis = System.currentTimeMillis();
+              java.util.Date now = new java.util.Date(nowMillis);
               Cookie cookie = null;
               Cookie[] cookies = null;
               // Get an array of Cookies associated with this domain
               cookies = request.getCookies();
               String loggedUser ="";
+              UserLogin login =null;
               if( cookies != null ) {
                  for (int i = 0; i < cookies.length; i++){
                     cookie = cookies[i];
-                    if (cookie.getName().equals("pckitName")) {
-                       loggedUser = (String)cookie.getValue();
+                    if (cookie.getName().equals("pckitLogin")) {
+                       String token = (String)cookie.getValue();
+                       Connection connection =null;
+                       try {
+                          Class.forName("com.mysql.jdbc.Driver");
+                          connection = DriverManager.getConnection("jdbc:mysql://localhost/PCKitDB","root","Potter11a");
+                          ArrayList<UserLogin> logs = authUtil.getAll(now, connection);
+                          authUtil.refreshAll(now, connection); 
+                          String result = authUtil.validateToken(token, now, connection);
+                          if (result.equals("Valid")) {
+                             login = authUtil.getLoginResult();
+                             loggedUser = login.getFirstName() + " " + login.getLastName();
+                          }
+                       }
+                       catch (Exception e) {
+                          
+                       }
                     }
                     //out.print("Name : " + cookie.getName( ) + ",  ");
                     //out.print("Value: " + cookie.getValue( )+" <br/>");
