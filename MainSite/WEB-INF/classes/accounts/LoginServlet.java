@@ -15,7 +15,7 @@ import javax.servlet.http.*;
 import javax.servlet.*;
 
 import util.SecureEncrypt;
-
+import java.util.logging.Logger;
 import java.util.Date;
 
 public class LoginServlet extends HttpServlet {
@@ -25,6 +25,7 @@ public class LoginServlet extends HttpServlet {
       String pageMessage = "Invalid Post Request.";         
       SecureEncrypt seTest= new SecureEncrypt();
       AuthJWTUtil authUtil = new AuthJWTUtil();
+      Logger logger = Logger.getLogger(this.getClass().getName());
 
       String email = request.getParameter("Email");
       String password = request.getParameter("Password");
@@ -32,6 +33,7 @@ public class LoginServlet extends HttpServlet {
       Connection connection = null;
       PreparedStatement pstatement = null;
       ResultSet rs = null;
+      String output="";
       
       try {
         //byte[] encryptedPass = seTest.encryptToBytes(password, "AES");
@@ -55,13 +57,17 @@ public class LoginServlet extends HttpServlet {
         
        
         
-        HttpSession session=request.getSession(true); 
+        /*HttpSession session=request.getSession(true); 
         session.setMaxInactiveInterval(30*60);
         session.setAttribute("userid", rs.getInt("userId"));
-        session.setAttribute("name", rs.getString("firstName") + " " + rs.getString("lastName"));
+        session.setAttribute("name", rs.getString("firstName") + " " + rs.getString("lastName"));*/
         
+        output=output+"got to authUtil use\n";
         authUtil.refreshAll(now, connection); 
+        output=output+"got past refresh\n";
         authUtil.authorize(userId, nowMillis, 30, connection);
+        output=output+"got past authorize\n";
+
 
         //request.getServletContext().setAttribute("pckitUserId", rs.getInt("userId"));
         //request.getServletContext().setAttribute("pckitName", rs.getString("firstName") + " " + rs.getString("lastName"));
@@ -83,22 +89,23 @@ public class LoginServlet extends HttpServlet {
         //request.setAttribute("sessionId", session.getId());
 
 
-        String output;
+        /*String output;
         if (session.isNew()) {
            output= "New user";
         }
         else {
            output="Returning user";
-        }
+        }*/
         //output= output +"Session id: " + session.getId() + "\nUser id: " + Integer.toString(rs.getInt("userId")) + "\nName: " +rs.getString("firstName") + " " + rs.getString("lastName");
-
-        response.getWriter().write(output);
+        output = output+authUtil.getJWTResult();
+        
       }
       catch (Exception e) {
          pageMessage="An error occurred while creating your account!";
+         output=output+"Error: "+e.toString();
       }
       
-
+      response.getWriter().write(output);
       request.getRequestDispatcher("../").include(request, response);
       //response.sendRedirect("../../");
    }

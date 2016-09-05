@@ -164,7 +164,7 @@ public class CartManagerUtil {
       
       String type = rs.getString("buildType");
       String description = rs.getString("buildDescriptions");
-      String name = rs.getString("name");
+      String name = rs.getString("buildName");
       pstatement.close();
       
       CartItem item = new CartItem(buildId, name, type, description, price, maxInStock);

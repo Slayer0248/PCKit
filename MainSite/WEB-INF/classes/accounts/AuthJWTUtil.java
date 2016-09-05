@@ -94,7 +94,7 @@ public class AuthJWTUtil {
         }
         
         //Builds the JWT and serializes it to a compact, URL-safe string
-        return URLEncoder.encode(seTest.encryptToString(builder.compact(), "AES"), "UTF-8");
+        return seTest.encryptToString(builder.compact(), "AES");
     
     }
     
