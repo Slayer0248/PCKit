@@ -21,7 +21,7 @@ public class LoginTracker {
             java.sql.Date sqlDate) {
         java.util.Date javaDate = null;
         if (sqlDate != null) {
-            javaDate = new Date(sqlDate.getTime());
+            javaDate = new java.util.Date(sqlDate.getTime());
         }
         return sqlDate;
     }
@@ -30,7 +30,7 @@ public class LoginTracker {
             java.util.Date javaDate) {
         java.sql.Date sqlDate = null;
         if (javaDate != null) {
-            sqlDate = new Date(javaDate.getTime());
+            sqlDate = new java.sql.Date(javaDate.getTime());
         }
         return sqlDate;
     }
