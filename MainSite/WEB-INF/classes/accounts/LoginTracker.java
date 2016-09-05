@@ -128,7 +128,7 @@ public class LoginTracker {
     /*Check if generated session id is already in the db and is active */
     //public boolean sessionIdInUse(String sessionId, String ipAddress, Date now, Connection conn) throws Exception {
     public boolean sessionIdInUse(String sessionId, Date now, Connection conn) throws Exception {
-       boolean sessionIdFound = false
+       boolean sessionIdFound = false;
        Class.forName("com.mysql.jdbc.Driver");
        //String queryString = "SELECT * FROM PCKitSessions WHERE sessionId=? and sessionIP=?";
        String queryString = "SELECT * FROM PCKitSessions WHERE sessionId=?";

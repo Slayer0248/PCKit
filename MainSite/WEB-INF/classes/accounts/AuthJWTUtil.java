@@ -102,7 +102,7 @@ public class AuthJWTUtil {
     public Claims parseJWT(String jwt) throws SignatureException {
        //This line will throw an exception if it is not a signed JWS (as expected)
        //System.out.println("Encrypted jwt: " + jwt);
-       String rawJwt = seTest.decryptToString(jwt, "AES")
+       String rawJwt = seTest.decryptToString(jwt, "AES");
        //System.out.println("Raw jwt: " + rawJwt);
        Claims claims = Jwts.parser()         
          .setSigningKey(DatatypeConverter.parseBase64Binary(jwtKey))

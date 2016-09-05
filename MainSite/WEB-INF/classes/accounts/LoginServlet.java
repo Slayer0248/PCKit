@@ -46,7 +46,7 @@ public class LoginServlet extends HttpServlet {
         rs = pstatement.executeQuery();
         rs.next();
         
-        int userId = rs.getInt("userId")
+        int userId = rs.getInt("userId");
         rs.close();
         pstatement.close();
         
