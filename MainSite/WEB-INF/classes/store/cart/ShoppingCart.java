@@ -116,7 +116,7 @@ public class ShoppingCart {
 	InvalidAlgorithmParameterException, NoSuchAlgorithmException, NoSuchProviderException, CertStoreException, CMSException, OperatorCreationException{
       ClientSide client_side = new ClientSide( "my-pubcert.pem", "my-prvkey.p12", "paypal_cert_pem.txt", "Potter11a" );
       
-      String basePath = "/Applications/tomcat/webapps/PCKitLive/OrderSection/";
+      String basePath = "/home/ec2-user/pckit/MainSite/OrderSection/";
       String rawData = "cert_id=SFTMKZFWK2YK8,cmd=_cart,upload=1,business=pckitcompany@gmail.com,";
       for (int i=0; i<items.size(); i++) {
          CartItem curItem = items.get(i);

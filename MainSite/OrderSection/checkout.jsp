@@ -77,7 +77,8 @@
                  data:"updates=" + encodeURIComponent(curId + ":" + update)
             }).done(function(data) {
                if (data == "Success") {
-                  $("#itemQuantityCell"+ curId).html("<center>" + update+"</center>");
+                  $("#quantity"+ curId).html(update);
+
                   if (update == maxVal) {
                      $("#increase"+ curId).removeClass("enabled");
                      $("#increase"+ curId).addClass("disabled");
@@ -114,7 +115,7 @@
                  data:"updates=" + encodeURIComponent(curId + ":" + update)
                }).done(function(data) {
                   if (data == "Success") {
-                     $("#itemQuantityCell"+ curId).html("<center>" + update+"</center>");
+                     $("#quantity"+ curId).html(update);
                      if (update == 1) {
                         $("#decrease"+ curId).removeClass("enabled");
                         $("#decrease"+ curId).addClass("disabled");
@@ -305,9 +306,10 @@
                 Class.forName("com.mysql.jdbc.Driver");
                 connection = DriverManager.getConnection("jdbc:mysql://localhost/PCKitDB","root","Potter11a");
                 CartManagerUtil cartManager = new CartManagerUtil();
-                cart = cartManager.createFullFromCartString(orderText, connection);
+                cart = cartManager.createFullFromCartString(orderText, connection);%>
+                <%= cart.size()%>                
 
-                for(int i=0; i<cart.size(); i++) {
+                <% for(int i=0; i<cart.size(); i++) {
                    CartItem curItem = cart.get(i);
                    int quantity = cart.getItemQuantity(i);
                    String decreaseState = "enabled";
@@ -315,7 +317,7 @@
                    if (quantity==1) {
                       decreaseState = "disabled";
                    }
-                   else if (quantity==curItem.getInventory()) {
+                   if (quantity==curItem.getInventory()) {
                       increaseState = "disabled";
                    }
                 %>
@@ -334,7 +336,7 @@
                 </tr>
                  <% } 
                  
-                 }  catch (Exception e) {  }%>
+                 }  catch (Exception e) {%> <%= e.getMessage() %> <%  }%>
                  
                  
               </table><center>

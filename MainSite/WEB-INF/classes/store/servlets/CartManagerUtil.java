@@ -131,10 +131,11 @@ public class CartManagerUtil {
       maxInStock = rs.getInt("numStocked");
       price= (double)(rs.getInt("price"));
       price = price/100.0;
-      pstatement.close();
       String description = rs.getString("buildDescriptions");
-      String name = rs.getString("name");
-      
+      String name = rs.getString("buildName");
+      pstatement.close();      
+
+
       CartItem item = new CartItem(buildId, name, description, price, maxInStock);
       return item;
    }
