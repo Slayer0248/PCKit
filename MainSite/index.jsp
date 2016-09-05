@@ -3,7 +3,7 @@
 <%@ page import="java.io.*,java.util.*,java.sql.*"%>
 <%@ page import="javax.servlet.http.*,javax.servlet.*" %>
 <%@ page import="java.util.Date,accounts.AuthJWTUtil,accounts.UserLogin" %>
-<%@page import="org.apache.log4j.Logger"%>
+<%@page import="java.util.logging.Logger"%>
 <%@ page session="true" %>
 
 <%
@@ -40,7 +40,7 @@ response.setDateHeader ("Expires", 0); //prevents caching at the proxy server
          <div id="accountAccessDiv">
            <%
            
-              Logger logger = Logger.getLogger(index_jsp.class);
+              Logger logger = Logger.getLogger(this.getClass().getName());
               AuthJWTUtil authUtil = new AuthJWTUtil();
               long nowMillis = System.currentTimeMillis();
               java.util.Date now = new java.util.Date(nowMillis);
