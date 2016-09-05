@@ -11,7 +11,7 @@ import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.JwtBuilder;
 
 import java.sql.*;
-
+import java.net.URLEncoder;
 import java.util.Date;
 
 import java.util.StringTokenizer;    
@@ -94,7 +94,7 @@ public class AuthJWTUtil {
         }
         
         //Builds the JWT and serializes it to a compact, URL-safe string
-        return seTest.encryptToString(builder.compact(), "AES");
+        return URLEncoder.encode(seTest.encryptToString(builder.compact(), "AES"), "UTF-8");
     
     }
     
