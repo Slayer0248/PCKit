@@ -70,7 +70,7 @@ public class AuthJWTUtil {
         return ip;
     }
     
-    public String createJWT(String id, String issuer, String subject, long nowMillis, long ttlMillis) {
+    public String createJWT(String id, String issuer, String subject, long nowMillis, long ttlMillis) throws Exception {
        //The JWT signature algorithm we will be using to sign the token
        //SignatureAlgorithm signatureAlgorithm = SignatureAlgorithm.HS256;
        
@@ -99,7 +99,7 @@ public class AuthJWTUtil {
     }
     
     
-    public Claims parseJWT(String jwt) throws SignatureException {
+    public Claims parseJWT(String jwt) throws Exception {
        //This line will throw an exception if it is not a signed JWS (as expected)
        //System.out.println("Encrypted jwt: " + jwt);
        String rawJwt = seTest.decryptToString(jwt, "AES");

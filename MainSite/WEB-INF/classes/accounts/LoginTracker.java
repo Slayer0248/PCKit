@@ -17,6 +17,24 @@ public class LoginTracker {
       cmUtil= new CartManagerUtil();
    }
    
+   public java.util.Date convertFromSQLDateToJAVADate(
+            java.sql.Date sqlDate) {
+        java.util.Date javaDate = null;
+        if (sqlDate != null) {
+            javaDate = new Date(sqlDate.getTime());
+        }
+        return sqlDate;
+    }
+    
+    public java.sql.Date convertFromJAVADateToSQLDate(
+            java.util.Date javaDate) {
+        java.sql.Date sqlDate = null;
+        if (javaDate != null) {
+            sqlDate = new Date(javaDate.getTime());
+        }
+        return sqlDate;
+    }
+   
    public void refreshAllLogins(java.util.Date now, Connection conn) throws Exception {
        ArrayList<UserLogin> logins;
        
@@ -26,7 +44,7 @@ public class LoginTracker {
        ResultSet rs = pstatement.executeQuery();
        while(rs.next()) {
           boolean loggedIn = rs.getInt("isLogged") == 1;
-          UserLogin login = new UserLogin(rs.getString("sessionId"), rs.getInt("userId"), rs.getDate("sessionStart"), rs.getInt("length"));
+          UserLogin login = new UserLogin(rs.getString("sessionId"), rs.getInt("userId"), convertFromSQLDateToJAVADate(rs.getDate("sessionStart")), rs.getInt("length"));
           login.setLoggedIn(loggedIn);
           logins.add(login);
        }
@@ -90,7 +108,7 @@ public class LoginTracker {
        int userId = rs.getInt("userId");
        
        
-       UserLogin login = new UserLogin(rs.getString("sessionId"), rs.getInt("userId"), rs.getDate("sessionStart"), rs.getInt("length"));
+       UserLogin login = new UserLogin(rs.getString("sessionId"), rs.getInt("userId"), convertFromSQLDateToJAVADate(rs.getDate("sessionStart")), rs.getInt("length"));
        login.setLoggedIn(true);
        
        rs.close();
@@ -242,7 +260,7 @@ public class LoginTracker {
        PreparedStatement pstatement = conn.prepareStatement(queryString);
        pstatement.setString(1, sessionId);
        pstatement.setInt(2, userId);
-       pstatement.setDate(3, now);
+       pstatement.setDate(3, convertFromJAVADateToSQLDate(now));
        /*pstatement.setString(4, ipAddress);
        pstatement.setInt(5, length);
        pstatement.setInt(6, 1);*/
@@ -283,7 +301,7 @@ public class LoginTracker {
        String queryString = "UPDATE PCKitSessions SET sessionId=?, sessionStart=?, length=?, isLogged=? WHERE userId=?";
        PreparedStatement pstatement = conn.prepareStatement(queryString);
        pstatement.setString(1, sessionId);
-       pstatement.setDate(2, now);
+       pstatement.setDate(2, convertFromJAVADateToSQLDate(now));
        pstatement.setInt(3, length);
        pstatement.setInt(4, 1);
        pstatement.setInt(5, userId);
