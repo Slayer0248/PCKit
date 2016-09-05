@@ -120,7 +120,7 @@ public class AuthJWTUtil {
         // Check if it was issued by the server and if it's not expired
         // Throw an Exception if the token is invalid
         String result = "Validation error";
-        Claims claims = parseJWT(jwt);
+        Claims claims = parseJWT(token);
         String sessionId  = claims.getId();
         if (!loginTracker.userLoginExpired(sessionId, now, conn)) {
            
@@ -153,7 +153,7 @@ public class AuthJWTUtil {
     public void deauthorize(String token, Connection conn) throws Exception {
         // Authenticate against a database, LDAP, file or whatever
         // Throw an Exception if the credentials are invalid
-        Claims claims = parseJWT(jwt);
+        Claims claims = parseJWT(token);
         String sessionId  = claims.getId();
         loginTracker.logoutUserSession(sessionId, conn);
         

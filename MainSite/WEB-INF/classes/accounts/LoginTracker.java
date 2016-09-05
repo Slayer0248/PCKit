@@ -17,7 +17,7 @@ public class LoginTracker {
       cmUtil= new CartManagerUtil();
    }
    
-   public void refreshAllLogins(Date now, Connection conn) throws Exception {
+   public void refreshAllLogins(java.util.Date now, Connection conn) throws Exception {
        ArrayList<UserLogin> logins;
        
        Class.forName("com.mysql.jdbc.Driver");
@@ -45,11 +45,11 @@ public class LoginTracker {
    
    
    
-   public String nextSessionId(Date now, Connection conn) throws Exception  {
+   public String nextSessionId(java.util.Date now, Connection conn) throws Exception  {
        /*long nowMillis = System.currentTimeMillis();
        Date now = new Date(nowMillis);*/
        
-       Strint result = null;
+       String result = null;
        while (result == null) {
           SecureRandom random = new SecureRandom();
           String curVal = new BigInteger(130, random).toString(32);
@@ -127,7 +127,7 @@ public class LoginTracker {
     
     /*Check if generated session id is already in the db and is active */
     //public boolean sessionIdInUse(String sessionId, String ipAddress, Date now, Connection conn) throws Exception {
-    public boolean sessionIdInUse(String sessionId, Date now, Connection conn) throws Exception {
+    public boolean sessionIdInUse(String sessionId, java.util.Date now, Connection conn) throws Exception {
        boolean sessionIdFound = false;
        Class.forName("com.mysql.jdbc.Driver");
        //String queryString = "SELECT * FROM PCKitSessions WHERE sessionId=? and sessionIP=?";
@@ -139,11 +139,11 @@ public class LoginTracker {
        while (rs.next()) {
           if (!sessionIdFound) {
              int loggedStatus = rs.getInt("isLogged");
-             Date start = rs.getDate("sessionStart");
+             java.util.Date start = rs.getDate("sessionStart");
              Calendar cal = Calendar.getInstance();
              cal.setTime(start);
              cal.add(Calendar.MINUTE, rs.getInt("length"));
-             Date end = cal.getTime();
+             java.util.Date end = cal.getTime();
              
              if (now.compareTo(start) >= 0 && now.compareTo(end) <= 0 && loggedStatus==1) {
                 sessionIdFound=true;
@@ -159,7 +159,7 @@ public class LoginTracker {
     
     /*Check if user session timed out*/
     //public boolean userLoginExpired(String sessionId, String ipAddress, Date now, Connection conn) throws Exception {
-    public boolean userLoginExpired(String sessionId, Date now, Connection conn) throws Exception {
+    public boolean userLoginExpired(String sessionId, java.util.Date now, Connection conn) throws Exception {
        boolean expired = false;
        Class.forName("com.mysql.jdbc.Driver");
        //String queryString = "SELECT * FROM PCKitSessions WHERE sessionId=? and sessionIP=?";
@@ -170,11 +170,11 @@ public class LoginTracker {
        ResultSet rs = pstatement.executeQuery();
        rs.next();
        int loggedStatus = rs.getInt("isLogged");
-       Date start = rs.getDate("sessionStart");
+       java.util.Date start = rs.getDate("sessionStart");
        Calendar cal = Calendar.getInstance();
        cal.setTime(start);
        cal.add(Calendar.MINUTE, rs.getInt("length"));
-       Date end = cal.getTime();
+       java.util.Date end = cal.getTime();
        
        if (now.compareTo(start) < 0 || now.compareTo(end) > 0) {
           expired =true;
@@ -214,9 +214,10 @@ public class LoginTracker {
        Class.forName("com.mysql.jdbc.Driver");
        //String queryString = "SELECT * FROM PCKitSessions WHERE userId=? and sessionIP=?";
        String queryString = "SELECT * FROM PCKitSessions WHERE userId=?";
+       PreparedStatement pstatement = conn.prepareStatement(queryString);
        pstatement.setInt(1, userId);
        //pstatement.setString(2, ipAddress);
-       PreparedStatement pstatement = conn.prepareStatement(queryString);
+       
        
        ResultSet rs = pstatement.executeQuery();
        while(rs.next()) {
@@ -233,7 +234,7 @@ public class LoginTracker {
     
     /*Create user login on password entry in db*/
     //public UserLogin createLogin(int userId, String sessionId, String ipAddress, Date now, int length, Connection conn)  throws Exception {
-    public UserLogin createLogin(int userId, String sessionId, Date now, int length, Connection conn)  throws Exception {
+    public UserLogin createLogin(int userId, String sessionId, java.util.Date now, int length, Connection conn)  throws Exception {
        
        Class.forName("com.mysql.jdbc.Driver");
        //String queryString = "INSERT INTO PCKitSessions(sessionId, userId, sessionStart, sessionIP, length, isLogged) VALUES (?, ?, ?, ?, ?, ?)";
@@ -262,7 +263,8 @@ public class LoginTracker {
        rs.close();
        pstatement2.close();
        
-       UserLogin login = new UserLogin(sessionId, ipAddress, userId, now, length);
+       //UserLogin login = new UserLogin(sessionId, ipAddress, userId, now, length);
+       UserLogin login = new UserLogin(sessionId, userId, now, length);
        login.setLoggedIn(true);
        login.setFirstName(firstName);
        login.setLastName(lastName);
@@ -275,7 +277,7 @@ public class LoginTracker {
     
     /*Update user login on password entry in db*/
     //public UserLogin updateLogin(int userId, String sessionId, String ipAddress, Date now, int length, Connection conn)  throws Exception {
-    public UserLogin updateLogin(int userId, String sessionId, Date now, int length, Connection conn)  throws Exception {
+    public UserLogin updateLogin(int userId, String sessionId, java.util.Date now, int length, Connection conn)  throws Exception {
        Class.forName("com.mysql.jdbc.Driver");
        //String queryString = "UPDATE PCKitSessions SET sessionId=?, sessionStart=?, length=?, isLogged=? WHERE userId=?, sessionIP=?";
        String queryString = "UPDATE PCKitSessions SET sessionId=?, sessionStart=?, length=?, isLogged=? WHERE userId=?";
@@ -300,7 +302,8 @@ public class LoginTracker {
        rs.close();
        pstatement2.close();
        
-       UserLogin login = new UserLogin(sessionId, ipAddress, userId, now, length);
+       //UserLogin login = new UserLogin(sessionId, ipAddress, userId, now, length);
+       UserLogin login = new UserLogin(sessionId, userId, now, length);
        login.setLoggedIn(true);
        login.setFirstName(firstName);
        login.setLastName(lastName);

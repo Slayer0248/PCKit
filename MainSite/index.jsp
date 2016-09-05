@@ -39,7 +39,7 @@ response.setDateHeader ("Expires", 0); //prevents caching at the proxy server
            <%
               AuthJWTUtil authUtil = new AuthJWTUtil();
               long nowMillis = System.currentTimeMillis();
-              Date now = new Date(nowMillis);
+              java.util.Date now = new java.util.Date(nowMillis);
               Cookie cookie = null;
               Cookie[] cookies = null;
               // Get an array of Cookies associated with this domain

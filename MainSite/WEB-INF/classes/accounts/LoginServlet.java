@@ -51,7 +51,7 @@ public class LoginServlet extends HttpServlet {
         pstatement.close();
         
         long nowMillis = System.currentTimeMillis();
-        Date now = new Date(nowMillis);
+        java.util.Date now = new java.util.Date(nowMillis);
         
        
         

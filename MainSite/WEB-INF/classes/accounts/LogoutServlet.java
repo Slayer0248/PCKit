@@ -23,6 +23,10 @@ public class LogoutServlet extends HttpServlet {
       session.setAttribute("userid", null);
       session.setAttribute("name", null);
       session.invalidate();
+      
+      AuthJWTUtil authUtil = new AuthJWTUtil();
+      long nowMillis = System.currentTimeMillis();
+      java.util.Date now = new java.util.Date(nowMillis);
       Cookie cookie = null;
       Cookie[] cookies = null;
       cookies = request.getCookies();
