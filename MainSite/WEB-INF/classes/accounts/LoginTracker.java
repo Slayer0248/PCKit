@@ -36,7 +36,7 @@ public class LoginTracker {
     }
    
    public void refreshAllLogins(java.util.Date now, Connection conn) throws Exception {
-       ArrayList<UserLogin> logins;
+       ArrayList<UserLogin> logins = new ArrayList<UserLogin>();
        
        Class.forName("com.mysql.jdbc.Driver");
        String queryString = "SELECT * FROM PCKitSessions";
