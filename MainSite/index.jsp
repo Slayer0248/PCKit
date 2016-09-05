@@ -45,7 +45,7 @@ response.setDateHeader ("Expires", 0); //prevents caching at the proxy server
               // Get an array of Cookies associated with this domain
               cookies = request.getCookies();
               UserLogin login = null;
-              loggedUser ="";
+              String loggedUser ="";
               //request.getServletContext().removeAttribute("pckitName");
               if( cookies != null ) {
                  for (int i = 0; i < cookies.length; i++){
