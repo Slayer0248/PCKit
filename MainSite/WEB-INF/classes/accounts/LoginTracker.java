@@ -34,6 +34,25 @@ public class LoginTracker {
         }
         return sqlDate;
     }
+    
+    public ArrayList<UserLogin> getAllLogins(java.util.Date now, Connection conn) throws Exception {
+       ArrayList<UserLogin> logins = new ArrayList<UserLogin>();
+       
+       Class.forName("com.mysql.jdbc.Driver");
+       String queryString = "SELECT * FROM PCKitSessions";
+       PreparedStatement pstatement = conn.prepareStatement(queryString);
+       ResultSet rs = pstatement.executeQuery();
+       while(rs.next()) {
+          boolean loggedIn = rs.getInt("isLogged") == 1;
+          UserLogin login = new UserLogin(rs.getString("sessionId"), rs.getInt("userId"), convertFromSQLDateToJAVADate(rs.getDate("sessionStart")), rs.getInt("length"));
+          login.setLoggedIn(loggedIn);
+          logins.add(login);
+       }
+       rs.close();
+       pstatement.close();
+       
+       return logins;
+    }
    
    public void refreshAllLogins(java.util.Date now, Connection conn) throws Exception {
        ArrayList<UserLogin> logins = new ArrayList<UserLogin>();

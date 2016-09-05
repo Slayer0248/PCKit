@@ -140,8 +140,7 @@ public class AuthJWTUtil {
         // Throw an Exception if the credentials are invalid
         String result = "Validation error";
         Date now = new Date(nowMillis);
-        long lengthMillis = (long)mins;
-        lengthMillis = lengthMillis * 60 * 1000;
+        long lengthMillis = ((long) mins)* 60 * 1000;
         String curSessionId = loginTracker.nextSessionId(now, conn);
         userLogin = loginTracker.createLogin(userId, curSessionId, now, mins, conn);
         outputToken =createJWT(curSessionId,"https://www.pckit.org", "PCKitData", nowMillis, lengthMillis);
@@ -161,6 +160,10 @@ public class AuthJWTUtil {
     
     public void refreshAll(Date now, Connection conn)  throws Exception {
         loginTracker.refreshAllLogins(now, conn);
+    }
+    
+    public ArrayList<UserLogin> getAll(Date now, Connection conn)  throws Exception {
+        loginTracker.getAllLogins(now, conn);
     }
 
     
