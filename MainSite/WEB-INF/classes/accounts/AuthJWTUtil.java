@@ -12,7 +12,7 @@ import io.jsonwebtoken.JwtBuilder;
 
 import java.sql.*;
 import java.net.URLEncoder;
-import java.util.Date;
+import java.util.*;
 
 import java.util.StringTokenizer;    
 import util.SecureEncrypt;
@@ -75,7 +75,7 @@ public class AuthJWTUtil {
        //SignatureAlgorithm signatureAlgorithm = SignatureAlgorithm.HS256;
        
        //long nowMillis = System.currentTimeMillis();
-       Date now = new Date(nowMillis);
+       java.util.Date now = new java.util.Date(nowMillis);
        
        //We will sign our JWT with our jwtKey secret
        byte[] apiKeySecretBytes = DatatypeConverter.parseBase64Binary(jwtKey);
@@ -89,7 +89,7 @@ public class AuthJWTUtil {
         //if it has been specified, let's add the expiration
         if (ttlMillis >= 0) {
            long expMillis = nowMillis + ttlMillis;
-           Date exp = new Date(expMillis);
+           java.util.Date exp = new java.util.Date(expMillis);
            builder.setExpiration(exp);
         }
         
@@ -116,7 +116,7 @@ public class AuthJWTUtil {
        return claims;
     }
     
-    public String validateToken(String token, Date now, Connection conn) throws Exception {
+    public String validateToken(String token, java.util.Date now, Connection conn) throws Exception {
         // Check if it was issued by the server and if it's not expired
         // Throw an Exception if the token is invalid
         String result = "Validation error";
@@ -139,7 +139,7 @@ public class AuthJWTUtil {
         // Authenticate against a database, LDAP, file or whatever
         // Throw an Exception if the credentials are invalid
         String result = "Validation error";
-        Date now = new Date(nowMillis);
+        java.util.Date now = new java.util.Date(nowMillis);
         long lengthMillis = ((long) mins)* 60 * 1000;
         String curSessionId = loginTracker.nextSessionId(now, conn);
         userLogin = loginTracker.createLogin(userId, curSessionId, now, mins, conn);
@@ -158,12 +158,12 @@ public class AuthJWTUtil {
         
     }
     
-    public void refreshAll(Date now, Connection conn)  throws Exception {
+    public void refreshAll(java.util.Date now, Connection conn)  throws Exception {
         loginTracker.refreshAllLogins(now, conn);
     }
     
-    public ArrayList<UserLogin> getAll(Date now, Connection conn)  throws Exception {
-        loginTracker.getAllLogins(now, conn);
+    public ArrayList<UserLogin> getAll(java.util.Date now, Connection conn)  throws Exception {
+        return loginTracker.getAllLogins(now, conn);
     }
 
     

@@ -4,13 +4,6 @@
 <%@ page import="javax.servlet.http.*,javax.servlet.*" %>
 <%@ page import="java.util.Date,accounts.AuthJWTUtil,accounts.UserLogin" %>
 <%@page import="java.util.logging.Logger"%>
-<%@ page session="true" %>
-
-<%
-response.setHeader("Cache-Control","no-cache"); //HTTP 1.1
-response.setHeader("Pragma","no-cache"); //HTTP 1.0
-response.setDateHeader ("Expires", 0); //prevents caching at the proxy server
-%>
 
 
 <!DOCTYPE html>
@@ -51,6 +44,7 @@ response.setDateHeader ("Expires", 0); //prevents caching at the proxy server
               UserLogin login = null;
               String loggedUser ="";
               logger.info("This is a test");
+              logger.info(""+ now);
               //request.getServletContext().removeAttribute("pckitName");
               if( cookies != null ) {
                  for (int i = 0; i < cookies.length; i++){
@@ -62,6 +56,11 @@ response.setDateHeader ("Expires", 0); //prevents caching at the proxy server
                        try {
                           Class.forName("com.mysql.jdbc.Driver");
                           connection = DriverManager.getConnection("jdbc:mysql://localhost/PCKitDB","root","Potter11a");
+                          ArrayList<UserLogin> logs = authUtil.getAll(now, connection);
+                          logger.info("curlogins");
+                          for (int j=0; j<logs.size(); j++) {
+                              logger.info(""+ logs.get(j).getStartDate());
+                          }
                           authUtil.refreshAll(now, connection); 
                           String result = authUtil.validateToken(token, now, connection);
                           if (result.equals("Valid")) {
