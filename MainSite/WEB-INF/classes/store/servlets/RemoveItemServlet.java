@@ -56,8 +56,7 @@ public class RemoveItemServlet extends HttpServlet {
                try {
                   Class.forName("com.mysql.jdbc.Driver");
                   connection = DriverManager.getConnection("jdbc:mysql://localhost/PCKitDB","root","Potter11a");
-                  authUtil.refreshAll(now, connection); 
-                  authUtil.deauthorize(token, connection);
+                  authUtil.refreshAll(now, connection);
                   result = authUtil.validateToken(token, now, connection);
                   if (result.equals("Valid")) {
                       login = authUtil.getLoginResult();
