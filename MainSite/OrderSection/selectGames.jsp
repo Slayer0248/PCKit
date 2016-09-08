@@ -117,7 +117,7 @@ document.write(data2); history.pushState({}, null, "https://www.pckit.org/OrderS
            
            function promptForCart(isCart) {
              //console.log(hasCart());          
-             if ($("#accessLogoutLink").length > 0 && isCart=="No") { 
+             if ($("#accessLogoutLink").length > 0 && isCart=="Yes") { 
              $.ajax({
                  type:"POST",
                  url:"./cartExists/",

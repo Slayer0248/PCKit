@@ -71,7 +71,7 @@ public class HasCartServlet extends HttpServlet {
          int userId= login.getUserId();
          String[] cartStates = {"In Progress", "Buying"};
          ArrayList<ShoppingCart> orders = login.getOrdersWithStatus(cartStates);
-         pageMessage = orders.size() == 0? "Yes" : "No";
+         pageMessage = orders.size() > 0? "Yes" : "No";
       }
       else {
          pageMessage = "Reload";
