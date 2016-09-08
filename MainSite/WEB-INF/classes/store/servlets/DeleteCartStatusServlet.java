@@ -94,7 +94,7 @@ public class DeleteCartStatusServlet extends HttpServlet {
                   }
                }
                
-               if (wasFound == 1) {
+               if (wasFound == -1) {
                   orderIds.add(orderId);
                }
             }
