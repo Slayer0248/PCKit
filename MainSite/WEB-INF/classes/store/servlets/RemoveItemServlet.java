@@ -72,7 +72,7 @@ public class RemoveItemServlet extends HttpServlet {
          }
       }
       
-      if (orderIdStr != null || userIdStr != null || cartData != null) {
+      if (result.equals("Valid")) {
          /*int orderId= Integer.parseInt(orderIdStr);
          int userId= Integer.parseInt(userIdStr);*/
          String[] cartStates = {"In Progress", "Buying"};
