@@ -146,7 +146,7 @@ public class UserLogin {
    }
    
    public ArrayList<ShoppingCart> getOrdersWithStatus(String[] states) {
-      ArrayList<ShoppingCart> carts = new ArrayList<Integer>();
+      ArrayList<ShoppingCart> carts = new ArrayList<ShoppingCart>();
       for (int i=0; i<orders.size(); i++) {
          ShoppingCart curCart = orders.get(i);
          for (int j=0; j<states.length; j++) {
