@@ -137,10 +137,7 @@ document.write(data2); history.pushState({}, null, "https://www.pckit.org/OrderS
                            url:"./deleteCartsWithStatus/",
                            data:"status="+encodeURIComponent("Buying") 
                          }).done(function(data3) {
-                            if (data3 =="Successful") {
-                                location.href='./selectGames.jsp';
-                            }
-                            else if (data3 =="Reload") {
+                            if (data3 =="Reload") {
                                location.reload();
                             } 
                         });
