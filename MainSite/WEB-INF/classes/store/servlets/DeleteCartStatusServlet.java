@@ -72,8 +72,6 @@ public class DeleteCartStatusServlet extends HttpServlet {
          
          Connection connection = null;
          PreparedStatement pstatement = null;
-         PreparedStatement pstatement2 = null;
-         PreparedStatement pstatement3 = null;
          ResultSet rs = null;
          try {
          
@@ -107,7 +105,7 @@ public class DeleteCartStatusServlet extends HttpServlet {
             for (int i=0; i<orderIds.size(); i++) {
                int curId = orderIds.get(i);
                String queryString2 = "Delete from OrderBuilds where orderId=?";
-               pstatement2 = connection.prepareStatement(queryString2);
+               PreparedStatement pstatement2 = connection.prepareStatement(queryString2);
                pstatement2.setInt(1, curId);
                updateQuery += pstatement2.executeUpdate();
                pstatement2.close();
@@ -115,7 +113,7 @@ public class DeleteCartStatusServlet extends HttpServlet {
             
             
                String queryString3 = "Delete from Order where orderId=? and userId=?";
-               pstatement3 = connection.prepareStatement(queryString3);
+               PreparedStatement pstatement3 = connection.prepareStatement(queryString3);
                pstatement3.setInt(1, curId);
                pstatement3.setInt(2, userId);
                updateQuery2 += pstatement3.executeUpdate();
