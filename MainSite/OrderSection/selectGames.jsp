@@ -96,6 +96,7 @@ document.write(data2); history.pushState({}, null, "https://www.pckit.org/OrderS
                 url:"./deleteCartsWithStatus/",
                 data:"status="+encodeURIComponent(status) 
               }).done(function(data) {
+                 console.log(data);
                  if (data =="Reload") {
                      location.reload();
                  } 
