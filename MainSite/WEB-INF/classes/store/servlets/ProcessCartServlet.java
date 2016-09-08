@@ -75,7 +75,7 @@ public class ProcessCartServlet extends HttpServlet {
       if (result.equals("Valid")) {
          /*int orderId= Integer.parseInt(orderIdStr);
          int userId= Integer.parseInt(userIdStr);*/
-         ArrayList<ShoppingCart> orders = login.getOrdersWithStatus(["In Progress", "Buying"]);
+         ArrayList<ShoppingCart> orders = login.getOrdersWithStatus({"In Progress", "Buying"});
          ShoppingCart cart = orders.get(0);
          int orderId= cart.getOrderId();
          int userId= login.getUserId();

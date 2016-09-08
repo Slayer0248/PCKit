@@ -74,7 +74,7 @@ public class DeleteCartServlet extends HttpServlet {
       if (result.equals("Valid")) {
          /*int userId = Integer.parseInt(userIdStr);
          int orderId = Integer.parseInt(orderIdStr);*/
-         ArrayList<ShoppingCart> orders = login.getOrdersWithStatus(["In Progress", "Buying"]);
+         ArrayList<ShoppingCart> orders = login.getOrdersWithStatus({"In Progress", "Buying"});
          ShoppingCart cart = orders.get(0);
          int orderId= cart.getOrderId();
          int userId= login.getUserId();
