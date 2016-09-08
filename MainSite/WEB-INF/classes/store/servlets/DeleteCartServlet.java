@@ -1,5 +1,8 @@
 package store.servlets;
 
+import java.util.logging.Logger;
+import java.util.logging.Level;
+
 import java.io.*;
 import java.util.*;
 import java.sql.*;
@@ -22,6 +25,8 @@ public class DeleteCartServlet extends HttpServlet {
    @Override
    protected void doPost(HttpServletRequest request, HttpServletResponse response)
          throws IOException, ServletException {
+         
+      Logger logger = Logger.getLogger(this.getClass().getName());
          
       AuthJWTUtil authUtil = new AuthJWTUtil();
       long nowMillis = System.currentTimeMillis();
@@ -53,7 +58,7 @@ public class DeleteCartServlet extends HttpServlet {
                   }
                }
                catch (Exception e) {
-                       
+                  logger.log(Level.SEVERE, "Login token not found.", e);   
                }
             }
             /*if (cookie.getName().equals("pckitUserId")) {
@@ -105,29 +110,13 @@ public class DeleteCartServlet extends HttpServlet {
                   pageMessage = "Successful";
             }
             
-            if( cookies != null ) {
-               for (int i = 0; i < cookies.length; i++){
-                  cookie = cookies[i];
-                  if (cookie.getName().equals("orderId")) {
-                     cookie.setMaxAge(0);
-                     cookie.setPath("/");
-                     cookie.setValue(null);
-                     response.addCookie(cookie);
-                  }
-                  else if (cookie.getName().equals("order")) {
-                     cookie.setMaxAge(0);
-                     cookie.setPath("/");
-                     cookie.setValue(null);
-                     response.addCookie(cookie);
-                  }
-                  //out.print("Name : " + cookie.getName( ) + ",  ");
-                  //out.print("Value: " + cookie.getValue( )+" <br/>");
-              }
-           }
+            authUtil.deleteOrderId(orderId, connection);
+           
          
          }
          catch (Exception e) {
             pageMessage="An error occurred while deleting your cart.";
+            logger.log(Level.SEVERE, "An error occurred while deleting cart " +orderId+" for user " + userId, e); 
          }
       }
       else {

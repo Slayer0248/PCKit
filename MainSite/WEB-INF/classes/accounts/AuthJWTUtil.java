@@ -175,6 +175,13 @@ public class AuthJWTUtil {
         return outputToken;
     }
     
-	
+	/*login db methods*/
+	public void setOrderId(int userId, String sessionId, int orderId, Connection conn)  throws Exception {
+        loginTracker.updateActiveOrderId(userId, sessionId, orderId, conn);
+    }
+    
+    public void deleteOrderId(int orderId, Connection conn)  throws Exception {
+        loginTracker.clearActiveOrderId(orderId, conn);
+    }
 	
 }

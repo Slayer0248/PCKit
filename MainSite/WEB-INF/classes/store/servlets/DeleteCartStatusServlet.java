@@ -1,5 +1,8 @@
 package store.servlets;
 
+import java.util.logging.Logger;
+import java.util.logging.Level;
+
 import java.io.*;
 import java.util.*;
 import java.sql.*;
@@ -22,6 +25,7 @@ public class DeleteCartStatusServlet extends HttpServlet {
    @Override
    protected void doPost(HttpServletRequest request, HttpServletResponse response)
          throws IOException, ServletException {
+      Logger logger = Logger.getLogger(this.getClass().getName());
          
       AuthJWTUtil authUtil = new AuthJWTUtil();
       long nowMillis = System.currentTimeMillis();
@@ -54,7 +58,7 @@ public class DeleteCartStatusServlet extends HttpServlet {
                   }
                }
                catch (Exception e) {
-                       
+                  logger.log(Level.SEVERE, "Login token not found.", e);       
                }
             }
             //out.print("Name : " + cookie.getName( ) + ",  ");
@@ -67,7 +71,7 @@ public class DeleteCartStatusServlet extends HttpServlet {
          int userId = login.getUserId();
          String status = request.getParameter("status");
          ArrayList<Integer> orderIds = new ArrayList<Integer>();
-         
+         int logBuildId = -1;
          
          
          Connection connection = null;
@@ -104,6 +108,7 @@ public class DeleteCartStatusServlet extends HttpServlet {
             
             for (int i=0; i<orderIds.size(); i++) {
                int curId = orderIds.get(i);
+               logBuildId = curId;
                String queryString2 = "Delete from OrderBuilds where orderId=?";
                PreparedStatement pstatement2 = connection.prepareStatement(queryString2);
                pstatement2.setInt(1, curId);
@@ -118,6 +123,8 @@ public class DeleteCartStatusServlet extends HttpServlet {
                pstatement3.setInt(2, userId);
                updateQuery2 += pstatement3.executeUpdate();
                pstatement3.close();
+               
+               authUtil.deleteOrderId(orderId, connection);
             }
                
             if (updateQuery2 != 0 || updateQuery != 0) {
@@ -127,6 +134,12 @@ public class DeleteCartStatusServlet extends HttpServlet {
          }
          catch (Exception e) {
             pageMessage="An error occurred while deleting your cart.";
+            if (logBuildId == -1) {
+               logger.log(Level.SEVERE, "An error occurred while deleting '" +status +"' carts for user " + userId, e);
+            }
+            else {
+               logger.log(Level.SEVERE, "An error occurred while deleting '" + status +"' cart " +logBuildId+" for user " + userId, e);
+            }
          }
       }
       else {

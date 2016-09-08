@@ -19,10 +19,10 @@ public class LogoutServlet extends HttpServlet {
    @Override
    protected void doPost(HttpServletRequest request, HttpServletResponse response)
          throws IOException, ServletException {
-      HttpSession session=request.getSession(false);
+      /*HttpSession session=request.getSession(false);
       session.setAttribute("userid", null);
       session.setAttribute("name", null);
-      session.invalidate();
+      session.invalidate();*/
       
       AuthJWTUtil authUtil = new AuthJWTUtil();
       long nowMillis = System.currentTimeMillis();

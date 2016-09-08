@@ -1,5 +1,8 @@
 package store.servlets;
 
+import java.util.logging.Logger;
+import java.util.logging.Level;
+
 import java.io.*;
 import java.util.*;
 import java.sql.*;
@@ -23,6 +26,7 @@ public class UpdateCartServlet extends HttpServlet {
    protected void doPost(HttpServletRequest request, HttpServletResponse response)
          throws IOException, ServletException {
          
+      Logger logger = Logger.getLogger(this.getClass().getName());
       AuthJWTUtil authUtil = new AuthJWTUtil();
       long nowMillis = System.currentTimeMillis();
       java.util.Date now = new java.util.Date(nowMillis);
@@ -64,7 +68,7 @@ public class UpdateCartServlet extends HttpServlet {
                   }
                }
                catch (Exception e) {
-                       
+                  logger.log(Level.SEVERE, "Login token not found.", e);       
                }
             }
             //out.print("Name : " + cookie.getName( ) + ",  ");
@@ -75,9 +79,10 @@ public class UpdateCartServlet extends HttpServlet {
       if (result.equals("Valid")) {
          /*int orderId= Integer.parseInt(orderIdStr);
          int userId= Integer.parseInt(userIdStr);*/
-         String[] cartStates = {"In Progress", "Buying"};
-         ArrayList<ShoppingCart> orders = login.getOrdersWithStatus(cartStates);
-         ShoppingCart cart = orders.get(0);
+         //String[] cartStates = {"In Progress", "Buying"};
+         //ArrayList<ShoppingCart> orders = login.getOrdersWithStatus(cartStates);
+         ShoppingCart cart = login.getActiveCart();
+         
          int orderId= cart.getOrderId();
          int userId= login.getUserId();
          String status = request.getParameter("status");

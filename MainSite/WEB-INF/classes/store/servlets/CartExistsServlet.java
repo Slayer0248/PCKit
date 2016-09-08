@@ -1,5 +1,8 @@
 package store.servlets;
 
+import java.util.logging.Logger;
+import java.util.logging.Level;
+
 import java.io.*;
 import java.util.*;
 import java.sql.*;
@@ -23,7 +26,8 @@ public class CartExistsServlet extends HttpServlet {
    protected void doPost(HttpServletRequest request, HttpServletResponse response)
          throws IOException, ServletException {
       //maxStocked & unit prices
-            String pageMessage = "Invalid Post Request.";  
+      String pageMessage = "Invalid Post Request.";  
+      Logger logger = Logger.getLogger(this.getClass().getName());
             
       AuthJWTUtil authUtil = new AuthJWTUtil();
       long nowMillis = System.currentTimeMillis();
@@ -52,7 +56,7 @@ public class CartExistsServlet extends HttpServlet {
                   }
                }
                catch (Exception e) {
-                       
+                  logger.log(Level.SEVERE, "Login token not found.", e);      
                }
             }
             /*if (cookie.getName().equals("pckitUserId")) {
@@ -87,6 +91,8 @@ public class CartExistsServlet extends HttpServlet {
          }
          catch (Exception e) {
             pageMessage="Error occurred while reading database.";
+            String varDefStr = "userId="+userId+", orderStatus="+status;
+            logger.log(Level.SEVERE, "Error occurred while reading database. Vars: " + varDefStr, e);
          }
          
          if (rowCount==1) {

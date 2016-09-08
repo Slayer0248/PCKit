@@ -1,5 +1,8 @@
 package store.servlets;
 
+import java.util.logging.Logger;
+import java.util.logging.Level;
+
 import java.io.*;
 import java.util.*;
 import java.sql.*;
@@ -16,11 +19,13 @@ import javax.servlet.*;
 
 import accounts.AuthJWTUtil;
 import accounts.UserLogin;
+import store.cart.ShoppingCart;
 
 public class CreateCartServlet extends HttpServlet {
    @Override
    protected void doPost(HttpServletRequest request, HttpServletResponse response)
          throws IOException, ServletException {
+      Logger logger = Logger.getLogger(this.getClass().getName());
          
       AuthJWTUtil authUtil = new AuthJWTUtil();
       long nowMillis = System.currentTimeMillis();
@@ -34,11 +39,12 @@ public class CreateCartServlet extends HttpServlet {
       //String userIdStr ="";
       UserLogin login = null;
       String result = "";
+      String token = "";
       if( cookies != null ) {
          for (int i = 0; i < cookies.length; i++){
             cookie = cookies[i];
             if (cookie.getName().equals("pckitLogin")) {
-               String token = (String)cookie.getValue();
+               token = (String)cookie.getValue();
                Connection connection =null;
                try {
                   Class.forName("com.mysql.jdbc.Driver");
@@ -50,7 +56,7 @@ public class CreateCartServlet extends HttpServlet {
                   }
                }
                catch (Exception e) {
-                       
+                  logger.log(Level.SEVERE, "Login token not found.", e);         
                }
             }
             /*if (cookie.getName().equals("pckitUserId")) {
@@ -81,33 +87,20 @@ public class CreateCartServlet extends HttpServlet {
             pstatement.setString(3, "In Progress");
             updateQuery = pstatement.executeUpdate();
             pstatement.close();
-            if (updateQuery != 0) {
-               pageMessage="Success";
-        
-               String queryString2 = "SELECT orderId from Orders where userId=? and orderStatus=?";
-               pstatement2 = connection.prepareStatement(queryString2);
-               pstatement2.setInt(1, userId);
-               pstatement2.setString(2, "In Progress");
-               rs = pstatement2.executeQuery();
-               rs.next();
-               int orderId=rs.getInt("orderId");
-               
-               Cookie orderIdCookie = new Cookie("orderId", "" + orderId);
-               orderIdCookie.setMaxAge(30*60);
-               orderIdCookie.setPath("/");
-               //orderIdCookie.setPath("/");
-               orderIdCookie.setSecure(true);
-               response.addCookie(orderIdCookie);
-               
-               Cookie orderCookie = new Cookie("order", "");
-               orderCookie.setMaxAge(30*60);
-               orderCookie.setPath("/");
-               //orderCookie.setPath("/");
-               response.addCookie(orderCookie);
+            
+            String result2 = authUtil.validateToken(token, now, connection);
+            if (result2.equals("Valid")) {
+                UserLogin login2 = authUtil.getLoginResult();
+                String[] cartStates = {"In Progress"};
+                ArrayList<ShoppingCart> orders = login2.getOrdersWithStatus(cartStates);
+                ShoppingCart cart = orders.get(0);
+                authUtil.setOrderId(login.getUserId(), login.getSessionId(), cart.getOrderId(), connection);
             }
+            
          }
          catch (Exception e) {
             pageMessage="An error occurred while creating your cart.";
+            logger.log(Level.SEVERE, "An error occurred while creating cart for user " + userId, e);   
          }
       }
       else {

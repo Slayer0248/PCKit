@@ -1,5 +1,8 @@
 package store.servlets;
 
+import java.util.logging.Logger;
+import java.util.logging.Level;
+
 import java.io.*;
 import java.util.*;
 import java.sql.*;
@@ -22,6 +25,8 @@ public class HasCartServlet extends HttpServlet {
    @Override
    protected void doPost(HttpServletRequest request, HttpServletResponse response)
          throws IOException, ServletException {
+      Logger logger = Logger.getLogger(this.getClass().getName());
+    
       //maxStocked & unit prices
       AuthJWTUtil authUtil = new AuthJWTUtil();
       long nowMillis = System.currentTimeMillis();
@@ -58,7 +63,7 @@ public class HasCartServlet extends HttpServlet {
                   }
                }
                catch (Exception e) {
-                       
+                  logger.log(Level.SEVERE, "Login token not found.", e);        
                }
             }
             //out.print("Name : " + cookie.getName( ) + ",  ");
@@ -69,9 +74,7 @@ public class HasCartServlet extends HttpServlet {
 
       if (result.equals("Valid")) {
          int userId= login.getUserId();
-         String[] cartStates = {"In Progress", "Buying"};
-         ArrayList<ShoppingCart> orders = login.getOrdersWithStatus(cartStates);
-         pageMessage = orders.size() > 0? "Yes" : "No";
+         pageMessage = login.getActiveCart() == null ? "No" : "Yes";
       }
       else {
          pageMessage = "Reload";

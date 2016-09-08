@@ -1,5 +1,8 @@
 package store.servlets;
 
+import java.util.logging.Logger;
+import java.util.logging.Level;
+
 import java.io.*;
 import java.util.*;
 import java.sql.*;
@@ -24,6 +27,9 @@ public class RemoveItemServlet extends HttpServlet {
    @Override
    protected void doPost(HttpServletRequest request, HttpServletResponse response)
          throws IOException, ServletException {
+    
+      Logger logger = Logger.getLogger(this.getClass().getName());
+      
       AuthJWTUtil authUtil = new AuthJWTUtil();
       long nowMillis = System.currentTimeMillis();
       java.util.Date now = new java.util.Date(nowMillis);
@@ -63,7 +69,7 @@ public class RemoveItemServlet extends HttpServlet {
                   }
                }
                catch (Exception e) {
-                       
+                  logger.log(Level.SEVERE, "Login token not found.", e);        
                }
             }
             //out.print("Name : " + cookie.getName( ) + ",  ");
@@ -74,12 +80,11 @@ public class RemoveItemServlet extends HttpServlet {
       if (result.equals("Valid")) {
          /*int orderId= Integer.parseInt(orderIdStr);
          int userId= Integer.parseInt(userIdStr);*/
-         String[] cartStates = {"In Progress", "Buying"};
-         ArrayList<ShoppingCart> orders = login.getOrdersWithStatus(cartStates);
-         ShoppingCart cart = orders.get(0);
+         ShoppingCart cart = login.getActiveCart();
          int orderId= cart.getOrderId();
          int userId= login.getUserId();
-
+         int logBuildId = -1;
+         int logQuantity = -1;
       
          String[] updates = request.getParameter("updates").split(",");
          
@@ -96,7 +101,6 @@ public class RemoveItemServlet extends HttpServlet {
             
             //ShoppingCart cart = cartManager.createFromCartString(cartData, connection);
             
-            
             //update quantities
             int updateQuery=0;
             int updateQuery2=0;
@@ -104,6 +108,8 @@ public class RemoveItemServlet extends HttpServlet {
                String[] values = updates[i].split(":");
                int curBuildId = Integer.parseInt(values[0]);
                int quantity = Integer.parseInt(values[1]);
+               logBuildId = curBuildId;
+               logQuantity = quantity;
                
                int curIndex = cart.find(curBuildId);
                if (quantity<=0) {
@@ -142,22 +148,13 @@ public class RemoveItemServlet extends HttpServlet {
             
             if (updateQuery == updates.length && updateQuery2 != 0) {
                pageMessage="Success";
-               if( cookies != null ) {
-                  for (int i = 0; i < cookies.length; i++){
-                     cookie = cookies[i];
-                     if (cookie.getName().equals("order")) {
-                        cookie.setValue(cart.getCookieStr());
-                        cookie.setMaxAge(30*60);
-                        cookie.setPath("/");
-                        response.addCookie(cookie);
-                     }
-                  }
-               }
+               
             }
             
          }
          catch (Exception e) {
             pageMessage="Error occurred while removing item from cart.";
+            logger.log(Level.SEVERE, "Error occurred while removing " +logQuantity+" of build " +logBuildId+" from cart " + orderId+ " for user " + userId, e);
          }
       }
       else {

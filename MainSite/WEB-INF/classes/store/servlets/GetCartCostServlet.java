@@ -1,5 +1,8 @@
 package store.servlets;
 
+import java.util.logging.Logger;
+import java.util.logging.Level;
+
 import java.io.*;
 import java.util.*;
 import java.sql.*;
@@ -23,6 +26,7 @@ public class GetCartCostServlet extends HttpServlet {
    @Override
    protected void doPost(HttpServletRequest request, HttpServletResponse response)
          throws IOException, ServletException {
+      Logger logger = Logger.getLogger(this.getClass().getName());
          
       AuthJWTUtil authUtil = new AuthJWTUtil();
       long nowMillis = System.currentTimeMillis();
@@ -54,7 +58,7 @@ public class GetCartCostServlet extends HttpServlet {
                   }
                }
                catch (Exception e) {
-                       
+                  logger.log(Level.SEVERE, "Login token not found.", e);         
                }
             }
             /*if (cookie.getName().equals("pckitUserId")) {
@@ -72,9 +76,7 @@ public class GetCartCostServlet extends HttpServlet {
       }
       
       if (result.equals("Valid")) {
-         String[] cartStates = {"In Progress", "Buying"};
-         ArrayList<ShoppingCart> orders = login.getOrdersWithStatus(cartStates);
-         ShoppingCart cart = orders.get(0);
+         ShoppingCart cart = login.getActiveCart();
          int orderId= cart.getOrderId();
          int userId= login.getUserId();
          /*int orderId= Integer.parseInt(orderIdStr);
@@ -96,6 +98,7 @@ public class GetCartCostServlet extends HttpServlet {
          }
          catch (Exception e) {
             pageMessage="Error occurred while getting cart cost.";
+            logger.log(Level.SEVERE, "Error occurred while getting cost of cart " +orderId+ " for user "+ userId, e);   
          }
       }
       else {

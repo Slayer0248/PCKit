@@ -20,6 +20,7 @@ public class UserLogin {
    private String email;
    
    /*Order data*/
+   private ShoppingCart activeCart;
    private ArrayList<ShoppingCart> orders;
    
    public UserLogin() {
@@ -36,6 +37,7 @@ public class UserLogin {
       cal.add(Calendar.MINUTE, length);
       endDate = cal.getTime();
       orders = new ArrayList<ShoppingCart>();
+      activeCart = null;
    }
    
     public UserLogin(String sId, int uId, Date start, int length) {
@@ -48,6 +50,7 @@ public class UserLogin {
       cal.add(Calendar.MINUTE, length);
       endDate = cal.getTime();
       orders = new ArrayList<ShoppingCart>();
+      activeCart = null;
    }
    
    
@@ -143,6 +146,26 @@ public class UserLogin {
    
    public void setOrders(ArrayList<ShoppingCart> allOrders) {
       orders=allOrders;
+   }
+   
+   public ShoppingCart getActiveCart() {
+      return activeCart;
+   }
+   
+   public void setActiveCart(int orderId) {
+      activeCart=this.find(orderId);
+   }
+   
+   public ShoppingCart find(int orderId) {
+      ShoppingCart result = null;
+      for (int i=0; i<orders.size() && result==null; i++) {
+         ShoppingCart curCart = orders.get(i);
+         if (curCart.getOrderId() == orderId) {
+            result = curCart;
+         }
+      }
+   
+      return result;
    }
    
    public ArrayList<ShoppingCart> getOrdersWithStatus(String[] states) {

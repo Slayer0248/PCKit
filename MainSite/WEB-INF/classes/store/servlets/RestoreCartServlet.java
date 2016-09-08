@@ -1,5 +1,8 @@
 package store.servlets;
 
+import java.util.logging.Logger;
+import java.util.logging.Level;
+
 import java.io.*;
 import java.util.*;
 import java.sql.*;
@@ -24,6 +27,7 @@ public class RestoreCartServlet extends HttpServlet {
    @Override
    protected void doPost(HttpServletRequest request, HttpServletResponse response)
          throws IOException, ServletException {
+      Logger logger = Logger.getLogger(this.getClass().getName());
          
       AuthJWTUtil authUtil = new AuthJWTUtil();
       long nowMillis = System.currentTimeMillis();
@@ -57,7 +61,7 @@ public class RestoreCartServlet extends HttpServlet {
                   }
                }
                catch (Exception e) {
-                       
+                  logger.log(Level.SEVERE, "Login token not found.", e);      
                }
             }
             //out.print("Name : " + cookie.getName( ) + ",  ");
@@ -89,23 +93,14 @@ public class RestoreCartServlet extends HttpServlet {
             rs.close();
             pstatement.close();
             
-            CartManagerUtil cartManager = new CartManagerUtil();
-            ShoppingCart cart = cartManager.createFromOrderId(orderId, connection);
-            
-            Cookie orderIdCookie = new Cookie("orderId", "" + orderId);
-            orderIdCookie.setMaxAge(30*60);
-            orderIdCookie.setPath("/");
-            response.addCookie(orderIdCookie);
-               
-            Cookie orderCookie = new Cookie("order", cart.getCookieStr());
-            orderCookie.setMaxAge(30*60);
-            orderCookie.setPath("/");
-            response.addCookie(orderCookie);
+            authUtil.setOrderId(userId, login.getSessionId(), orderId, connection);
+            login.setActiveCart(orderId);
             
             pageMessage="Success";
          }
          catch (Exception e) {
             pageMessage="Error occurred while restoring cart.";
+            logger.log(Level.SEVERE, "Error occurred while removing cart " + orderId+ " for user " + userId, e);
          }
       }
       else {
