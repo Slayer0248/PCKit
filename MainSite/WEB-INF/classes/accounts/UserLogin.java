@@ -145,15 +145,18 @@ public class UserLogin {
       orders=allOrders;
    }
    
-   public ArrayList<Integer> getOrdersWithStatus(String status) {
-      ArrayList<Integer> indices = new ArrayList<Integer>();
+   public ArrayList<ShoppingCart> getOrdersWithStatus(String[] states) {
+      ArrayList<ShoppingCart> carts = new ArrayList<Integer>();
       for (int i=0; i<orders.size(); i++) {
          ShoppingCart curCart = orders.get(i);
-         if(curCart.getOrderStatus().equals(status)) {
-            indices.add(i);
+         for (int j=0; j<states.length; j++) {
+            String status = states[j];
+            if(curCart.getOrderStatus().equals(status)) {
+               carts.add(curCart);
+            }
          }
       }
-      return indices;
+      return carts;
    }
    
 }

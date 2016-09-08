@@ -17,29 +17,58 @@ import javax.servlet.*;
 import store.cart.ShoppingCart;
 import store.cart.CartItem;
 
+import accounts.AuthJWTUtil;
+import accounts.UserLogin;
+
 public class RestoreCartServlet extends HttpServlet {
    @Override
    protected void doPost(HttpServletRequest request, HttpServletResponse response)
          throws IOException, ServletException {
+         
+      AuthJWTUtil authUtil = new AuthJWTUtil();
+      long nowMillis = System.currentTimeMillis();
+      java.util.Date now = new java.util.Date(nowMillis);
+      
       String pageMessage = "Invalid Post Request.";  
       Cookie cookie = null;
       Cookie[] cookies = null;
       // Get an array of Cookies associated with this domain
       cookies = request.getCookies();
-      String userIdStr ="";
+      //String userIdStr ="";
+      
+      UserLogin login = null;
+      String result = "";
       if( cookies != null ) {
          for (int i = 0; i < cookies.length; i++){
             cookie = cookies[i];
-            if (cookie.getName().equals("pckitUserId")) {
+            /*if (cookie.getName().equals("pckitUserId")) {
                userIdStr= (String)cookie.getValue();
+            }*/
+            if (cookie.getName().equals("pckitLogin")) {
+               String token = (String)cookie.getValue();
+               Connection connection =null;
+               try {
+                  Class.forName("com.mysql.jdbc.Driver");
+                  connection = DriverManager.getConnection("jdbc:mysql://localhost/PCKitDB","root","Potter11a");
+                  authUtil.refreshAll(now, connection); 
+                  authUtil.deauthorize(token, connection);
+                  result = authUtil.validateToken(token, now, connection);
+                  if (result.equals("Valid")) {
+                      login = authUtil.getLoginResult();
+                  }
+               }
+               catch (Exception e) {
+                       
+               }
             }
             //out.print("Name : " + cookie.getName( ) + ",  ");
             //out.print("Value: " + cookie.getValue( )+" <br/>");
          }
       }
       
-      if (userIdStr != null) {
-         int userId = Integer.parseInt(userIdStr);
+      if (result.equals("Valid")) {
+         //int userId = Integer.parseInt(userIdStr);
+         int userId = login.getUserId();
          String status = request.getParameter("status");
       
          Connection connection = null;
