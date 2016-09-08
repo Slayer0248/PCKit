@@ -65,15 +65,13 @@ public class HasCartServlet extends HttpServlet {
             //out.print("Value: " + cookie.getValue( )+" <br/>");
          }
       }
-      int userId= login.getUserId();
-      String[] cartStates = {"In Progress", "Buying"};
-      ArrayList<ShoppingCart> orders = login.getOrdersWithStatus(cartStates);
       
-      if (orders.size() > 0) {
-         exists=1;
-      }
+
       if (result.equals("Valid")) {
-         pageMessage = exists ==1? "Yes" : "No";
+         int userId= login.getUserId();
+         String[] cartStates = {"In Progress", "Buying"};
+         ArrayList<ShoppingCart> orders = login.getOrdersWithStatus(cartStates);
+         pageMessage = orders.size() == 0? "Yes" : "No";
       }
       else {
          pageMessage = "Reload";
