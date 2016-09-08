@@ -75,7 +75,8 @@ public class RemoveItemServlet extends HttpServlet {
       if (orderIdStr != null || userIdStr != null || cartData != null) {
          /*int orderId= Integer.parseInt(orderIdStr);
          int userId= Integer.parseInt(userIdStr);*/
-         ArrayList<ShoppingCart> orders = login.getOrdersWithStatus({"In Progress", "Buying"});
+         String[] cartStates = {"In Progress", "Buying"};
+         ArrayList<ShoppingCart> orders = login.getOrdersWithStatus(cartStates);
          ShoppingCart cart = orders.get(0);
          int orderId= cart.getOrderId();
          int userId= login.getUserId();

@@ -73,7 +73,8 @@ public class GetCartCostServlet extends HttpServlet {
       }
       
       if (result.equals("Valid")) {
-         ArrayList<ShoppingCart> orders = login.getOrdersWithStatus({"In Progress", "Buying"});
+         String[] cartStates = {"In Progress", "Buying"};
+         ArrayList<ShoppingCart> orders = login.getOrdersWithStatus(cartStates);
          ShoppingCart cart = orders.get(0);
          int orderId= cart.getOrderId();
          int userId= login.getUserId();

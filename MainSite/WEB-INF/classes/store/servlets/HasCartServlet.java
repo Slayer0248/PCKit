@@ -67,7 +67,8 @@ public class HasCartServlet extends HttpServlet {
          }
       }
       int userId= login.getUserId();
-      ArrayList<ShoppingCart> orders = login.getOrdersWithStatus({"In Progress", "Buying"});
+      String[] cartStates = {"In Progress", "Buying"};
+      ArrayList<ShoppingCart> orders = login.getOrdersWithStatus(cartStates);
       
       if (orders.size() > 0) {
          exists=1;
