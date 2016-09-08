@@ -213,8 +213,9 @@
               // Get an array of Cookies associated with this domain
               cookies = request.getCookies();
               String loggedUser ="";
-              String orderText = "";
+              //String orderText = "";
               UserLogin login = null;
+              String result = "";
               if( cookies != null ) {
                  for (int i = 0; i < cookies.length; i++){
                     cookie = cookies[i];
@@ -226,7 +227,7 @@
                           connection = DriverManager.getConnection("jdbc:mysql://localhost/PCKitDB","root","Potter11a");
                           ArrayList<UserLogin> logs = authUtil.getAll(now, connection);
                           authUtil.refreshAll(now, connection); 
-                          String result = authUtil.validateToken(token, now, connection);
+                          result = authUtil.validateToken(token, now, connection);
                           if (result.equals("Valid")) {
                              login = authUtil.getLoginResult();
                              loggedUser = login.getFirstName() + " " + login.getLastName();
@@ -316,17 +317,13 @@
                    <th id="itemRemoveHeader" class="removeCol">In Cart</th>
                  </tr>
                  
-        <%  Connection connection = null;
-            PreparedStatement pstatement = null;
-            ResultSet rs = null;
+        <%  String[] cartStates = {"In Progress", "Buying"};
+            ArrayList<ShoppingCart> orders = login.getOrdersWithStatus(cartStates);
             ShoppingCart cart = null;
              
-             try {
-             
-                Class.forName("com.mysql.jdbc.Driver");
-                connection = DriverManager.getConnection("jdbc:mysql://localhost/PCKitDB","root","Potter11a");
-                CartManagerUtil cartManager = new CartManagerUtil();
-                cart = cartManager.createFullFromCartString(orderText, connection);%>
+             if (orders.size() > 0) {
+                cart = orders.get(0);
+                %>
                 <%= cart.size()%>                
 
                 <% for(int i=0; i<cart.size(); i++) {
@@ -356,7 +353,7 @@
                 </tr>
                  <% } 
                  
-                 }  catch (Exception e) {%> <%= e.getMessage() %> <%  }%>
+                 }  else {%>No shopping cart found<%  }%>
                  
                  
               </table><center>
