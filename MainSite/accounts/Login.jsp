@@ -111,8 +111,8 @@
            <%
               SecureRandom random = new SecureRandom();
               String token = new BigInteger(130, random).toString(32);
-              Cookie cookie = new Cookie("csrf",token);
-              response.addCookie(cookie);
+              Cookie cookieCSRF = new Cookie("csrf",token);
+              response.addCookie(cookieCSRF);
               
               AuthJWTUtil authUtil = new AuthJWTUtil();
               long nowMillis = System.currentTimeMillis();
