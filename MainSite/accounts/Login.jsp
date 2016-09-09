@@ -3,6 +3,7 @@
 <%@ page import="java.io.*,java.util.*,java.sql.*"%>
 <%@ page import="javax.servlet.http.*,javax.servlet.*" %>
 <%@ page import="java.util.Date,accounts.AuthJWTUtil,accounts.UserLogin" %>
+<@ page import="import java.security.SecureRandom,import java.math.BigInteger" %>
 
 <!DOCTYPE html>
 <html>
@@ -43,10 +44,7 @@
      	         $.ajax({
      	            type : "POST",
      	            url: "/accounts/login-exists/",
-     	            headers: {
-                      "csrf":$.cookie('csrf')
-                    },
-     	            data: "email=" + encodeURIComponent($("#emailText").val()) + "&password=" + encodeURIComponent($("#passwordText").val()),
+     	            data: "email=" + encodeURIComponent($("#emailText").val()) + "&password=" + encodeURIComponent($("#passwordText").val()) + "&csrf="+encodeURIComponent($.cookie('csrf')),
      	            success: function (data) {
      	               if (data == "Yes") {
                           console.log("got here");
@@ -111,6 +109,11 @@
          <img class="make-it-fit" src="../images/background.png" id="bgImage" alt="">
          <div id="accountAccessDiv">
            <%
+              SecureRandom random = new SecureRandom();
+              String token = new BigInteger(130, random).toString(32);
+              Cookie cookie = new Cookie("csrf",token);
+              response.addCookie(cookie);
+              
               AuthJWTUtil authUtil = new AuthJWTUtil();
               long nowMillis = System.currentTimeMillis();
               java.util.Date now = new java.util.Date(nowMillis);
