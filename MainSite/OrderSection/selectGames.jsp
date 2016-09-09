@@ -283,9 +283,16 @@ document.write(data2); history.pushState({}, null, "https://www.pckit.org/OrderS
               //TODO: create csrf cookie in here to be sure next page is accessed only by this page
               $.ajax({
                  type:"POST",
+                 url:"./hasCart/",
+                 
+               }).done(function(data) {
+               
+               if (data =="No") {
+              $.ajax({
+                 type:"POST",
                  url:"./createCart/",
                  data:"" 
-               }).done(function(data) {
+               }).done(function(data2) {
                   if (data=="Success") {
                      console.log("in here");
                      $.ajax({
@@ -296,12 +303,28 @@ document.write(data2); history.pushState({}, null, "https://www.pckit.org/OrderS
                      console.log(xhr.responseText );
                      console.log('A jQuery error has occurred. Status: ' + status + ' - Message: ' + message);
                   }
-               }).done(function(data) { /*window.location.href = "http://www.pckit.org/OrderSection/selectBuild.jsp";*/
-document.write(data); history.pushState({}, null, "https://www.pckit.org/OrderSection/selectBuild.jsp"); });
+               }).done(function(data3) { /*window.location.href = "http://www.pckit.org/OrderSection/selectBuild.jsp";*/
+document.write(data3); history.pushState({}, null, "https://www.pckit.org/OrderSection/selectBuild.jsp"); });
                   }  else {
-                    //form errors
+                    //form errors'
+                    
                  
                  }
+                
+             });
+              else if (data =="Yes") { 
+                 $.ajax({
+                 type:"POST",
+                 url:"./selectBuild.jsp",
+                 data:JSON.stringify({"minTier": adjustedTier}),
+                  error: function (xhr, status, message) {
+                     console.log(xhr.responseText );
+                     console.log('A jQuery error has occurred. Status: ' + status + ' - Message: ' + message);
+                  }
+               }).done(function(data2) { /*window.location.href = "http://www.pckit.org/OrderSection/selectBuild.jsp";*/
+document.write(data2); history.pushState({}, null, "https://www.pckit.org/OrderSection/selectBuild.jsp"); });
+              }
+             
              });
             // $.post("./selectBuild.jsp",{"minTier": adjustedTier}).done(function(data) {
      //console.log(data);
