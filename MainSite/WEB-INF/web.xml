@@ -65,11 +65,7 @@
     </servlet>
 
 
-
-    <servlet>
-      <servlet-name>MailingList</servlet-name>
-      <servlet-class>MailingListServlet</servlet-class>
-   </servlet>
+    
 
     <!-- Mapping -->
     <servlet-mapping>
@@ -81,6 +77,40 @@
     	<servlet-name>jforum</servlet-name>
     	<url-pattern>*.page</url-pattern>
     </servlet-mapping>   
+    
+    <!--CSRFGuard-->
+    <listener>
+		<listener-class>org.owasp.csrfguard.CsrfGuardServletContextListener</listener-class>
+	</listener>
+	<listener>
+		<listener-class>org.owasp.csrfguard.CsrfGuardHttpSessionListener</listener-class>
+	</listener>
+	
+	<filter>
+		<filter-name>CSRFGuard</filter-name>
+		<filter-class>org.owasp.csrfguard.CsrfGuardFilter</filter-class>
+	</filter>
+	
+	<filter-mapping>
+		<filter-name>CSRFGuard</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+	
+	<context-param>
+             <param-name>Owasp.CsrfGuard.Config</param-name>
+             <param-value>WEB-INF/Owasp.CsrfGuard.properties</param-value>
+       </context-param>
+       <context-param>
+             <param-name>Owasp.CsrfGuard.Config.Print</param-name>
+             <param-value>true</param-value>
+       </context-param>
+   
+   <!--Mailing List-->
+   
+   <servlet>
+      <servlet-name>MailingList</servlet-name>
+      <servlet-class>MailingListServlet</servlet-class>
+   </servlet>
    
    <servlet-mapping>
       <servlet-name>MailingList</servlet-name>
