@@ -124,7 +124,7 @@ public class DeleteCartStatusServlet extends HttpServlet {
                updateQuery2 += pstatement3.executeUpdate();
                pstatement3.close();
                
-               authUtil.deleteOrderId(orderId, connection);
+               authUtil.deleteOrderId(curId, connection);
             }
                
             if (updateQuery2 != 0 || updateQuery != 0) {
