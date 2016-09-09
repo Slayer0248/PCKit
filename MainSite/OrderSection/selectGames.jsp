@@ -293,7 +293,7 @@ document.write(data2); history.pushState({}, null, "https://www.pckit.org/OrderS
                  url:"./createCart/",
                  data:"" 
                }).done(function(data2) {
-                  if (data=="Success") {
+                  if (data2=="Success") {
                      console.log("in here");
                      $.ajax({
                  type:"POST",
