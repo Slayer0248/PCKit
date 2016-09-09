@@ -27,6 +27,7 @@ public class VerifyCsrfToken {
          return false;
       }
       
+      //String csrfToken = req.getParameter("csrf");
       String csrfToken = req.getHeader("csrf");
       if (csrfToken == null) {
          return false;
