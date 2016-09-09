@@ -97,7 +97,7 @@ public class CreateCartServlet extends HttpServlet {
                 authUtil.setOrderId(login.getUserId(), login.getSessionId(), cart.getOrderId(), connection);
             }
             
-            pageMessage="Success;"
+            pageMessage="Success";
             
          }
          catch (Exception e) {
