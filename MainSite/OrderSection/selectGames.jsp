@@ -312,7 +312,7 @@ document.write(data3); history.pushState({}, null, "https://www.pckit.org/OrderS
                  }
                 
              });
-              else if (data =="Yes") { 
+             } else if (data =="Yes") { 
                  $.ajax({
                  type:"POST",
                  url:"./selectBuild.jsp",
@@ -323,6 +323,7 @@ document.write(data3); history.pushState({}, null, "https://www.pckit.org/OrderS
                   }
                }).done(function(data2) { /*window.location.href = "http://www.pckit.org/OrderSection/selectBuild.jsp";*/
 document.write(data2); history.pushState({}, null, "https://www.pckit.org/OrderSection/selectBuild.jsp"); });
+
               }
              
              });
