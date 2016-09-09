@@ -23,6 +23,13 @@
             var fSize = parseFloat($('#placeholderText').css('font-size'))
             console.log("%f px or %f em", fSize, fSize/16);
         });
+        
+        function getCookie(name)
+  {
+    var re = new RegExp(name + "=([^;]+)");
+    var value = re.exec(document.cookie);
+    return (value != null) ? unescape(value[1]) : null;
+  }
          
         $(function(){
            $("#loginForm").on("submit", function(e) {
@@ -44,7 +51,7 @@
      	         $.ajax({
      	            type : "POST",
      	            url: "/accounts/login-exists/",
-     	            data: "email=" + encodeURIComponent($("#emailText").val()) + "&password=" + encodeURIComponent($("#passwordText").val()) + "&csrf="+encodeURIComponent($.cookie('csrf')),
+     	            data: "email=" + encodeURIComponent($("#emailText").val()) + "&password=" + encodeURIComponent($("#passwordText").val()) + "&csrf="+encodeURIComponent(getCookie('csrf')),
      	            success: function (data) {
      	               if (data == "Yes") {
                           console.log("got here");
@@ -109,12 +116,12 @@
          <img class="make-it-fit" src="../images/background.png" id="bgImage" alt="">
          <div id="accountAccessDiv">
            <%
-              SecureRandom random = new SecureRandom();
+              /*SecureRandom random = new SecureRandom();
               String tokenCSRF = new BigInteger(130, random).toString(32);
               Cookie cookieCSRF = new Cookie("csrf",tokenCSRF);
               cookieCSRF.setPath("/");
               cookieCSRF.setSecure(true);
-              response.addCookie(cookieCSRF);
+              response.addCookie(cookieCSRF);*/
               
               AuthJWTUtil authUtil = new AuthJWTUtil();
               long nowMillis = System.currentTimeMillis();
