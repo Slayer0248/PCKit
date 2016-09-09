@@ -11,12 +11,16 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import util.SecureEncrypt;
+import VerifyCsrfToken;
 
 
 public class LoginExistsServlet extends HttpServlet {
    @Override
    protected void doPost(HttpServletRequest request, HttpServletResponse response)
          throws IOException, ServletException {
+         
+      VerifyCsrfToken tokenCompare= new VerifyCsrfToken();
+      if (tokenCompare.isValidToken(request, response)) {
       String resultMsg="";         
 
       SecureEncrypt seTest= new SecureEncrypt();
@@ -58,5 +62,7 @@ public class LoginExistsServlet extends HttpServlet {
       
       response.setContentType("text/html;charset=UTF-8");
       response.getWriter().write(resultMsg);
+      }
    }
+   
 }

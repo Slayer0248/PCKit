@@ -6,6 +6,11 @@ import java.util.*;
  
 // Implements Filter class
 public class VerifyCsrfToken {
+    public VerifyCsrfToken() {
+        
+        
+    }
+
    public static boolean isValidToken(HttpServletRequest req, HttpServletResponse resp) 
           throws IOException, ServletException {
       
@@ -20,7 +25,7 @@ public class VerifyCsrfToken {
          return false;
       }
       
-      String csrfToken = req.getParameter("csrf");
+      String csrfToken = req.getHeader("csrf");
       if (csrfToken == null) {
          return false;
       }

@@ -43,6 +43,9 @@
      	         $.ajax({
      	            type : "POST",
      	            url: "/accounts/login-exists/",
+     	            headers: {
+                      "csrf":$.cookie('csrf')
+                    },
      	            data: "email=" + encodeURIComponent($("#emailText").val()) + "&password=" + encodeURIComponent($("#passwordText").val()),
      	            success: function (data) {
      	               if (data == "Yes") {
