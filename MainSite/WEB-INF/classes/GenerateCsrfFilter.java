@@ -25,7 +25,7 @@ public class GenerateCsrfFilter implements Filter {
         HttpServletResponse res= (HttpServletResponse) response;
         res.addCookie(cookie);
 
-        chain.doFilter(request, res);
+        filterChain.doFilter(request, res);
 
     }
 
