@@ -99,7 +99,7 @@ public class DeleteCartServlet extends HttpServlet {
             
             
             int updateQuery2 = 0;
-            String queryString2 = "Delete from Order where orderId=? and userId=?";
+            String queryString2 = "Delete from Orders where orderId=? and userId=?";
             pstatement2 = connection.prepareStatement(queryString2);
             pstatement2.setInt(1, orderId);
             pstatement2.setInt(2, userId);
