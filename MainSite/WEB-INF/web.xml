@@ -78,7 +78,7 @@
     	<url-pattern>*.page</url-pattern>
     </servlet-mapping>   
     
-    <!--CSRFGuard-->
+    <!--CSRFGuard
     <listener>
 		<listener-class>org.owasp.csrfguard.CsrfGuardServletContextListener</listener-class>
 	</listener>
@@ -103,7 +103,7 @@
        <context-param>
              <param-name>Owasp.CsrfGuard.Config.Print</param-name>
              <param-value>true</param-value>
-       </context-param>
+       </context-param>-->
    
    <!--Mailing List-->
    
