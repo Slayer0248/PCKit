@@ -60,6 +60,20 @@
              return aKeys;
           }
         };
+        
+        var ESC_MAP = {
+          '&': '&amp;',
+          '<': '&lt;',
+          '>': '&gt;',
+          '"': '&quot;',
+          "'": '&#39;'
+       };
+
+       function escapeHTML(s, forAttribute) {
+          return s.replace(forAttribute ? /[&<>'"]/g : /[&<>]/g, function(c) {
+             return ESC_MAP[c];
+          });
+       }
       
          var w = Math.max(document.documentElement.clientWidth, window.innerWidth || 0)
          var h = Math.max(document.documentElement.clientHeight, window.innerHeight || 0)

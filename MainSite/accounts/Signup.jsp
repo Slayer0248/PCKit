@@ -23,7 +23,19 @@
             console.log("%f px or %f em", fSize, fSize/16);
         });
         
-       
+       var ESC_MAP = {
+          '&': '&amp;',
+          '<': '&lt;',
+          '>': '&gt;',
+          '"': '&quot;',
+          "'": '&#39;'
+       };
+
+       function escapeHTML(s, forAttribute) {
+          return s.replace(forAttribute ? /[&<>'"]/g : /[&<>]/g, function(c) {
+             return ESC_MAP[c];
+          });
+       }
         
         $(function(){
            $("#signUpForm").on("submit", function(e) {
@@ -58,10 +70,10 @@
      	         $.ajax({
      	            type : "POST",
      	            url: "/accounts/account-exists/",
-     	            data: "email=" + encodeURIComponent($("#emailText").val()),
+     	            data: "email=" + encodeURIComponent(escapeHTML($("#emailText").val(), true)),
      	            success: function (data) {
      	               if (data == "No") {
-     	                  nextData = "Email=" + encodeURIComponent($("#emailText").val()) +"&Password="+encodeURIComponent($("#passwordText").val())+ "&firstName="+encodeURIComponent($("#firstNameText").val()) +  "&lastName="+encodeURIComponent($("#lastNameText").val());
+     	                  nextData = "Email=" + encodeURIComponent(escapeHTML($("#emailText").val(), true)) +"&Password="+encodeURIComponent(escapeHTML($("#passwordText").val(), true))+ "&firstName="+encodeURIComponent(escapeHTML($("#firstNameText").val(), true)) +  "&lastName="+encodeURIComponent(escapeHTML($("#lastNameText").val(), true));
      	                  $.ajax({
      	                    type : "POST",
      	                    url: "/accounts/register/",

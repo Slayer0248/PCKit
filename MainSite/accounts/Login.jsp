@@ -30,6 +30,21 @@
     var value = re.exec(document.cookie);
     return (value != null) ? unescape(value[1]) : null;
   }
+  
+  
+        var ESC_MAP = {
+          '&': '&amp;',
+          '<': '&lt;',
+          '>': '&gt;',
+          '"': '&quot;',
+          "'": '&#39;'
+       };
+
+       function escapeHTML(s, forAttribute) {
+          return s.replace(forAttribute ? /[&<>'"]/g : /[&<>]/g, function(c) {
+             return ESC_MAP[c];
+          });
+       }
          
         $(function(){
            $("#loginForm").on("submit", function(e) {
@@ -52,7 +67,7 @@
      	            type : "POST",
      	            url: "/accounts/login-exists/",
      	            headers: { "csrf":getCookie('csrf')},
-     	            data: "email=" + encodeURIComponent($("#emailText").val()) + "&password=" + encodeURIComponent($("#passwordText").val()) + "&csrf="+encodeURIComponent(getCookie('csrf')),
+     	            data: "email=" + encodeURIComponent(escapeHTML($("#emailText").val(), true)) + "&password=" + encodeURIComponent(escapeHTML($("#passwordText").val(), true)),
      	            success: function (data) {
      	               if (data == "Yes") {
                           console.log("got here");
@@ -123,6 +138,12 @@
               cookieCSRF.setPath("/");
               cookieCSRF.setSecure(true);
               response.addCookie(cookieCSRF);
+              
+              Cookie cookieCSRF2 = new Cookie("csrfCheck",tokenCSRF);
+              cookieCSRF2.setPath("/");
+              cookieCSRF2.setHttpOnly(true);
+              cookieCSRF2.setSecure(true);
+              response.addCookie(cookieCSRF2);
               
               AuthJWTUtil authUtil = new AuthJWTUtil();
               long nowMillis = System.currentTimeMillis();
