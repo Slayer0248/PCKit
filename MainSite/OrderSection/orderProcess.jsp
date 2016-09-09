@@ -112,7 +112,7 @@ document.write(data2); history.pushState({}, null, "https://www.pckit.org/OrderS
            }
            
            function goToNextPage(isCart) {          
-             if ($("#accessLogoutLink").length > 0 && isCart=="Yes") { 
+             if ($("#accessLogoutLink").length > 0 && isCart=="No") { 
              $.ajax({
                  type:"POST",
                  url:"./cartExists/",
