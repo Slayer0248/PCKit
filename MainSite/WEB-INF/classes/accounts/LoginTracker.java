@@ -147,7 +147,7 @@ public class LoginTracker {
        pstatement3.setString(1, sessionId);
        pstatement3.setInt(2, userId);
        //pstatement.setString(2, ipAddress);
-       ResultSet rs3 = pstatement.executeQuery();
+       ResultSet rs3 = pstatement3.executeQuery();
        rs3.next();
        int activeOrderId = rs3.getInt("activeOrderId");
        rs3.close();
