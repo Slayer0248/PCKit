@@ -103,7 +103,7 @@
        <context-param>
              <param-name>Owasp.CsrfGuard.Config.Print</param-name>
              <param-value>true</param-value>
-       </context-param>-->
+       </context-param>
        
      <filter>
 		<filter-name>CSRFGen</filter-name>
@@ -113,7 +113,7 @@
 	<filter-mapping>
 		<filter-name>CSRFGen</filter-name>
 		<url-pattern>/*</url-pattern>
-	</filter-mapping>  
+	</filter-mapping> --> 
    
    <!--Mailing List-->
    
