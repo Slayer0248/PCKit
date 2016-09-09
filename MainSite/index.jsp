@@ -3,7 +3,7 @@
 <%@ page import="java.io.*,java.util.*,java.sql.*"%>
 <%@ page import="javax.servlet.http.*,javax.servlet.*" %>
 <%@ page import="java.util.Date,accounts.AuthJWTUtil,accounts.UserLogin" %>
-<%@page import="java.util.logging.Logger"%>
+<%@page import="java.util.logging.Logger,java.util.logging.Level"%>
 
 
 <!DOCTYPE html>
@@ -45,7 +45,9 @@
               String loggedUser ="";
               logger.info("This is a test");
               logger.info(""+ now);
+              String result = "";
               //request.getServletContext().removeAttribute("pckitName");
+              
               if( cookies != null ) {
                  for (int i = 0; i < cookies.length; i++){
                     cookie = cookies[i];
@@ -62,14 +64,28 @@
                               logger.info(""+ logs.get(j).getStartDate());
                           }
                           authUtil.refreshAll(now, connection); 
-                          String result = authUtil.validateToken(token, now, connection);
+                          result = authUtil.validateToken(token, now, connection);
                           if (result.equals("Valid")) {
                              login = authUtil.getLoginResult();
                              loggedUser = login.getFirstName() + " " + login.getLastName();
                           }
+                          if (result.equals("Reload")) {
+                             cookie.setPath("/");
+                             cookie.setMaxAge(0);
+                             cookie.setValue(null);
+                             cookie.setHttpOnly(true);
+                             cookie.setSecure(true);
+                             response.addCookie(cookie);
+                          }
                        }
                        catch (Exception e) {
-                          
+                          logger.log(Level.SEVERE, "Login token not found.", e); 
+                          /*cookie.setPath("/");
+                          cookie.setMaxAge(0);
+                          cookie.setValue(null);
+                          cookie.setHttpOnly(true);
+                          cookie.setSecure(true);
+                          response.addCookie(cookie);*/
                        }
                        
                        
@@ -118,7 +134,7 @@
         <% }
         else { %>
 
-           <a id="accessLoginLink"href="./accounts/Login.jsp" class="accountAccessText">Login/Sign up</a>
+           <a id="accessLoginLink"href="./accounts/Login.jsp" class="accountAccessText">Login/Sign up<%= result%></a>
 
         <% }
 
