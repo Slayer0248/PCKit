@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import util.SecureEncrypt;
-import VerifyCsrfToken;
+//import VerifyCsrfToken;
 
 
 public class LoginExistsServlet extends HttpServlet {
