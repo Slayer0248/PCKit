@@ -110,8 +110,8 @@
          <div id="accountAccessDiv">
            <%
               SecureRandom random = new SecureRandom();
-              String token = new BigInteger(130, random).toString(32);
-              Cookie cookieCSRF = new Cookie("csrf",token);
+              String tokenCSRF = new BigInteger(130, random).toString(32);
+              Cookie cookieCSRF = new Cookie("csrf",tokenCSRF);
               response.addCookie(cookieCSRF);
               
               AuthJWTUtil authUtil = new AuthJWTUtil();
