@@ -11,8 +11,7 @@ import store.servlets.CartManagerUtil;
 public class LoginTracker {
 
    //private UserLogin;
-   private CartManagerUtil cmUtil;
-   private String 
+   private CartManagerUtil cmUtil; 
 
    public LoginTracker() {
       cmUtil= new CartManagerUtil();
