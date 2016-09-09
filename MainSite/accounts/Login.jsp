@@ -3,7 +3,7 @@
 <%@ page import="java.io.*,java.util.*,java.sql.*"%>
 <%@ page import="javax.servlet.http.*,javax.servlet.*" %>
 <%@ page import="java.util.Date,accounts.AuthJWTUtil,accounts.UserLogin" %>
-<@ page import="import java.security.SecureRandom,import java.math.BigInteger" %>
+<@ page import="java.security.SecureRandom,java.math.BigInteger" %>
 
 <!DOCTYPE html>
 <html>
