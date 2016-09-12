@@ -63,7 +63,7 @@
               
               }
               catch (Exception e) {
-              
+                 logger.log(Level.SEVERE, "CSRF not created.", e);
               }
               
               Cookie cookie = null;
