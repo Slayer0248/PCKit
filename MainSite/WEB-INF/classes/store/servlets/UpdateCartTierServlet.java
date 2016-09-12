@@ -22,7 +22,7 @@ import accounts.UserLogin;
 import accounts.VerifyCsrfToken;
 import store.cart.ShoppingCart;
 
-public class UpdateCartServlet extends HttpServlet {
+public class UpdateCartTierServlet extends HttpServlet {
    @Override
    protected void doPost(HttpServletRequest request, HttpServletResponse response)
    throws IOException, ServletException {
