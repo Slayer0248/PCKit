@@ -23,6 +23,12 @@
             console.log("%f px or %f em", fSize, fSize/16);
         });
         
+       function getCookie(name) {
+           var re = new RegExp(name + "=([^;]+)");
+           var value = re.exec(document.cookie);
+           return (value != null) ? unescape(value[1]) : null;
+       }
+        
        var ESC_MAP = {
           '&': '&amp;',
           '<': '&lt;',
@@ -70,13 +76,15 @@
      	         $.ajax({
      	            type : "POST",
      	            url: "/accounts/account-exists/",
-     	            data: "email=" + encodeURIComponent(escapeHTML($("#emailText").val(), true)),
+     	            headers: { "csrf":getCookie('csrf')},
+     	            data: "email=" + encodeURIComponent($("#emailText").val()),
      	            success: function (data) {
      	               if (data == "No") {
-     	                  nextData = "Email=" + encodeURIComponent(escapeHTML($("#emailText").val(), true)) +"&Password="+encodeURIComponent(escapeHTML($("#passwordText").val(), true))+ "&firstName="+encodeURIComponent(escapeHTML($("#firstNameText").val(), true)) +  "&lastName="+encodeURIComponent(escapeHTML($("#lastNameText").val(), true));
+     	                  nextData = "Email=" + encodeURIComponent($("#emailText").val()) +"&Password="+encodeURIComponent($("#passwordText").val())+ "&firstName="+encodeURIComponent($("#firstNameText").val()) +  "&lastName="+encodeURIComponent($("#lastNameText").val());
      	                  $.ajax({
      	                    type : "POST",
      	                    url: "/accounts/register/",
+     	                    headers: { "csrf":getCookie('csrf')},
      	                    data: nextData
      	                  }).done(function(outData) { document.write(outData); });
      	               }
@@ -136,6 +144,30 @@
               AuthJWTUtil authUtil = new AuthJWTUtil();
               long nowMillis = System.currentTimeMillis();
               java.util.Date now = new java.util.Date(nowMillis);
+              
+              try {
+              
+                 SecureRandom random = new SecureRandom();
+                 String tokenCSRF = new BigInteger(130, random).toString(32);
+                 
+                 Cookie cookieCSRF2 = new Cookie("csrfCheck", authUtil.makeCSRFCookie(tokenCSRF, nowMillis, 30));
+                 cookieCSRF2.setPath("/");
+                 cookieCSRF2.setHttpOnly(true);
+                 cookieCSRF2.setSecure(true);
+                 response.addCookie(cookieCSRF2);
+                 
+                 Cookie cookieCSRF = new Cookie("csrf",tokenCSRF);
+                 cookieCSRF.setPath("/");
+                 cookieCSRF.setSecure(true);
+                 response.addCookie(cookieCSRF);
+              
+                 
+              
+              }
+              catch (Exception e) {
+              
+              }
+              
               Cookie cookie = null;
               Cookie[] cookies = null;
               // Get an array of Cookies associated with this domain
@@ -156,7 +188,7 @@
                           String result = authUtil.validateToken(token, now, connection);
                           if (result.equals("Valid")) {
                              login = authUtil.getLoginResult();
-                             loggedUser = login.getFirstName() + " " + login.getLastName();
+                             loggedUser = authUtil.escapeHTML(login.getFirstName()) + " " + authUtil.escapeHTML(login.getLastName());
                           }
                        }
                        catch (Exception e) {

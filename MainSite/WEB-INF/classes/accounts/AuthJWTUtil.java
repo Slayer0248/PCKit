@@ -98,7 +98,6 @@ public class AuthJWTUtil {
     
     }
     
-    
     public Claims parseJWT(String jwt) throws Exception {
        //This line will throw an exception if it is not a signed JWS (as expected)
        //System.out.println("Encrypted jwt: " + jwt);
@@ -183,5 +182,81 @@ public class AuthJWTUtil {
     public void deleteOrderId(int orderId, Connection conn)  throws Exception {
         loginTracker.clearActiveOrderId(orderId, conn);
     }
+    
+    /*CSRF cookie methods*/
+    public String createJWTForCSRF(String id, String issuer, String subject, long nowMillis, long ttlMillis, String csrf) throws Exception {
+       //The JWT signature algorithm we will be using to sign the token
+       //SignatureAlgorithm signatureAlgorithm = SignatureAlgorithm.HS256;
+       
+       //long nowMillis = System.currentTimeMillis();
+       java.util.Date now = new java.util.Date(nowMillis);
+       
+       //We will sign our JWT with our jwtKey secret
+       byte[] apiKeySecretBytes = DatatypeConverter.parseBase64Binary(jwtKey);
+       Key signingKey = new SecretKeySpec(apiKeySecretBytes, "HmacSHA256");
+       
+       
+       JwtBuilder builder = Jwts.builder();
+       builder.setId(id).setIssuedAt(now).setSubject(subject).setIssuer(issuer).setNotBefore(now).claim("csrf", csrf).signWith(SignatureAlgorithm.HS256, signingKey);
+            
+            //.setNotBefore(now).claim("test", "Hello")                    
+        //if it has been specified, let's add the expiration
+        if (ttlMillis >= 0) {
+           long expMillis = nowMillis + ttlMillis;
+           java.util.Date exp = new java.util.Date(expMillis);
+           builder.setExpiration(exp);
+        }
+        
+        //Builds the JWT and serializes it to a compact, URL-safe string
+        return seTest.encryptToString(builder.compact(), "AES");
+    
+    }
+    
+    
+    public String makeCSRFCookie(String csrfValue, long nowMillis, int mins) throws Exception {
+        // Authenticate against a database, LDAP, file or whatever
+        // Throw an Exception if the credentials are invalid
+        java.util.Date now = new java.util.Date(nowMillis);
+        long lengthMillis = ((long) mins)* 60 * 1000;
+        return createJWTForCSRF(csrfValue, "https://www.pckit.org", "PCKitCSRF", nowMillis, lengthMillis, csrfValue);
+
+    }
+    
+    public String extractCSRF(String jwt) throws Exception {
+        // Authenticate against a database, LDAP, file or whatever
+        // Throw an Exception if the credentials are invalid
+        //String result = "Validation error";
+        Claims claims = parseJWT(jwt);
+        String csrf = claims.get("csrf", String.class);
+        return csrf;
+        
+        
+    }
+	
+	/*HTML escape String*/
+	public String escapeHTML(String input) {
+	    char[] unsafeChars = {'<', '>','&','"','\'', '/'};
+	    String[] replacements = {"&lt;", "&gt;", "&amp;", "&quot;", "&#x27", "&#x2F"};
+	    
+	    String escapedText= "";
+	    char tmp = ' ';
+	    for (int i=0; i<input.length(); i++) {
+	       tmp = input.charAt(i);
+	       int found = -1;
+	       for (int j=0; j<unsafeChars.length && found == -1; i++) {
+	          if (tmp == unsafeChars[j]) {
+	             found = j;
+	          }
+	       }
+	       
+	       if (found != -1) {
+	          escapedText=escapedText + replacements[found];
+	       }
+	       else {
+	          escapedText=escapedText + tmp;
+	       }
+	    }
+	    return escapedText;
+	}
 	
 }

@@ -263,6 +263,17 @@
    </servlet-mapping>
    
    <servlet>
+      <servlet-name>UpdateCartTier</servlet-name>
+      <servlet-class>store.servlets.UpdateCartTierServlet</servlet-class>
+   </servlet>
+   
+   
+   <servlet-mapping>
+      <servlet-name>UpdateCartTier</servlet-name>
+      <url-pattern>/OrderSection/updateCartTier/</url-pattern>
+   </servlet-mapping>
+   
+   <servlet>
       <servlet-name>ProcessCart</servlet-name>
       <servlet-class>store.servlets.ProcessCartServlet</servlet-class>
    </servlet>

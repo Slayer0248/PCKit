@@ -23,6 +23,7 @@ public class ShoppingCart {
    private ArrayList<Integer> quantities;
    private String orderStatus;
    private int orderId;
+   private int minTier;
    
    public ShoppingCart() {
       items = new ArrayList<CartItem>();
@@ -97,6 +98,15 @@ public class ShoppingCart {
    
    public void setOrderStatus(String status) {
       orderStatus = status;
+   }
+   
+   
+   public int getMinTier() {
+      return minTier;
+   }
+   
+   public void setMinTier(int tier) {
+      minTier = tier;
    }
    
    

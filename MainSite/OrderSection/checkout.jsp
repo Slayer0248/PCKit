@@ -30,11 +30,18 @@
             console.log("%f px or %f em", fSize, fSize/16);
         });
         
+        function getCookie(name) {
+           var re = new RegExp(name + "=([^;]+)");
+           var value = re.exec(document.cookie);
+           return (value != null) ? unescape(value[1]) : null;
+       }
+        
         function getJSONCart(callback, source) {
            
            $.ajax({
                type:"POST",
                url:"./getCartData/",
+               headers: { "csrf":getCookie('csrf')},
                data:""
            }).done(function(data) {
               if(data.indexOf("Success") != -1) {
@@ -75,6 +82,7 @@
             $.ajax({
                  type:"POST",
                  url:"./addToCart/",
+                 headers: { "csrf":getCookie('csrf')},
                  data:"updates=" + encodeURIComponent(curId + ":" + update)
             }).done(function(data) {
                if (data == "Success") {
@@ -113,6 +121,7 @@
             $.ajax({
                  type:"POST",
                  url:"./removeFromCart/",
+                 headers: { "csrf":getCookie('csrf')},
                  data:"updates=" + encodeURIComponent(curId + ":" + update)
                }).done(function(data) {
                   if (data == "Success") {
@@ -142,6 +151,7 @@
                $.ajax({
                     type:"POST",
                     url:"./removeFromCart/",
+                    headers: { "csrf":getCookie('csrf')},
                     data:"updates=" + encodeURIComponent(curId + ":0")
                }).done(function(data) {
                   if (data == "Success") {
@@ -172,6 +182,7 @@
            $.ajax({
              type:"POST",
              url:"./processCart/",
+             headers: { "csrf":getCookie('csrf')},
              data:""
            }).done(function(data) {
               if (data.indexOf("Success") != -1 &&  $("input[name='encrypted']").length > 0) {
@@ -208,6 +219,30 @@
               AuthJWTUtil authUtil = new AuthJWTUtil();
               long nowMillis = System.currentTimeMillis();
               java.util.Date now = new java.util.Date(nowMillis);
+              
+              try {
+              
+                 SecureRandom random = new SecureRandom();
+                 String tokenCSRF = new BigInteger(130, random).toString(32);
+                 
+                 Cookie cookieCSRF2 = new Cookie("csrfCheck", authUtil.makeCSRFCookie(tokenCSRF, nowMillis, 30));
+                 cookieCSRF2.setPath("/");
+                 cookieCSRF2.setHttpOnly(true);
+                 cookieCSRF2.setSecure(true);
+                 response.addCookie(cookieCSRF2);
+                 
+                 Cookie cookieCSRF = new Cookie("csrf",tokenCSRF);
+                 cookieCSRF.setPath("/");
+                 cookieCSRF.setSecure(true);
+                 response.addCookie(cookieCSRF);
+              
+                 
+              
+              }
+              catch (Exception e) {
+              
+              }
+              
               Cookie cookie = null;
               Cookie[] cookies = null;
               // Get an array of Cookies associated with this domain
@@ -230,7 +265,7 @@
                           result = authUtil.validateToken(token, now, connection);
                           if (result.equals("Valid")) {
                              login = authUtil.getLoginResult();
-                             loggedUser = login.getFirstName() + " " + login.getLastName();
+                             loggedUser = authUtil.escapeHTML(login.getFirstName()) + " " + authUtil.escapeHTML(login.getLastName());
                           }
                        }
                        catch (Exception e) {
@@ -270,6 +305,7 @@
               $.ajax({
                  type:"POST",
                  url:"../accounts/logout/",
+                 headers: { "csrf":getCookie('csrf')},
                  data:"",
                  error: function (xhr, status, message) {
                      console.log(xhr.responseText );
@@ -340,7 +376,7 @@
                 %>
                 <tr id="orderItemRow<%= curItem.getItemId()%>" class="itemRow">
                    <td id="itemIndexCell<%= curItem.getItemId()%>" class="indexCol"><center><%= i+1%></center></td>
-                   <td id="itemNameCell<%= curItem.getItemId()%>" class="nameCol"><%= curItem.getName()%></td>
+                   <td id="itemNameCell<%= curItem.getItemId()%>" class="nameCol"><%=  authUtil.escapeHTML(curItem.getName())%></td>
                    <td id="itemPriceCell<%= curItem.getItemId()%>" class="priceCol"><center>$<%= curItem.getPrice()%></center></td>
                    <td id="itemQuantityCell<%= curItem.getItemId()%>" class="quantityCol">
                       

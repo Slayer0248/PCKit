@@ -28,7 +28,13 @@
             hasCart(promptForCart);
         });
         
-                function restoreCart() {
+        function getCookie(name) {
+           var re = new RegExp(name + "=([^;]+)");
+           var value = re.exec(document.cookie);
+           return (value != null) ? unescape(value[1]) : null;
+       }
+        
+        function restoreCart() {
               var status;
               var index =$("#cartMessageText").text().indexOf("purchase");
               if (index == -1) {
@@ -41,6 +47,7 @@
               $.ajax({
                  type:"POST",
                  url:"./restoreCart/",
+                 headers: { "csrf":getCookie('csrf')},
                  data:"status="+encodeURIComponent(status) 
                }).done(function(data) {
                   if (data == "Reload") {
@@ -64,6 +71,7 @@ document.write(data2); history.pushState({}, null, "https://www.pckit.org/OrderS
               $.ajax({
                  type:"POST",
                  url:"./restoreCart/",
+                 headers: { "csrf":getCookie('csrf')},
                  data:"status="+encodeURIComponent("Buying") 
                }).done(function(data) {
                   if (data == "Reload") {
@@ -94,6 +102,7 @@ document.write(data2); history.pushState({}, null, "https://www.pckit.org/OrderS
               $.ajax({
                 type:"POST",
                 url:"./deleteCartsWithStatus/",
+                headers: { "csrf":getCookie('csrf')},
                 data:"status="+encodeURIComponent(status) 
               }).done(function(data) {
                  console.log(data);
@@ -111,6 +120,7 @@ document.write(data2); history.pushState({}, null, "https://www.pckit.org/OrderS
                $.ajax({
                  type:"POST",
                  url:"./hasCart/",
+                 headers: { "csrf":getCookie('csrf')},
                  success:callback
                });
            }
@@ -121,6 +131,7 @@ document.write(data2); history.pushState({}, null, "https://www.pckit.org/OrderS
              $.ajax({
                  type:"POST",
                  url:"./cartExists/",
+                 headers: { "csrf":getCookie('csrf')},
                  data:"status="+encodeURIComponent("Buying") 
                }).done(function(data) {
                   if (data == "Yes") {
@@ -140,6 +151,7 @@ document.write(data2); history.pushState({}, null, "https://www.pckit.org/OrderS
                         $.ajax({
                            type:"POST",
                            url:"./deleteCartsWithStatus/",
+                           headers: { "csrf":getCookie('csrf')},
                            data:"status="+encodeURIComponent("Buying") 
                          }).done(function(data3) {
                             if (data3 =="Reload") {
@@ -150,6 +162,7 @@ document.write(data2); history.pushState({}, null, "https://www.pckit.org/OrderS
                      $.ajax({
                        type:"POST",
                        url:"./cartExists/",
+                       headers: { "csrf":getCookie('csrf')},
                        data:"status="+encodeURIComponent("In Progress") 
                      }).done(function(data2) {
                          if (data2 == "Yes") {
@@ -167,6 +180,7 @@ document.write(data2); history.pushState({}, null, "https://www.pckit.org/OrderS
                            $.ajax({
                               type:"POST",
                               url:"./deleteCartsWithStatus/",
+                              headers: { "csrf":getCookie('csrf')},
                               data:"status="+encodeURIComponent("In Progress") 
                             }).done(function(data3) {
                                 if (data3 =="Successful") {
@@ -284,14 +298,15 @@ document.write(data2); history.pushState({}, null, "https://www.pckit.org/OrderS
               $.ajax({
                  type:"POST",
                  url:"./hasCart/",
-                 
+                 headers: { "csrf":getCookie('csrf')},
                }).done(function(data) {
                
                if (data =="No") {
               $.ajax({
                  type:"POST",
                  url:"./createCart/",
-                 data:"" 
+                 headers: { "csrf":getCookie('csrf')},
+                 data:"minTier=" +adjustedTier 
                }).done(function(data2) {
                   if (data2=="Success") {
                      console.log("in here");
@@ -313,17 +328,28 @@ document.write(data3); history.pushState({}, null, "https://www.pckit.org/OrderS
                 
              });
              } else if (data =="Yes") { 
+                //enclose in post request 
+                $.ajax({
+                 type:"POST",
+                 url:"./updateCartTier/",
+                 headers: { "csrf":getCookie('csrf')},
+                 data:"tier=" +adjustedTier 
+               }).done(function(data2) {
+                  if (data2=="Success") {
                  $.ajax({
                  type:"POST",
                  url:"./selectBuild.jsp",
+                 headers: { "csrf":getCookie('csrf')},
                  data:JSON.stringify({"minTier": adjustedTier}),
                   error: function (xhr, status, message) {
                      console.log(xhr.responseText );
                      console.log('A jQuery error has occurred. Status: ' + status + ' - Message: ' + message);
                   }
-               }).done(function(data2) { /*window.location.href = "http://www.pckit.org/OrderSection/selectBuild.jsp";*/
-document.write(data2); history.pushState({}, null, "https://www.pckit.org/OrderSection/selectBuild.jsp"); });
-
+               }).done(function(data3) { /*window.location.href = "http://www.pckit.org/OrderSection/selectBuild.jsp";*/
+document.write(data3); history.pushState({}, null, "https://www.pckit.org/OrderSection/selectBuild.jsp"); });
+                  //enclose in post request 
+                }
+                });
               }
              
              });
@@ -377,6 +403,31 @@ document.write(data2); history.pushState({}, null, "https://www.pckit.org/OrderS
               AuthJWTUtil authUtil = new AuthJWTUtil();
               long nowMillis = System.currentTimeMillis();
               java.util.Date now = new java.util.Date(nowMillis);
+              
+              try {
+              
+                 SecureRandom random = new SecureRandom();
+                 String tokenCSRF = new BigInteger(130, random).toString(32);
+                 
+                 Cookie cookieCSRF2 = new Cookie("csrfCheck", authUtil.makeCSRFCookie(tokenCSRF, nowMillis, 30));
+                 cookieCSRF2.setPath("/");
+                 cookieCSRF2.setHttpOnly(true);
+                 cookieCSRF2.setSecure(true);
+                 response.addCookie(cookieCSRF2);
+                 
+                 Cookie cookieCSRF = new Cookie("csrf",tokenCSRF);
+                 cookieCSRF.setPath("/");
+                 cookieCSRF.setSecure(true);
+                 response.addCookie(cookieCSRF);
+              
+                 
+              
+              }
+              catch (Exception e) {
+              
+              }
+              
+              
               Cookie cookie = null;
               Cookie[] cookies = null;
               // Get an array of Cookies associated with this domain
@@ -397,7 +448,7 @@ document.write(data2); history.pushState({}, null, "https://www.pckit.org/OrderS
                           String result = authUtil.validateToken(token, now, connection);
                           if (result.equals("Valid")) {
                              login = authUtil.getLoginResult();
-                             loggedUser = login.getFirstName() + " " + login.getLastName();
+                             loggedUser = authUtil.escapeHTML(login.getFirstName()) + " " + authUtil.escapeHTML(login.getLastName());
                           }
                        }
                        catch (Exception e) {
@@ -434,6 +485,7 @@ document.write(data2); history.pushState({}, null, "https://www.pckit.org/OrderS
               $.ajax({
                  type:"POST",
                  url:"../accounts/logout/",
+                 headers: { "csrf":getCookie('csrf')},
                  data:""
               }).done(function(data) { /*Reload current page*/ location.reload(); });
            }

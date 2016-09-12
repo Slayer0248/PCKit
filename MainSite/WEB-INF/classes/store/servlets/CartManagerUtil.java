@@ -16,6 +16,7 @@ public class CartManagerUtil {
       ArrayList<ShoppingCart> carts = new ArrayList<ShoppingCart>();
       ArrayList<Integer> orderIds = new ArrayList<Integer>();
       ArrayList<String> orderStates = new ArrayList<String>();
+      ArrayList<Integer> orderTiers = new ArrayList<Integer>();
       
       Class.forName("com.mysql.jdbc.Driver");
       String queryString = "SELECT * FROM Orders WHERE userId=?";
@@ -25,6 +26,7 @@ public class CartManagerUtil {
       while(rs.next()) {
          orderIds.add(rs.getInt("orderId"));
          orderStates.add(rs.getString("orderStatus"));
+         orderTiers.add(rs.getInt("recommendedTier"));
       }
       rs.close();
       pstatement.close();
@@ -32,9 +34,11 @@ public class CartManagerUtil {
       for (int i=0; i<orderIds.size(); i++) {
          int orderId = orderIds.get(i);
          String status = orderStates.get(i);
+         int tier = orderTiers.get(i);
          ShoppingCart cart = createFullFromOrderId(orderId, conn);
          cart.setOrderId(orderId);
          cart.setOrderStatus(status);
+         cart.setMinTier(tier);
          carts.add(cart);
       }
       

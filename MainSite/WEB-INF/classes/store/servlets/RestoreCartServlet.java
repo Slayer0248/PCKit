@@ -22,92 +22,97 @@ import store.cart.CartItem;
 
 import accounts.AuthJWTUtil;
 import accounts.UserLogin;
+import accounts.VerifyCsrfToken;
 
 public class RestoreCartServlet extends HttpServlet {
    @Override
    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-         throws IOException, ServletException {
+   throws IOException, ServletException {
       Logger logger = Logger.getLogger(this.getClass().getName());
+      String pageMessage = "Invalid csrf token";
+      VerifyCsrfToken tokenCompare= new VerifyCsrfToken();
+      if (tokenCompare.isValidToken(request, response)) {
+         AuthJWTUtil authUtil = new AuthJWTUtil();
+         long nowMillis = System.currentTimeMillis();
+         java.util.Date now = new java.util.Date(nowMillis);
          
-      AuthJWTUtil authUtil = new AuthJWTUtil();
-      long nowMillis = System.currentTimeMillis();
-      java.util.Date now = new java.util.Date(nowMillis);
-      
-      String pageMessage = "Invalid Post Request.";  
-      Cookie cookie = null;
-      Cookie[] cookies = null;
-      // Get an array of Cookies associated with this domain
-      cookies = request.getCookies();
-      //String userIdStr ="";
-      
-      UserLogin login = null;
-      String result = "";
-      if( cookies != null ) {
-         for (int i = 0; i < cookies.length; i++){
-            cookie = cookies[i];
-            /*if (cookie.getName().equals("pckitUserId")) {
-               userIdStr= (String)cookie.getValue();
-            }*/
-            if (cookie.getName().equals("pckitLogin")) {
-               String token = (String)cookie.getValue();
-               Connection connection =null;
+         pageMessage = "Invalid Post Request.";
+         Cookie cookie = null;
+         Cookie[] cookies = null;
+         // Get an array of Cookies associated with this domain
+         cookies = request.getCookies();
+         //String userIdStr ="";
+         
+         UserLogin login = null;
+         String result = "";
+         if( cookies != null ) {
+            for (int i = 0; i < cookies.length; i++){
+               cookie = cookies[i];
+               /*if (cookie.getName().equals("pckitUserId")) {
+                  userIdStr= (String)cookie.getValue();
+                  }*/
+                  if (cookie.getName().equals("pckitLogin")) {
+                     String token = (String)cookie.getValue();
+                     Connection connection =null;
+                     try {
+                        Class.forName("com.mysql.jdbc.Driver");
+                        connection = DriverManager.getConnection("jdbc:mysql://localhost/PCKitDB","root","Potter11a");
+                        authUtil.refreshAll(now, connection);
+                        result = authUtil.validateToken(token, now, connection);
+                        if (result.equals("Valid")) {
+                           login = authUtil.getLoginResult();
+                        }
+                     }
+                     catch (Exception e) {
+                        logger.log(Level.SEVERE, "Login token not found.", e);
+                     }
+                  }
+                  //out.print("Name : " + cookie.getName( ) + ",  ");
+                  //out.print("Value: " + cookie.getValue( )+" <br/>");
+               }
+            }
+            
+            if (result.equals("Valid")) {
+               //int userId = Integer.parseInt(userIdStr);
+               int userId = login.getUserId();
+               String status = request.getParameter("status");
+               
+               Connection connection = null;
+               PreparedStatement pstatement = null;
+               ResultSet rs =null;
+               int orderId = -1;
+               
                try {
                   Class.forName("com.mysql.jdbc.Driver");
                   connection = DriverManager.getConnection("jdbc:mysql://localhost/PCKitDB","root","Potter11a");
-                  authUtil.refreshAll(now, connection);
-                  result = authUtil.validateToken(token, now, connection);
-                  if (result.equals("Valid")) {
-                      login = authUtil.getLoginResult();
-                  }
+                  String queryString = "SELECT * FROM Orders WHERE userId=? and orderStatus=?";
+                  pstatement = connection.prepareStatement(queryString);
+                  pstatement.setInt(1, userId);
+                  pstatement.setString(2, status);
+                  rs = pstatement.executeQuery();
+                  rs.next();
+                  orderId = rs.getInt("orderId");
+                  
+                  rs.close();
+                  pstatement.close();
+                  
+                  authUtil.setOrderId(userId, login.getSessionId(), orderId, connection);
+                  login.setActiveCart(orderId);
+                  
+                  pageMessage="Success";
                }
                catch (Exception e) {
-                  logger.log(Level.SEVERE, "Login token not found.", e);      
+                  pageMessage="Error occurred while restoring cart.";
+                  logger.log(Level.SEVERE, "Error occurred while removing cart " + orderId+ " for user " + userId, e);
                }
             }
-            //out.print("Name : " + cookie.getName( ) + ",  ");
-            //out.print("Value: " + cookie.getValue( )+" <br/>");
+            else {
+               pageMessage="Reload";
+            }
+            
          }
+         response.setContentType("text/html;charset=UTF-8");
+         response.getWriter().write(pageMessage);
       }
       
-      if (result.equals("Valid")) {
-         //int userId = Integer.parseInt(userIdStr);
-         int userId = login.getUserId();
-         String status = request.getParameter("status");
-      
-         Connection connection = null;
-         PreparedStatement pstatement = null;
-         ResultSet rs =null;
-         int orderId = -1;
-         
-         try {
-            Class.forName("com.mysql.jdbc.Driver");
-            connection = DriverManager.getConnection("jdbc:mysql://localhost/PCKitDB","root","Potter11a");
-            String queryString = "SELECT * FROM Orders WHERE userId=? and orderStatus=?";
-            pstatement = connection.prepareStatement(queryString);
-            pstatement.setInt(1, userId);
-            pstatement.setString(2, status);
-            rs = pstatement.executeQuery();
-            rs.next();
-            orderId = rs.getInt("orderId");
-            
-            rs.close();
-            pstatement.close();
-            
-            authUtil.setOrderId(userId, login.getSessionId(), orderId, connection);
-            login.setActiveCart(orderId);
-            
-            pageMessage="Success";
-         }
-         catch (Exception e) {
-            pageMessage="Error occurred while restoring cart.";
-            logger.log(Level.SEVERE, "Error occurred while removing cart " + orderId+ " for user " + userId, e);
-         }
-      }
-      else {
-         pageMessage="Reload";
-      }
-      response.setContentType("text/html;charset=UTF-8");
-      response.getWriter().write(pageMessage);
    }
-
-}

@@ -17,14 +17,12 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.*;
 import javax.servlet.*;
 
-import store.cart.ShoppingCart;
-import store.cart.CartItem;
-
 import accounts.AuthJWTUtil;
 import accounts.UserLogin;
 import accounts.VerifyCsrfToken;
+import store.cart.ShoppingCart;
 
-public class RemoveItemServlet extends HttpServlet {
+public class UpdateCartServlet extends HttpServlet {
    @Override
    protected void doPost(HttpServletRequest request, HttpServletResponse response)
    throws IOException, ServletException {
@@ -47,6 +45,8 @@ public class RemoveItemServlet extends HttpServlet {
          String cartData = "";*/
          UserLogin login = null;
          String result = "";
+         
+         
          if( cookies != null ) {
             for (int i = 0; i < cookies.length; i++){
                cookie = cookies[i];
@@ -83,85 +83,39 @@ public class RemoveItemServlet extends HttpServlet {
             if (result.equals("Valid")) {
                /*int orderId= Integer.parseInt(orderIdStr);
                int userId= Integer.parseInt(userIdStr);*/
+               //String[] cartStates = {"In Progress", "Buying"};
+               //ArrayList<ShoppingCart> orders = login.getOrdersWithStatus(cartStates);
                ShoppingCart cart = login.getActiveCart();
+               
                int orderId= cart.getOrderId();
                int userId= login.getUserId();
-               int logBuildId = -1;
-               int logQuantity = -1;
-               
-               String[] updates = request.getParameter("updates").split(",");
+               String tierStr = request.getParameter("tier");
+               int tier = Integer.parseInt(tierStr);
                
                Connection connection = null;
                PreparedStatement pstatement = null;
-               PreparedStatement pstatement2 = null;
-               ResultSet rs = null;
                
+               int updateQuery = -1;
                try {
-                  CartManagerUtil cartManager = new CartManagerUtil();
-                  
                   Class.forName("com.mysql.jdbc.Driver");
                   connection = DriverManager.getConnection("jdbc:mysql://localhost/PCKitDB","root","Potter11a");
+                  String queryString = "UPDATE Orders SET recommendedTier=? WHERE orderId=? and userId=?";
+                  pstatement= connection.prepareStatement(queryString);
+                  pstatement.setInt(1, tier);
+                  pstatement.setInt(2, orderId);
+                  pstatement.setInt(3, userId);
+                  updateQuery = pstatement.executeUpdate();
                   
-                  //ShoppingCart cart = cartManager.createFromCartString(cartData, connection);
-                  
-                  //update quantities
-                  int updateQuery=0;
-                  int updateQuery2=0;
-                  for (int i=0; i<updates.length; i++) {
-                     String[] values = updates[i].split(":");
-                     int curBuildId = Integer.parseInt(values[0]);
-                     int quantity = Integer.parseInt(values[1]);
-                     logBuildId = curBuildId;
-                     logQuantity = quantity;
-                     
-                     int curIndex = cart.find(curBuildId);
-                     if (quantity<=0) {
-                        String queryString = "DELETE FROM OrderBuilds WHERE orderId=? and buildId=?";
-                        pstatement = connection.prepareStatement(queryString);
-                        pstatement.setInt(1, orderId);
-                        pstatement.setInt(2, curBuildId);
-                        updateQuery += pstatement.executeUpdate();
-                        pstatement.close();
-                        
-                        cart.remove(curIndex);
-                     }
-                     else {
-                        String queryString = "UPDATE OrderBuilds SET quantity=? WHERE orderId=? and buildId=?";
-                        pstatement = connection.prepareStatement(queryString);
-                        pstatement.setInt(1, quantity);
-                        pstatement.setInt(2, orderId);
-                        pstatement.setInt(3, curBuildId);
-                        updateQuery += pstatement.executeUpdate();
-                        pstatement.close();
-                        cart.setItemQuantity(curIndex, quantity);
-                        
-                     }
-                  }
-                  
-                  
-                  //update totalPrice
-                  int price = (int)(cart.getTotalPrice() * 100.0);
-                  String queryString = "UPDATE Orders SET totalPrice=? WHERE orderId=? and userId=?";
-                  pstatement2 = connection.prepareStatement(queryString);
-                  pstatement2.setInt(1, price);
-                  pstatement2.setInt(2, orderId);
-                  pstatement2.setInt(3, userId);
-                  updateQuery2 = pstatement2.executeUpdate();
-                  pstatement2.close();
-                  
-                  if (updateQuery == updates.length && updateQuery2 != 0) {
+                  if (updateQuery > 0) {
                      pageMessage="Success";
-                     
                   }
-                  
                }
                catch (Exception e) {
-                  pageMessage="Error occurred while removing item from cart.";
-                  logger.log(Level.SEVERE, "Error occurred while removing " +logQuantity+" of build " +logBuildId+" from cart " + orderId+ " for user " + userId, e);
+                  pageMessage="Error occurred while updating cart status.";
                }
             }
             else {
-               pageMessage="Reload";
+               pageMessage = "Reload";
             }
             
             

@@ -16,11 +16,19 @@ public class VerifyCsrfToken {
    public static boolean isValidToken(HttpServletRequest req, HttpServletResponse resp) 
           throws IOException, ServletException {
       
+      AuthJWTUtil authUtil = new AuthJWTUtil();
+      
       String tokenFromCookie = null;
       Cookie cookies[] = req.getCookies();
       for (int i=0; i<cookies.length; i++) {
-         if (cookies[i].getName().equals("csrf")) {
-            tokenFromCookie = cookies[i].getValue();
+         if (cookies[i].getName().equals("csrfCheck")) {
+            try {
+               tokenFromCookie = authUtil.extractCSRF(cookies[i].getValue());
+            }
+            catch(Exception e) {
+            
+            }
+            
          }
       }
       if (tokenFromCookie ==null) {

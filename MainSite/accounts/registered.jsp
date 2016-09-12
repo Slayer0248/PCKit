@@ -29,6 +29,12 @@
             console.log("%d px", textLen);
         });
         
+        function getCookie(name) {
+           var re = new RegExp(name + "=([^;]+)");
+           var value = re.exec(document.cookie);
+           return (value != null) ? unescape(value[1]) : null;
+       }
+        
         function interestChanged(select) {
            if (select.value == "other" && select.oldvalue != "other") {
               //add other field for interest
@@ -144,6 +150,30 @@
               AuthJWTUtil authUtil = new AuthJWTUtil();
               long nowMillis = System.currentTimeMillis();
               java.util.Date now = new java.util.Date(nowMillis);
+              
+              try {
+              
+                 SecureRandom random = new SecureRandom();
+                 String tokenCSRF = new BigInteger(130, random).toString(32);
+                 
+                 Cookie cookieCSRF2 = new Cookie("csrfCheck", authUtil.makeCSRFCookie(tokenCSRF, nowMillis, 30));
+                 cookieCSRF2.setPath("/");
+                 cookieCSRF2.setHttpOnly(true);
+                 cookieCSRF2.setSecure(true);
+                 response.addCookie(cookieCSRF2);
+                 
+                 Cookie cookieCSRF = new Cookie("csrf",tokenCSRF);
+                 cookieCSRF.setPath("/");
+                 cookieCSRF.setSecure(true);
+                 response.addCookie(cookieCSRF);
+              
+                 
+              
+              }
+              catch (Exception e) {
+              
+              }
+              
               Cookie cookie = null;
               Cookie[] cookies = null;
               // Get an array of Cookies associated with this domain
@@ -164,7 +194,7 @@
                           String result = authUtil.validateToken(token, now, connection);
                           if (result.equals("Valid")) {
                              login = authUtil.getLoginResult();
-                             loggedUser = login.getFirstName() + " " + login.getLastName();
+                             loggedUser = authUtil.escapeHTML(login.getFirstName()) + " " + authUtil.escapeHTML(login.getLastName());
                           }
                        }
                        catch (Exception e) {
@@ -201,6 +231,7 @@
               $.ajax({
                  type:"POST",
                  url:"./logout/",
+                 headers: { "csrf":getCookie('csrf')},
                  data:""
               }).done(function(data) { /*Reload current page*/ location.reload(); });
            }

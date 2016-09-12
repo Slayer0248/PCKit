@@ -1,7 +1,7 @@
 <%@ page language="java" pageEncoding="UTF-8" contentType="text/html;charset=utf-8"%>
 <%@ page import="java.io.*,java.util.*,java.sql.*"%>
 <%@ page import="javax.servlet.http.*,javax.servlet.*,java.security.SecureRandom" %>
-<%@ page import="java.util.Date,accounts.AuthJWTUtil,accounts.UserLogin" %>
+<%@ page import="java.util.Date,accounts.AuthJWTUtil,accounts.UserLogin,store.cart.ShoppingCart" %>
 <!DOCTYPE html>
 <html>
    <head>
@@ -22,6 +22,12 @@
             console.log("%f px or %f em", fSize, fSize/16);
             //setupWithCart();
         });
+        
+        function getCookie(name) {
+           var re = new RegExp(name + "=([^;]+)");
+           var value = re.exec(document.cookie);
+           return (value != null) ? unescape(value[1]) : null;
+       }
         
         /*function setupWithCart() {
            $.ajax({
@@ -49,26 +55,36 @@
          
         function updateKitStatus(selected) {
            if ($(selected).hasClass("unselectedKitButton")) {
-              $(selected).removeClass("unselectedKitButton");
-              $(selected).addClass("selectedKitButton");
-              $(selected).html("REMOVE FROM CART");
+              
               
               $.ajax({
                  type:"POST",
                  url:"./addToCart/",
+                 headers: { "csrf":getCookie('csrf')},
                  data:"updates=" + encodeURIComponent($(selected).prop("id").substring(11) + ":1")
-               }).done(function(data) {});
+               }).done(function(data) {
+                  if (data == "Success") {
+                     $(selected).removeClass("unselectedKitButton");
+                     $(selected).addClass("selectedKitButton");
+                     $(selected).html("REMOVE FROM CART");
+                  }
+               });
            }
            else if ($(selected).hasClass("selectedKitButton")) {
-              $(selected).removeClass("selectedKitButton");
-              $(selected).addClass("unselectedKitButton");
-              $(selected).html("BUY THIS KIT");
+              
               
               $.ajax({
                  type:"POST",
                  url:"./removeFromCart/",
+                 headers: { "csrf":getCookie('csrf')},
                  data:"updates=" + encodeURIComponent($(selected).prop("id").substring(11) + ":0")
-               }).done(function(data) {});
+               }).done(function(data) {
+                   if (data == "Success") {
+                      $(selected).removeClass("selectedKitButton");
+                      $(selected).addClass("unselectedKitButton");
+                      $(selected).html("BUY THIS KIT");
+                   }
+               });
            }
         }
         
@@ -122,6 +138,30 @@ error: function (xhr, status, message) {
               AuthJWTUtil authUtil = new AuthJWTUtil();
               long nowMillis = System.currentTimeMillis();
               java.util.Date now = new java.util.Date(nowMillis);
+              
+              try {
+              
+                 SecureRandom random = new SecureRandom();
+                 String tokenCSRF = new BigInteger(130, random).toString(32);
+                 
+                 Cookie cookieCSRF2 = new Cookie("csrfCheck", authUtil.makeCSRFCookie(tokenCSRF, nowMillis, 30));
+                 cookieCSRF2.setPath("/");
+                 cookieCSRF2.setHttpOnly(true);
+                 cookieCSRF2.setSecure(true);
+                 response.addCookie(cookieCSRF2);
+                 
+                 Cookie cookieCSRF = new Cookie("csrf",tokenCSRF);
+                 cookieCSRF.setPath("/");
+                 cookieCSRF.setSecure(true);
+                 response.addCookie(cookieCSRF);
+              
+                 
+              
+              }
+              catch (Exception e) {
+              
+              }
+              
               Cookie cookie = null;
               Cookie[] cookies = null;
               // Get an array of Cookies associated with this domain
@@ -143,7 +183,7 @@ error: function (xhr, status, message) {
                           String result = authUtil.validateToken(token, now, connection);
                           if (result.equals("Valid")) {
                              login = authUtil.getLoginResult();
-                             loggedUser = login.getFirstName() + " " + login.getLastName();
+                             loggedUser = authUtil.escapeHTML(login.getFirstName()) + " " + authUtil.escapeHTML(login.getLastName());
                           }
                        }
                        catch (Exception e) {
@@ -183,6 +223,7 @@ error: function (xhr, status, message) {
               $.ajax({
                  type:"POST",
                  url:"../accounts/logout/",
+                 headers: { "csrf":getCookie('csrf')},
                  data:"",
                  error: function (xhr, status, message) {
                      console.log(xhr.responseText );
@@ -226,7 +267,8 @@ error: function (xhr, status, message) {
 
            <% } else { 
            
-             String tierStr="";
+             ShoppingCart cart = login.getActiveCart();
+             /*String tierStr="";
              if (request.getParameter("minTier") == null || request.getParameter("minTier").length() == 0) {
                 tierStr = "1";
              }          
@@ -234,7 +276,8 @@ error: function (xhr, status, message) {
                 tierStr = (String)request.getParameter("minTier");
              }
 
-             int buildTier = Integer.parseInt(tierStr);
+             int buildTier = Integer.parseInt(tierStr);*/
+             int buildTier = cart.getMinTier();
              
              Connection connection = null;
              PreparedStatement pstatement = null;
@@ -276,10 +319,10 @@ error: function (xhr, status, message) {
                 }
                  %>
                   <td class="buildCell" id="build<%= rs.getInt("buildId")%>">
-                     <p class="buildDescriptionShort"><%= shortDescription%></p>
+                     <p class="buildDescriptionShort"><%=  authUtil.escapeHTML(shortDescription)%></p>
                      <img class="buildIcon" src="images/BuildIcon.png" width="200px" height="140px">
-                     <p class="buildPrice">$<%= price%></p>
-                     <p class="buildDescriptionMed"><%= longDescription%></p>
+                     <p class="buildPrice">$<%=  price%></p>
+                     <p class="buildDescriptionMed"><%=  authUtil.escapeHTML(longDescription)%></p>
                      <hr class="buildDivider">
                      <% if (isSelected == 0) { %>
                      <button id='selectBuild<%= rs.getInt("buildId")%>' class="buyKitButton unselectedKitButton" onclick="updateKitStatus(this)">BUY THIS KIT</button>
