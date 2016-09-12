@@ -9,6 +9,7 @@
 <%@ page import="javax.servlet.http.*,javax.servlet.*" %>
 <%@ page import="store.servlets.CartManagerUtil,store.cart.ShoppingCart,store.cart.CartItem" %>
 <%@ page import="java.util.Date,accounts.AuthJWTUtil,accounts.UserLogin" %>
+<%@ page import="java.security.SecureRandom,java.math.BigInteger" %>
 
 <!DOCTYPE html>
 <html>

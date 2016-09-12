@@ -4,7 +4,7 @@
 <%@ page import="javax.servlet.http.*,javax.servlet.*" %>
 <%@ page import="java.util.Date,accounts.AuthJWTUtil,accounts.UserLogin" %>
 <%@page import="java.util.logging.Logger,java.util.logging.Level"%>
-
+<%@ page import="java.security.SecureRandom,java.math.BigInteger" %>
 
 <!DOCTYPE html>
 <html>
