@@ -21,6 +21,9 @@
          $(document).ready(function() {
             var fSize = parseFloat($('#placeholderText').css('font-size'))
             console.log("%f px or %f em", fSize, fSize/16);
+            $("#curPageContent").load("./AboutSection/AboutUs.html");
+            $("#curPageContent").css("height", "600px");
+            $("#aboutSectionDiv").css("height", "600px");
         });
         
         function updatePage(navLink) {
