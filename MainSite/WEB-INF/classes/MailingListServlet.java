@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import accounts.VerifyCsrfToken;
 
+//Code by Clay Jacobs
 public class MailingListServlet extends HttpServlet {
     private String host;
     private String port;

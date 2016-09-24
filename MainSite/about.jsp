@@ -4,7 +4,7 @@
 <%@ page import="javax.servlet.http.*,javax.servlet.*" %>
 <%@ page import="java.util.Date,accounts.AuthJWTUtil,accounts.UserLogin" %>
 <%@ page import="java.security.SecureRandom,java.math.BigInteger" %>
-
+<!--Code by Clay Jacobs-->
 <!DOCTYPE html>
 <html>
    <head>

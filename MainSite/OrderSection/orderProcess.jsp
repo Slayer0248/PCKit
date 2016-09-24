@@ -3,7 +3,7 @@
 <%@ page import="java.io.*,java.util.*,java.sql.*"%>
 <%@ page import="java.util.Date,accounts.AuthJWTUtil,accounts.UserLogin" %>
 <%@ page import="java.security.SecureRandom,java.math.BigInteger" %>
-
+<!--Code by Clay Jacobs-->
 <!DOCTYPE html>
 <html>
    <head>

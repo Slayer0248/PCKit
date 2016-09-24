@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.*;
 import store.cart.ShoppingCart;
 
+//Code by Clay Jacobs
 public class UserLogin {
 
    /*Login data*/

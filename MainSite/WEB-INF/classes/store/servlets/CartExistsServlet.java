@@ -21,6 +21,8 @@ import accounts.AuthJWTUtil;
 import accounts.UserLogin;
 import accounts.VerifyCsrfToken;
 
+//Code by Clay Jacobs
+
 public class CartExistsServlet extends HttpServlet {
    @Override
    protected void doPost(HttpServletRequest request, HttpServletResponse response)

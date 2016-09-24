@@ -8,6 +8,8 @@ import java.sql.*;
 
 import store.servlets.CartManagerUtil;
 
+//Code by Clay Jacobs
+
 public class LoginTracker {
 
    //private UserLogin;

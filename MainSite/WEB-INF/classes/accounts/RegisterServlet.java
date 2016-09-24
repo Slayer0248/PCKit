@@ -12,6 +12,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import util.SecureEncrypt;
 
+//Code by Clay Jacobs
+
 public class RegisterServlet extends HttpServlet {
    @Override
    protected void doPost(HttpServletRequest request, HttpServletResponse response)

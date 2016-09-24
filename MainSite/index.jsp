@@ -5,7 +5,7 @@
 <%@ page import="java.util.Date,accounts.AuthJWTUtil,accounts.UserLogin" %>
 <%@page import="java.util.logging.Logger,java.util.logging.Level"%>
 <%@ page import="java.security.SecureRandom,java.math.BigInteger" %>
-
+<!--Code by Clay Jacobs-->
 <!DOCTYPE html>
 <html>
    <head>

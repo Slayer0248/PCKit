@@ -18,6 +18,7 @@ import java.sql.*;
 import javax.servlet.*;
 import javax.servlet.http.*;
 
+//Code by Clay Jacobs
 public class ShoppingCart {
    private ArrayList<CartItem> items;
    private ArrayList<Integer> quantities;
@@ -150,7 +151,7 @@ public class ShoppingCart {
       
       //String basePath = "/Applications/tomcat/webapps/PCKitLive/OrderSection/";
       String basePath = "/home/ec2-user/pckit/MainSite/OrderSection/";
-      String rawData = "cert_id=SFTMKZFWK2YK8,cmd=_cart,upload=1,business=pckitcompany@gmail.com,";
+      String rawData = "cert_id=SFTMKZFWK2YK8,cmd=_cart,upload=1,business=pckitcompany@gmail.com,custom="+orderId+",notify_url=https://www.pckit.org/OrderSection/ipn/,return=https://www.pckit.org/OrderSection/purchased.jsp,rm=2,cancel_return=https://www.pckit.org/OrderSection/canceled.jsp,";
       for (int i=0; i<items.size(); i++) {
          CartItem curItem = items.get(i);
          int quantity = quantities.get(i);

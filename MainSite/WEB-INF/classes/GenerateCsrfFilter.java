@@ -11,6 +11,7 @@ import javax.servlet.*;
 import java.io.*;
 import java.util.*;
 
+//Code by Clay Jacobs
 public class GenerateCsrfFilter implements Filter {
 
     public void init(FilterConfig filterConfig) throws ServletException {

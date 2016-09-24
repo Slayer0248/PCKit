@@ -340,6 +340,18 @@
       <url-pattern>/OrderSection/getCartData/</url-pattern>
    </servlet-mapping>
    
+   <servlet>
+      <servlet-name>IpnListener</servlet-name>
+      <servlet-class>store.ipn.IpnListener</servlet-class>
+   </servlet>
+   
+   
+   <servlet-mapping>
+      <servlet-name>IpnListener</servlet-name>
+      <url-pattern>/OrderSection/ipn/</url-pattern>
+   </servlet-mapping>
+   
+   
    
  
     <!-- SMTP settings -->

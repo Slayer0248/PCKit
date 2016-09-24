@@ -18,6 +18,8 @@ import util.SecureEncrypt;
 import java.util.logging.Logger;
 import java.util.Date;
 
+//Code by Clay Jacobs
+
 public class LoginServlet extends HttpServlet {
    @Override
    protected void doPost(HttpServletRequest request, HttpServletResponse response)

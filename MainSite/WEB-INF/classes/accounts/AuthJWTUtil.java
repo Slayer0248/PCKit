@@ -16,6 +16,8 @@ import java.util.*;
 
 import java.util.StringTokenizer;    
 import util.SecureEncrypt;
+
+//Code by Clay Jacobs
  
 public class AuthJWTUtil {
 
@@ -243,7 +245,7 @@ public class AuthJWTUtil {
 	    for (int i=0; i<input.length(); i++) {
 	       tmp = input.charAt(i);
 	       int found = -1;
-	       for (int j=0; j<unsafeChars.length && found == -1; i++) {
+	       for (int j=0; j<unsafeChars.length && found == -1; j++) {
 	          if (tmp == unsafeChars[j]) {
 	             found = j;
 	          }

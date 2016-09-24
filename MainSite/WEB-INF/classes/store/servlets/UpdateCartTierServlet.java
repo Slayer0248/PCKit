@@ -22,6 +22,8 @@ import accounts.UserLogin;
 import accounts.VerifyCsrfToken;
 import store.cart.ShoppingCart;
 
+//Code by Clay Jacobs
+
 public class UpdateCartTierServlet extends HttpServlet {
    @Override
    protected void doPost(HttpServletRequest request, HttpServletResponse response)

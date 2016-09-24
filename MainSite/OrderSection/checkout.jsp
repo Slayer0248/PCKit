@@ -10,7 +10,7 @@
 <%@ page import="store.servlets.CartManagerUtil,store.cart.ShoppingCart,store.cart.CartItem" %>
 <%@ page import="java.util.Date,accounts.AuthJWTUtil,accounts.UserLogin" %>
 <%@ page import="java.security.SecureRandom,java.math.BigInteger" %>
-
+<!--Code by Clay Jacobs-->
 <!DOCTYPE html>
 <html>
    <head>

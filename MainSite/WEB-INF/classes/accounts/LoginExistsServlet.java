@@ -13,7 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import util.SecureEncrypt;
 //import VerifyCsrfToken;
 
-
+//Code by Clay Jacobs
 public class LoginExistsServlet extends HttpServlet {
    @Override
    protected void doPost(HttpServletRequest request, HttpServletResponse response)

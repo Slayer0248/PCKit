@@ -4,7 +4,7 @@
 <%@ page import="javax.servlet.http.*,javax.servlet.*" %>
 <%@ page import="java.util.Date,accounts.AuthJWTUtil,accounts.UserLogin" %>
 <%@ page import="java.security.SecureRandom,java.math.BigInteger" %>
-<!--Code by Clay Jacobs-->
+
 <!DOCTYPE html>
 <html>
    <head>
@@ -258,9 +258,10 @@
          <div class="scrollable" id="mainContentDiv">
            <center><img src="../images/PCkit-logo-trans.png" id="logoImageHeader" alt=""></center>
           
-           <p id="form-description"><% String msg = (String)request.getAttribute("Message");
+           <p id="form-description">You're order from PCKit will not be made.
+           <% String msg = (String)request.getAttribute("custom");
             if(msg == null || msg.equals("")) {%>
-              This page can't be accessed in this manner.
+              Null
            <% } else {%>
               <%=msg%>
            <% } %></p><br>
