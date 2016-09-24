@@ -23,6 +23,36 @@
             console.log("%f px or %f em", fSize, fSize/16);
         });
         
+        function updatePage(navLink) {
+           //return false;
+           if (navLink != $(".curTab")) {
+               $(".curTab").removeClass("curTab");
+               $(navLink).addClass("curTab");
+             
+             
+               $("#curPageContent").html("");
+               if ($(navLink).html() == "About Us") {
+                  $("#curPageContent").load("./AboutSection/AboutUs.html");
+                  $("#curPageContent").css("height", "600px");
+                  $("#aboutSectionDiv").css("height", "600px");
+               }
+               else if ($(navLink).html() == "Bios") {
+                  $("#curPageContent").load("./AboutSection/Bios.html");
+                  $("#curPageContent").css("height", "1300px");
+                  $("#aboutSectionDiv").css("height", "1300px");
+               }
+               else if ($(navLink).html() == "Contact Us") {
+                  $("#curPageContent").load("./AboutSection/ContactUs.html");
+                  $("#curPageContent").css("height", "80px");
+                  $("#aboutSectionDiv").css("height", "80px");
+               }
+               else {
+                  //error case
+               }
+           }
+        }
+         
+        
         function getCookie(name) {
            var re = new RegExp(name + "=([^;]+)");
            var value = re.exec(document.cookie);
