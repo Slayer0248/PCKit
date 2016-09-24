@@ -1,0 +1,174 @@
+#aboutSectionDiv {
+   /*display: block;
+   position: absolute;*/
+   /*display: inline-block;
+   position: relative;*/
+   margin-left: auto;
+   margin-right: auto;
+   margin-top: 50px;
+   border-collapse: collapse;
+   border-spacing: 20px;
+   height: 1300px;
+   width: 1000px;
+   /*background-color: #575757;*/
+   
+}
+
+/*Settings Nav styles*/
+
+#aboutSectionNavDiv {
+   max-width: 100%;
+   max-height: 28px;
+   left: 0;
+   right: 0;
+   bottom: 0px;
+   width: 100%;
+   height: 28px;
+   top: 65px;
+   margin: 0;
+   padding: 0;
+}
+
+#aboutSectionNavLinks {
+   list-style-type: none;
+   margin: 0px;
+   padding: 0px;
+   float: left;
+   overflow:hidden;
+   padding-top: 9px;
+   width:1000px;
+   
+}
+
+.aboutSectionNavItem {
+   
+   /*display: inline;
+   text-align: center;*/
+   text-align: center;
+   display: inline;
+   float: left;
+   width: 313px;
+   padding: 0px 10px;
+}
+
+.aboutSectionNavLink {
+   
+   /*width: 313px;
+   text-align: center;*/
+   color: #F9A825;
+   font-family: "RobotoCondensedBold";
+   font-size: 28px;
+   text-decoration: none;
+}
+
+.curTab {
+   color: #F1C93E;
+}
+
+
+#curPageContent {
+   /*display: block;
+   position: absolute;*/
+   /*display: inline-block;
+   position: relative;*/
+   margin-top: 50px;
+   margin-left: auto;
+   margin-right: auto
+   border-collapse: collapse;
+   border-spacing: 20px;
+   height: 1300px;
+   width: 1000px;
+   background-color: #575757;
+   
+}
+
+.infoText {
+   font-size: 18px;
+   color: #FFFFFF;
+   font-family: "RobotoCondensedBold";
+}
+
+/*About us styles*/
+
+.sectionHeader {
+   font-size: 28px;
+   color: #F9A825;
+   font-family: "RobotoCondensedBold";
+   text-decoration: underline;
+   text-decoration-color: #FFFFFF;
+   -webkit-text-decoration-color: #FFFFFF;
+   -moz-text-decoration-color: #FFFFFF;
+   padding-bottom: 0px;
+   margin-bottom: 0px;
+   width: 900px;
+   padding-left: 50px;
+}
+
+.aboutInfo {
+   padding-top: 0px;
+   margin-top: 0px;
+   font-size: 20px;
+   width: 900px;
+   padding-left: 50px;
+   color: #FFFFFF;
+   font-family: "RobotoCondensedBold";
+   word-wrap: break-word;
+}
+
+/*Bios styles*/
+
+.biosTable {
+   width: 900px;
+}
+
+.bioRow {
+   width: 100%;
+}
+
+.bioPhotoCell {
+   width: 38.2%;
+}
+
+.bioInfoCell {
+   width: 61.8%;
+}
+
+.bioName {
+   width: 300px;
+   text-align: left;
+   color: #F9A825;
+}
+
+.bioPic {
+   width: 300px;
+   height: 250px;
+}
+
+.bioInfo {
+   font-size: 18px;
+   width: 550px;
+   float: left;
+   color: #FFFFFF;
+   font-family: "RobotoCondensedBold";
+}
+
+.nameFont {
+   font-size: 28px;
+   color: #F9A825;
+   font-family: "RobotoCondensedBold";
+}
+
+.positionFont {
+   font-size: 20px;
+   color: #FFFFFF;
+   font-family: "RobotoCondensedBold";
+}
+
+
+/*Contact us styles*/
+
+#contactInfo {
+   width: 900px;
+   padding-left: 50px;
+   float: left;
+}

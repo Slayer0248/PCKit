@@ -10,7 +10,7 @@
    <head>
       <title>PCKit</title>
       <link rel="stylesheet" href="stylesheets/main.css">
-      <link rel="stylesheet" href="stylesheets/placeholder.css">
+      <link rel="stylesheet" href="stylesheets/about.css">
       <link rel="stylesheet" href="stylesheets/accountNav.css">
       <link rel="stylesheet" href="stylesheets/fonts.css">
       <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js" type="text/javascript"></script>
@@ -141,8 +141,20 @@
         <%}%>
         </div>
          <div class="scrollable" id="mainContentDiv">
-            <center><img src="images/PCkit-logo-trans.png" id="logoImage" alt=""></center>
-           <p id="placeholderText">Coming Soon</p>
+             <div id="aboutSectionDiv">
+             <div id="aboutSectionNavDiv">
+              <ul id="aboutSectionNavLinks">
+            	<li class="aboutSectionNavItem"><a id="aboutUsNav" class="aboutSectionNavLink curTab" href="#" onclick="updatePage(this); return false;">About Us</a></li>
+            	<li class="aboutSectionNavItem"><a id="biosNav" class="aboutSectionNavLink" href="#" onclick="updatePage(this); return false;">Bios</a></li>
+            	<li class="aboutSectionNavItem"><a id="contactUsNav" class="aboutSectionNavLink" href="#" onclick="updatePage(this); return false;">Contact Us</a></li>
+              </ul>
+             </div>
+              <div id="curPageContent">
+              
+              
+              
+              </div>
+            </div>
          </div> 
          <div id="siteNavDiv">
             <center>
