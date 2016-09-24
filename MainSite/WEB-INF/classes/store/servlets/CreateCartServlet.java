@@ -42,7 +42,6 @@ public class CreateCartServlet extends HttpServlet {
          Cookie[] cookies = null;
          // Get an array of Cookies associated with this domain
          cookies = request.getCookies();
-         //String userIdStr ="";
          UserLogin login = null;
          String result = "";
          String token = "";
@@ -65,16 +64,10 @@ public class CreateCartServlet extends HttpServlet {
                      logger.log(Level.SEVERE, "Login token not found.", e);
                   }
                }
-               /*if (cookie.getName().equals("pckitUserId")) {
-                  userIdStr= (String)cookie.getValue();
-                  }*/
-                  //out.print("Name : " + cookie.getName( ) + ",  ");
-                  //out.print("Value: " + cookie.getValue( )+" <br/>");
                }
             }
             
             if (result.equals("Valid")) {
-               //int userId = Integer.parseInt(userIdStr);
                int userId = login.getUserId();
                String tierStr = (String)request.getParameter("minTier");
                int tier = Integer.parseInt(tierStr);

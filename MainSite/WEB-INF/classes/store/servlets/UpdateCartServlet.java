@@ -52,15 +52,6 @@ public class UpdateCartServlet extends HttpServlet {
          if( cookies != null ) {
             for (int i = 0; i < cookies.length; i++){
                cookie = cookies[i];
-               /*if (cookie.getName().equals("pckitUserId")) {
-                  userIdStr= (String)cookie.getValue();
-               }
-               else if (cookie.getName().equals("orderId")) {
-                  orderIdStr=(String)cookie.getValue();
-               }
-               else if (cookie.getName().equals("order")) {
-                  cartData=(String)cookie.getValue();
-                  }*/
                   if (cookie.getName().equals("pckitLogin")) {
                      String token = (String)cookie.getValue();
                      Connection connection =null;
@@ -77,16 +68,10 @@ public class UpdateCartServlet extends HttpServlet {
                         logger.log(Level.SEVERE, "Login token not found.", e);
                      }
                   }
-                  //out.print("Name : " + cookie.getName( ) + ",  ");
-                  //out.print("Value: " + cookie.getValue( )+" <br/>");
                }
             }
             
             if (result.equals("Valid")) {
-               /*int orderId= Integer.parseInt(orderIdStr);
-               int userId= Integer.parseInt(userIdStr);*/
-               //String[] cartStates = {"In Progress", "Buying"};
-               //ArrayList<ShoppingCart> orders = login.getOrdersWithStatus(cartStates);
                ShoppingCart cart = login.getActiveCart();
                
                int orderId= cart.getOrderId();

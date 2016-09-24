@@ -44,9 +44,6 @@ public class ProcessCartServlet extends HttpServlet {
          Cookie[] cookies = null;
          // Get an array of Cookies associated with this domain
          cookies = request.getCookies();
-         /*String userIdStr ="";
-         String orderIdStr="";
-         String cartData = "";*/
          UserLogin login = null;
          String result = "";
          if( cookies != null ) {

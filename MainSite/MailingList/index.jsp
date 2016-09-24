@@ -322,50 +322,6 @@
         </div>
          <div class="scrollable" id="mainContentDiv">
            <center><img src="../images/PCkit-logo-trans.png" id="logoImageHeader" alt=""></center>
-           <!--<% if ("POST".equalsIgnoreCase(request.getMethod())) { 
-                  String firstName = request.getParameter("firstName");
-                  String lastName = request.getParameter("lastName");
-                  String email = request.getParameter("Email");
-                  String company = request.getParameter("Company");
-                  String interest = request.getParameter("Interest").equals("other")? request.getParameter("InterestOther") : request.getParameter("Interest");
-                  String adMedium = request.getParameter("AdMedium").equals("other")? request.getParameter("AdMediumOther") : request.getParameter("AdMedium");
-                  String notes = request.getParameter("Notes");
-                  
-                  //out.println("<p id='form-description'>" + firstName+ ", " +lastName+ ", " +email+", " +company+", " +interest+", " +adMedium+", " +notes+"</p>");
-                  
-                  Connection connection = null;
-                  PreparedStatement pstatement = null;
-                  Class.forName("com.mysql.jdbc.Driver");
-                  int updateQuery = 0;
-                  try {
-                     connection = DriverManager.getConnection("jdbc:mysql://localhost/PCKitDB","root","Potter11a");
-                     String queryString = "INSERT INTO mailList(first,last,email,company,relationship,publicity,otherInfo) VALUES (?, ?, ?, ?, ?, ?, ?)";
-                     pstatement = connection.prepareStatement(queryString);
-                     pstatement.setString(1, firstName);
-                     pstatement.setString(2, lastName);
-                     pstatement.setString(3, email);
-                     pstatement.setString(4, company);
-                     pstatement.setString(5, interest);
-                     pstatement.setString(6, adMedium);
-                     pstatement.setString(7, notes);
-                     updateQuery = pstatement.executeUpdate();
-                  
-                     if (updateQuery != 0) { 
-            %>
-            <p id="form-description">Your information has been added to our mailing list!</p>
-            
-            
-            <%       }
-                  }
-                  catch (SQLException e) { %>
-            <p id="form-description">An error occurred while adding your data to the mailing list! Please try again later.</p>    
-                   
-            <%    }
-                  finally {
-                     pstatement.close();
-                     connection.close();
-                  }
-              } else { %>-->
            <p id="form-description">PCkit will be fully up and running by Fall 2016. In the 
               meantime, prospective customers, affiliates, and interested parties should sign up for
               our mailing list.</p><br>
@@ -391,9 +347,7 @@
                     <option value="applicant">Applicant</option>
                     <option value="media">Media</option>
                     <option value="other">Other</option>
-                 </select><!--<br>
-                 <label class="mailField" for="InterestOther" id="interestOtherLabel">Please specify: </label><input type="text" id="interestOtherText" name="InterestOther">-->
-              </p>
+                 </select>
               </span>
               <span id="aSelectSpan">
               <p id="adMediumSection">
@@ -404,8 +358,7 @@
                     <option value="search">Web Search</option>
                     <option value="link">Link shared/Redirect</option>
                     <option value="other">Other</option>
-                 </select><!--<br>
-                 <label class="mailField" for="AdMediumOther" id="adMediumOtherLabel">Please specify: </label><input type="text" id="adMediumOtherText" name="AdMediumOther">-->
+                 </select>
               </p>
               </span>
               <div id="miscInputSection">
@@ -435,9 +388,5 @@
          
       </div>
       
-      
-      <!--hidden button style = "color: transparent; background-color: transparent; border-color: transparent; cursor: default;"
-      <input id="next" type="submit" style="color: red; background-color: red; border-color: transparent; cursor: default;">
-      <input id="prev" type="submit" style="color: green; background-color: green; border-color: transparent; cursor: default;">-->
    </body>
 </html>

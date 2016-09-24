@@ -598,11 +598,5 @@ document.write(data3); history.pushState({}, null, "https://www.pckit.org/OrderS
          </div>
          
       </div>
-      
-      
-      
-      <!--hidden button style = "color: transparent; background-color: transparent; border-color: transparent; cursor: default;"
-      <input id="next" type="submit" style="color: red; background-color: red; border-color: transparent; cursor: default;">
-      <input id="prev" type="submit" style="color: green; background-color: green; border-color: transparent; cursor: default;">-->
    </body>
 </html>

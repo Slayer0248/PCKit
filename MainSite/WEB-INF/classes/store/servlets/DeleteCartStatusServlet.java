@@ -40,15 +40,11 @@ public class DeleteCartStatusServlet extends HttpServlet {
          Cookie[] cookies = null;
          // Get an array of Cookies associated with this domain
          cookies = request.getCookies();
-         //String userIdStr ="";
          UserLogin login = null;
          String result = "";
          if( cookies != null ) {
             for (int i = 0; i < cookies.length; i++){
                cookie = cookies[i];
-               /*if (cookie.getName().equals("pckitUserId")) {
-                  userIdStr= (String)cookie.getValue();
-                  }*/
                   if (cookie.getName().equals("pckitLogin")) {
                      String token = (String)cookie.getValue();
                      Connection connection =null;
@@ -65,13 +61,10 @@ public class DeleteCartStatusServlet extends HttpServlet {
                         logger.log(Level.SEVERE, "Login token not found.", e);
                      }
                   }
-                  //out.print("Name : " + cookie.getName( ) + ",  ");
-                  //out.print("Value: " + cookie.getValue( )+" <br/>");
                }
             }
             
             if (result.equals("Valid")) {
-               //int userId = Integer.parseInt(userIdStr);
                int userId = login.getUserId();
                String status = request.getParameter("status");
                ArrayList<Integer> orderIds = new ArrayList<Integer>();

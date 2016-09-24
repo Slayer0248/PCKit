@@ -30,30 +30,7 @@
            var value = re.exec(document.cookie);
            return (value != null) ? unescape(value[1]) : null;
        }
-        
-        /*function setupWithCart() {
-           $.ajax({
-               type:"POST",
-               url:"./getCartData/",
-               data:""
-           }).done(function(data) {
-              if(data.indexOf("Success") != -1) {
-                 var cartStr = data.substring(8);
-                 var items = cartStr.split(",");
-                 var i;
-                 for (i=0; i<items.length; i++) {
-                    var itemVals=items[i].split(":");
-                    var buildId = itemVals[0];
-                    if ($("#selectBuild" +buildId).length > 0) {
-                       $("#selectBuild" +buildId).removeClass("unselectedKitButton");
-                       $("#selectBuild" +buildId).addClass("selectedKitButton");
-                       $("#selectBuild" +buildId).html("REMOVE FROM CART");
-                    }
-                 }
-              }
-           });
-           
-        }*/
+ 
          
         function updateKitStatus(selected) {
            if ($(selected).hasClass("unselectedKitButton")) {
@@ -192,11 +169,6 @@ error: function (xhr, status, message) {
                           
                        }
                     }
-                    /*if (cookie.getName().equals("order")) {
-                       orderText = (String)cookie.getValue();
-                    }*/
-                    //out.print("Name : " + cookie.getName( ) + ",  ");
-                    //out.print("Value: " + cookie.getValue( )+" <br/>");
                  }
 
 
@@ -270,15 +242,7 @@ error: function (xhr, status, message) {
            <% } else { 
            
              ShoppingCart cart = login.getActiveCart();
-             /*String tierStr="";
-             if (request.getParameter("minTier") == null || request.getParameter("minTier").length() == 0) {
-                tierStr = "1";
-             }          
-             else { 
-                tierStr = (String)request.getParameter("minTier");
-             }
-
-             int buildTier = Integer.parseInt(tierStr);*/
+            
              int buildTier = cart.getMinTier();
              
              Connection connection = null;
@@ -296,9 +260,6 @@ error: function (xhr, status, message) {
                 rs = pstatement.executeQuery();
                 int count=0;
            %>
-            <!--<center><img src="../images/PCkit-logo-trans.png" id="logoImage" alt=""></center>
-           <p id="descriptionText">Build a custom PC to play the games you want to play at the quality you want to play.</p>
-           <button id="BuildPCBuuton" onclick="location.href='selectGames.jsp';">Build your PC</button>-->
            <p id="selectPCP" class="actionText">Select a PCKit</p>
            <p id="noticeP" class="subtitleText">Every kit ships with tools and our custom builder's guide!</p>
 
@@ -367,11 +328,6 @@ error: function (xhr, status, message) {
 
          
       </div>
-      
-      
-      
-      <!--hidden button style = "color: transparent; background-color: transparent; border-color: transparent; cursor: default;"
-      <input id="next" type="submit" style="color: red; background-color: red; border-color: transparent; cursor: default;">
-      <input id="prev" type="submit" style="color: green; background-color: green; border-color: transparent; cursor: default;">-->
+ 
    </body>
 </html>

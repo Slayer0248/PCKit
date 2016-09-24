@@ -20,10 +20,6 @@ public class LogoutServlet extends HttpServlet {
    @Override
    protected void doPost(HttpServletRequest request, HttpServletResponse response)
          throws IOException, ServletException {
-      /*HttpSession session=request.getSession(false);
-      session.setAttribute("userid", null);
-      session.setAttribute("name", null);
-      session.invalidate();*/
       VerifyCsrfToken tokenCompare= new VerifyCsrfToken();
       if (tokenCompare.isValidToken(request, response)) {
       
@@ -54,13 +50,9 @@ public class LogoutServlet extends HttpServlet {
                   cookie.setValue(null);
                   response.addCookie(cookie);
                }
-               //out.print("Name : " + cookie.getName( ) + ",  ");
-               //out.print("Value: " + cookie.getValue( )+" <br/>");
             }
          }
       }
       
-      
-      //response.sendRedirect(".");
    }
 }

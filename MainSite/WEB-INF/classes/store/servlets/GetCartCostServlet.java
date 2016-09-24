@@ -42,9 +42,6 @@ public class GetCartCostServlet extends HttpServlet {
          Cookie[] cookies = null;
          // Get an array of Cookies associated with this domain
          cookies = request.getCookies();
-         /*String userIdStr ="";
-         String orderIdStr="";
-         String cartData = "";*/
          UserLogin login = null;
          String result = "";
          if( cookies != null ) {
@@ -66,17 +63,6 @@ public class GetCartCostServlet extends HttpServlet {
                      logger.log(Level.SEVERE, "Login token not found.", e);
                   }
                }
-               /*if (cookie.getName().equals("pckitUserId")) {
-                  userIdStr= (String)cookie.getValue();
-               }
-               else if (cookie.getName().equals("orderId")) {
-                  orderIdStr=(String)cookie.getValue();
-               }
-               else if (cookie.getName().equals("order")) {
-                  cartData=(String)cookie.getValue();
-                  }*/
-                  //out.print("Name : " + cookie.getName( ) + ",  ");
-                  //out.print("Value: " + cookie.getValue( )+" <br/>");
                }
             }
             
@@ -84,9 +70,6 @@ public class GetCartCostServlet extends HttpServlet {
                ShoppingCart cart = login.getActiveCart();
                int orderId= cart.getOrderId();
                int userId= login.getUserId();
-               /*int orderId= Integer.parseInt(orderIdStr);
-               int userId= Integer.parseInt(userIdStr);*/
-               
                Connection connection = null;
                PreparedStatement pstatement = null;
                
@@ -95,7 +78,6 @@ public class GetCartCostServlet extends HttpServlet {
                   connection = DriverManager.getConnection("jdbc:mysql://localhost/PCKitDB","root","Potter11a");
                   
                   CartManagerUtil cartManager = new CartManagerUtil();
-                  //ShoppingCart cart = cartManager.createFromCartString(cartData, connection);
                   
                   
                   pageMessage="Success;" + cart.getTotalPrice();

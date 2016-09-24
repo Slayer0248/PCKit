@@ -44,23 +44,11 @@ public class RemoveItemServlet extends HttpServlet {
          Cookie[] cookies = null;
          // Get an array of Cookies associated with this domain
          cookies = request.getCookies();
-         /*String userIdStr ="";
-         String orderIdStr="";
-         String cartData = "";*/
          UserLogin login = null;
          String result = "";
          if( cookies != null ) {
             for (int i = 0; i < cookies.length; i++){
                cookie = cookies[i];
-               /*if (cookie.getName().equals("pckitUserId")) {
-                  userIdStr= (String)cookie.getValue();
-               }
-               else if (cookie.getName().equals("orderId")) {
-                  orderIdStr=(String)cookie.getValue();
-               }
-               else if (cookie.getName().equals("order")) {
-                  cartData=(String)cookie.getValue();
-                  }*/
                   if (cookie.getName().equals("pckitLogin")) {
                      String token = (String)cookie.getValue();
                      Connection connection =null;
@@ -77,14 +65,10 @@ public class RemoveItemServlet extends HttpServlet {
                         logger.log(Level.SEVERE, "Login token not found.", e);
                      }
                   }
-                  //out.print("Name : " + cookie.getName( ) + ",  ");
-                  //out.print("Value: " + cookie.getValue( )+" <br/>");
                }
             }
             
             if (result.equals("Valid")) {
-               /*int orderId= Integer.parseInt(orderIdStr);
-               int userId= Integer.parseInt(userIdStr);*/
                ShoppingCart cart = login.getActiveCart();
                int orderId= cart.getOrderId();
                int userId= login.getUserId();
@@ -103,8 +87,6 @@ public class RemoveItemServlet extends HttpServlet {
                   
                   Class.forName("com.mysql.jdbc.Driver");
                   connection = DriverManager.getConnection("jdbc:mysql://localhost/PCKitDB","root","Potter11a");
-                  
-                  //ShoppingCart cart = cartManager.createFromCartString(cartData, connection);
                   
                   //update quantities
                   int updateQuery=0;

@@ -44,9 +44,6 @@ public class GetCartDataServlet extends HttpServlet {
          Cookie[] cookies = null;
          // Get an array of Cookies associated with this domain
          cookies = request.getCookies();
-         /*String userIdStr ="";
-         String orderIdStr="";
-         String cartData = "";*/
          UserLogin login = null;
          String result = "";
          if( cookies != null ) {
@@ -68,23 +65,11 @@ public class GetCartDataServlet extends HttpServlet {
                      logger.log(Level.SEVERE, "Login token not found.", e);
                   }
                }
-               /*if (cookie.getName().equals("pckitUserId")) {
-                  userIdStr= (String)cookie.getValue();
-               }
-               else if (cookie.getName().equals("orderId")) {
-                  orderIdStr=(String)cookie.getValue();
-               }
-               else if (cookie.getName().equals("order")) {
-                  cartData=(String)cookie.getValue();
-                  }*/
-                  //out.print("Name : " + cookie.getName( ) + ",  ");
-                  //out.print("Value: " + cookie.getValue( )+" <br/>");
                }
             }
             
             if (result.equals("Valid")) {
-               /*int orderId= Integer.parseInt(orderIdStr);
-               int userId= Integer.parseInt(userIdStr);*/
+              
                ShoppingCart cart = login.getActiveCart();
                int orderId= cart.getOrderId();
                int userId= login.getUserId();
@@ -97,9 +82,7 @@ public class GetCartDataServlet extends HttpServlet {
                   connection = DriverManager.getConnection("jdbc:mysql://localhost/PCKitDB","root","Potter11a");
                   
                   CartManagerUtil cartManager = new CartManagerUtil();
-                  // ShoppingCart cart = cartManager.createFullFromCartString(cartData, connection);
-                  
-                  
+                 
                   pageMessage="Success;" + cart.getDataStr();
                   
                }

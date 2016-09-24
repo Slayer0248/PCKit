@@ -48,9 +48,6 @@ public class AddItemServlet extends HttpServlet {
          cookies = request.getCookies();
          UserLogin login = null;
          String result = "";
-         /*String userIdStr ="";
-         String orderIdStr="";
-         String cartData = "";*/
          if( cookies != null ) {
             for (int i = 0; i < cookies.length; i++){
                cookie = cookies[i];
@@ -70,23 +67,10 @@ public class AddItemServlet extends HttpServlet {
                      logger.log(Level.SEVERE, "Login token not found.", e);
                   }
                }
-               /*if (cookie.getName().equals("pckitUserId")) {
-                  userIdStr= (String)cookie.getValue();
-               }
-               else if (cookie.getName().equals("orderId")) {
-                  orderIdStr=(String)cookie.getValue();
-               }
-               else if (cookie.getName().equals("order")) {
-                  cartData=(String)cookie.getValue();
-               }*/
-               //out.print("Name : " + cookie.getName( ) + ",  ");
-               //out.print("Value: " + cookie.getValue( )+" <br/>");
             }
          }
       
          if (result.equals("Valid")) {
-            /*int orderId= Integer.parseInt(orderIdStr);
-            int userId= Integer.parseInt(userIdStr);*/
             ShoppingCart cart = login.getActiveCart();
             int orderId= cart.getOrderId();
             int userId= login.getUserId();
@@ -106,8 +90,6 @@ public class AddItemServlet extends HttpServlet {
          
                Class.forName("com.mysql.jdbc.Driver");
                connection = DriverManager.getConnection("jdbc:mysql://localhost/PCKitDB","root","Potter11a");
-            
-               //ShoppingCart cart = cartManager.createFromCartString(cartData, connection);
             
             
                //update quantities

@@ -12,7 +12,6 @@ import store.servlets.CartManagerUtil;
 
 public class LoginTracker {
 
-   //private UserLogin;
    private CartManagerUtil cmUtil; 
 
    public LoginTracker() {
@@ -76,8 +75,7 @@ public class LoginTracker {
    
    
    public String nextSessionId(java.util.Date now, Connection conn) throws Exception  {
-       /*long nowMillis = System.currentTimeMillis();
-       Date now = new Date(nowMillis);*/
+       
        
        String result = null;
        while (result == null) {
@@ -92,22 +90,18 @@ public class LoginTracker {
     }
     
     /*Logout current  sessionId */
-    //public void logoutUserSession(String sessionId, String ipAddress, Connection conn) throws Exception {
     public void logoutUserSession(String sessionId, Connection conn) throws Exception {
        
        Class.forName("com.mysql.jdbc.Driver");
-       //String queryString = "UPDATE PCKitSessions SET isLogged=1 WHERE sessionId=? and sessionIP=?";
        String queryString = "DELETE FROM PCKitSessions WHERE sessionId=?";
        PreparedStatement pstatement = conn.prepareStatement(queryString);
        pstatement.setString(1, sessionId);
-       //pstatement.setString(2, ipAddress);
        pstatement.executeUpdate();
        pstatement.close();
        
        String queryString2 = "DELETE FROM PCKitSessionData WHERE sessionId=?";
        PreparedStatement pstatement2 = conn.prepareStatement(queryString2);
        pstatement2.setString(1, sessionId);
-       //pstatement.setString(2, ipAddress);
        pstatement2.executeUpdate();
        pstatement2.close();
        
@@ -115,13 +109,10 @@ public class LoginTracker {
     
     
     /*Get user login for current user */
-    //public UserLogin getUserInfo(String sessionId, String ipAddress, Connection conn)  throws Exception {
     public UserLogin getUserInfo(String sessionId, Connection conn)  throws Exception {
-       //String queryString = "SELECT * FROM PCKitSessions WHERE sessionId=? and sessionIP=?";
        String queryString = "SELECT * FROM PCKitSessions WHERE sessionId=?";
        PreparedStatement pstatement = conn.prepareStatement(queryString);
        pstatement.setString(1, sessionId);
-       //pstatement.setString(2, ipAddress);
        ResultSet rs = pstatement.executeQuery();
        rs.next();
        int userId = rs.getInt("userId");
@@ -148,7 +139,6 @@ public class LoginTracker {
        PreparedStatement pstatement3 = conn.prepareStatement(queryString3);
        pstatement3.setString(1, sessionId);
        pstatement3.setInt(2, userId);
-       //pstatement.setString(2, ipAddress);
        ResultSet rs3 = pstatement3.executeQuery();
        rs3.next();
        int activeOrderId = rs3.getInt("activeOrderId");
@@ -176,15 +166,12 @@ public class LoginTracker {
     }*/
     
     /*Check if generated session id is already in the db and is active */
-    //public boolean sessionIdInUse(String sessionId, String ipAddress, Date now, Connection conn) throws Exception {
     public boolean sessionIdInUse(String sessionId, java.util.Date now, Connection conn) throws Exception {
        boolean sessionIdFound = false;
        Class.forName("com.mysql.jdbc.Driver");
-       //String queryString = "SELECT * FROM PCKitSessions WHERE sessionId=? and sessionIP=?";
        String queryString = "SELECT * FROM PCKitSessions WHERE sessionId=?";
        PreparedStatement pstatement = conn.prepareStatement(queryString);
        pstatement.setString(1, sessionId);
-       //pstatement.setString(2, ipAddress);
        ResultSet rs = pstatement.executeQuery();
        while (rs.next()) {
           if (!sessionIdFound) {
@@ -208,15 +195,12 @@ public class LoginTracker {
     }
     
     /*Check if user session timed out*/
-    //public boolean userLoginExpired(String sessionId, String ipAddress, Date now, Connection conn) throws Exception {
     public boolean userLoginExpired(String sessionId, java.util.Date now, Connection conn) throws Exception {
        boolean expired = false;
        Class.forName("com.mysql.jdbc.Driver");
-       //String queryString = "SELECT * FROM PCKitSessions WHERE sessionId=? and sessionIP=?";
        String queryString = "SELECT * FROM PCKitSessions WHERE sessionId=?";
        PreparedStatement pstatement = conn.prepareStatement(queryString);
        pstatement.setString(1, sessionId);
-       //pstatement.setString(2, ipAddress);
        ResultSet rs = pstatement.executeQuery();
        rs.next();
        int loggedStatus = rs.getInt("isLogged");
@@ -236,16 +220,13 @@ public class LoginTracker {
     }
     
     /*Check if user login exists on password entry*/
-    //public boolean userLoginExists(int userId, String ipAddress, Connection conn) throws Exception {
     public boolean userLoginExists(int userId, Connection conn) throws Exception {
        int rowCount =-1;
     
        Class.forName("com.mysql.jdbc.Driver");
-       //String queryString = "SELECT COUNT(*) FROM PCKitSessions WHERE userId=? and sessionIP=?";
        String queryString = "SELECT COUNT(*) FROM PCKitSessions WHERE userId=?";
        PreparedStatement pstatement = conn.prepareStatement(queryString);
        pstatement.setInt(1, userId);
-       //pstatement.setString(2, ipAddress);
        ResultSet rs = pstatement.executeQuery();
        rs.next();
        rowCount = rs.getInt(1);
@@ -257,16 +238,13 @@ public class LoginTracker {
     }
     
     /*Check if user is logged in on password entry*/
-    //public boolean userLoggedIn(int userId, String ipAddress, Connection conn) throws Exception {
     public boolean userLoggedIn(int userId, Connection conn) throws Exception {
        boolean loggedIn = false;
     
        Class.forName("com.mysql.jdbc.Driver");
-       //String queryString = "SELECT * FROM PCKitSessions WHERE userId=? and sessionIP=?";
        String queryString = "SELECT * FROM PCKitSessions WHERE userId=?";
        PreparedStatement pstatement = conn.prepareStatement(queryString);
        pstatement.setInt(1, userId);
-       //pstatement.setString(2, ipAddress);
        
        
        ResultSet rs = pstatement.executeQuery();
@@ -283,19 +261,14 @@ public class LoginTracker {
     
     
     /*Create user login on password entry in db*/
-    //public UserLogin createLogin(int userId, String sessionId, String ipAddress, Date now, int length, Connection conn)  throws Exception {
     public UserLogin createLogin(int userId, String sessionId, java.util.Date now, int length, Connection conn)  throws Exception {
        
        Class.forName("com.mysql.jdbc.Driver");
-       //String queryString = "INSERT INTO PCKitSessions(sessionId, userId, sessionStart, sessionIP, length, isLogged) VALUES (?, ?, ?, ?, ?, ?)";
        String queryString = "INSERT INTO PCKitSessions(sessionId, userId, sessionStart, length, isLogged) VALUES (?, ?, ?, ?, ?)";
        PreparedStatement pstatement = conn.prepareStatement(queryString);
        pstatement.setString(1, sessionId);
        pstatement.setInt(2, userId);
        pstatement.setTimestamp(3, toTimestamp(now));
-       /*pstatement.setString(4, ipAddress);
-       pstatement.setInt(5, length);
-       pstatement.setInt(6, 1);*/
        pstatement.setInt(4, length);
        pstatement.setInt(5, 1);
        pstatement.executeUpdate();
@@ -321,7 +294,6 @@ public class LoginTracker {
        pstatement3.executeUpdate();
        pstatement3.close();
        
-       //UserLogin login = new UserLogin(sessionId, ipAddress, userId, now, length);
        UserLogin login = new UserLogin(sessionId, userId, now, length);
        login.setLoggedIn(true);
        login.setFirstName(firstName);
@@ -334,10 +306,8 @@ public class LoginTracker {
     
     
     /*Update user login on password entry in db*/
-    //public UserLogin updateLogin(int userId, String sessionId, String ipAddress, Date now, int length, Connection conn)  throws Exception {
     public UserLogin updateLogin(int userId, String sessionId, java.util.Date now, int length, Connection conn)  throws Exception {
        Class.forName("com.mysql.jdbc.Driver");
-       //String queryString = "UPDATE PCKitSessions SET sessionId=?, sessionStart=?, length=?, isLogged=? WHERE userId=?, sessionIP=?";
        String queryString = "UPDATE PCKitSessions SET sessionId=?, sessionStart=?, length=?, isLogged=? WHERE userId=?";
        PreparedStatement pstatement = conn.prepareStatement(queryString);
        pstatement.setString(1, sessionId);
@@ -345,7 +315,6 @@ public class LoginTracker {
        pstatement.setInt(3, length);
        pstatement.setInt(4, 1);
        pstatement.setInt(5, userId);
-       /*pstatement.setString(6, ipAddress);*/
        pstatement.executeUpdate();
        pstatement.close();
        
@@ -360,7 +329,6 @@ public class LoginTracker {
        rs.close();
        pstatement2.close();
        
-       //UserLogin login = new UserLogin(sessionId, ipAddress, userId, now, length);
        UserLogin login = new UserLogin(sessionId, userId, now, length);
        login.setLoggedIn(true);
        login.setFirstName(firstName);
@@ -372,13 +340,11 @@ public class LoginTracker {
     
     public void updateActiveOrderId(int userId, String sessionId, int orderId, Connection conn)  throws Exception {
        Class.forName("com.mysql.jdbc.Driver");
-       //String queryString = "UPDATE PCKitSessions SET sessionId=?, sessionStart=?, length=?, isLogged=? WHERE userId=?, sessionIP=?";
        String queryString = "UPDATE PCKitSessionData SET activeOrderId=? WHERE sessionId=? and userId=?";
        PreparedStatement pstatement = conn.prepareStatement(queryString);
        pstatement.setInt(1, orderId);
        pstatement.setString(2, sessionId);
        pstatement.setInt(3, userId);
-       /*pstatement.setString(6, ipAddress);*/
        pstatement.executeUpdate();
        pstatement.close();
     }
@@ -387,7 +353,6 @@ public class LoginTracker {
        ArrayList<String> sessionIds = new ArrayList<String>();
     
        Class.forName("com.mysql.jdbc.Driver");
-       //String queryString = "UPDATE PCKitSessions SET sessionId=?, sessionStart=?, length=?, isLogged=? WHERE userId=?, sessionIP=?";
        String queryString = "Select * from PCKitSessionData WHERE activeOrderId=?";
        PreparedStatement pstatement = conn.prepareStatement(queryString);
        pstatement.setInt(1, orderId);

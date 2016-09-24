@@ -19,15 +19,7 @@
          var h = Math.max(document.documentElement.clientHeight, window.innerHeight || 0)
          console.log("%d x %d", w, h);
          $(document).ready(function() {
-            //var fSize = parseFloat($('#placeholderText').css('font-size'))
-            //console.log("%f px or %f em", fSize, fSize/16);
             var textLen = $('#submitFormButton').width();
-            //var textLen2 = $('#adMediumSection').width();
-            //console.log("%d px, %d px", textLen, textLen2);
-            //var endPos1 = $('#selectSpan').position().top + $('#selectSpan').height();
-            //var endPos2 = $('#lastNameText').position().left + $('#lastNameText').width();
-            //var pos1 = $('#interestSelect').position().left;
-            //var pos2 = $('#adMediumSelect').position().left;
             console.log("%d px", textLen);
         });
         
@@ -112,9 +104,6 @@
      	   }
      	   
      	   if (errorList.length == 0) {
-     	      //$("#form-description").remove();
-     	      //$("#mailingForm").remove();
-     	      //$("#form-description").html($('#mailingForm').serialize());
      	      inData = $('#mailingForm').serializeObject();
      	      inData["action"] = "AddEmail";
      	      $.ajax({
@@ -203,8 +192,6 @@
                           
                        }
                     }
-                    //out.print("Name : " + cookie.getName( ) + ",  ");
-                    //out.print("Value: " + cookie.getValue( )+" <br/>");
                  }
 
 
@@ -279,10 +266,5 @@
          </div>
          
       </div>
-      
-      
-      <!--hidden button style = "color: transparent; background-color: transparent; border-color: transparent; cursor: default;"
-      <input id="next" type="submit" style="color: red; background-color: red; border-color: transparent; cursor: default;">
-      <input id="prev" type="submit" style="color: green; background-color: green; border-color: transparent; cursor: default;">-->
    </body>
 </html>

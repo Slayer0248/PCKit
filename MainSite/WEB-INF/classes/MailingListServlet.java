@@ -48,7 +48,6 @@ public class MailingListServlet extends HttpServlet {
          pageMessage = "Invalid Post Request.";
          String mailMessage = "";
          String action = request.getParameter("action");
-         //boolean validRequest = VerifyCsrfToken.isValidToken(request, response);
          if (action.equals("AddEmail")) {
             String firstName = request.getParameter("firstName");
             String lastName = request.getParameter("lastName");
@@ -57,9 +56,7 @@ public class MailingListServlet extends HttpServlet {
             String interest = request.getParameter("Interest").equals("other")? request.getParameter("InterestOther") : request.getParameter("Interest");
             String adMedium = request.getParameter("AdMedium").equals("other")? request.getParameter("AdMediumOther") : request.getParameter("AdMedium");
             String notes = request.getParameter("Notes");
-                  
-                  //out.println("<p id='form-description'>" + firstName+ ", " +lastName+ ", " +email+", " +company+", " +interest+", " +adMedium+", " +notes+"</p>");
-                  
+ 
             Connection connection = null;
             PreparedStatement pstatement = null;
          
@@ -80,12 +77,8 @@ public class MailingListServlet extends HttpServlet {
                   
                if (updateQuery != 0) {
                   mailMessage = mailMessage + "Hello " + firstName + " " + lastName + ",<br><br>&emsp; Your information has been added to PCkit's mailing list! Click here to <a href='mailto:PCKitCompany@gmail.com?subject=UNSUBSCRIBE'>unsubscribe</a> at any time";
-                  /*EmailUtility.sendEmail(host, port, user, pass, email, "PCKit Mailing List Confirmation",
-                       mailMessage);*/
+                  
                   pageMessage = "Your information has been added to our mailing list!";
-                  //request.setAttribute("Message", pageMessage);
-                  //getServletContext().getRequestDispatcher("/PCKit/MailingList/response.jsp").forward(
-                  //     request, response);
                
                }
             
@@ -93,10 +86,6 @@ public class MailingListServlet extends HttpServlet {
             }
             catch (Exception e) {
                pageMessage = "An error occurred while adding your data to the mailing list! Please try again later.";
-               //request.setAttribute("Message", pageMessage);
-            
-               //getServletContext().getRequestDispatcher("/PCKit/MailingList/response.jsp").forward(
-               //    request, response);
         
             }
          

@@ -109,18 +109,11 @@
                        }
                        catch (Exception e) {
                           logger.log(Level.SEVERE, "Login token not found.", e); 
-                          /*cookie.setPath("/");
-                          cookie.setMaxAge(0);
-                          cookie.setValue(null);
-                          cookie.setHttpOnly(true);
-                          cookie.setSecure(true);
-                          response.addCookie(cookie);*/
+                          
                        }
                        
                        
                     }
-                    //out.print("Name : " + cookie.getName( ) + ",  ");
-                    //out.print("Value: " + cookie.getValue( )+" <br/>");
                  }
            
 
@@ -189,10 +182,6 @@
          
       </div>
       
-      
-      
-      <!--hidden button style = "color: transparent; background-color: transparent; border-color: transparent; cursor: default;"
-      <input id="next" type="submit" style="color: red; background-color: red; border-color: transparent; cursor: default;">
-      <input id="prev" type="submit" style="color: green; background-color: green; border-color: transparent; cursor: default;">-->
+
    </body>
 </html>

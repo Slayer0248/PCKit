@@ -208,12 +208,7 @@
    </head>
    <body>
       <div class="fill-screen">
-        <%
-           //ClientSide client_side = new ClientSide( "my-pubcert.pem", "my-prvkey.p12", "paypal_cert_pem.txt", "Potter11a" );
-
-		   //String result = client_side.getButtonEncryptionValue( "cert_id=SFTMKZFWK2YK8,cmd=_cart,upload=1,business=pckitcompany@gmail.com,item_name_1=Handheld Computer,amount_1=500.00", "/home/ec2-user/pckit/MainSite/OrderSection/my-prvkey.p12", "/home/ec2-user/pckit/MainSite/OrderSection/my-pubcert.pem", "/home/ec2-user/pckit/MainSite/OrderSection/paypal_cert_pem.txt", "Potter11a" );
-		   //String result = client_side.getButtonEncryptionValue( "business=pckitcompany@gmail.com\n    cert_id=SFTMKZFWK2YK8\n    cmd=_cart\n    upload=1\n    item_name=Handheld Computer\n    amount=500.00", "/Applications/tomcat/webapps/PCKit/Accounts/my-prvkey.p12", "/Applications/tomcat/webapps/PCKit/Accounts/my-pubcert.pem", "/Applications/tomcat/webapps/PCKit/Accounts/paypal_cert_pem.txt", "Potter11a" );
-        %>
+    
          <img class="make-it-fit" src="../images/background.png" id="bgImage" alt="">
          <div id="accountAccessDiv">
            <%
@@ -249,7 +244,6 @@
               // Get an array of Cookies associated with this domain
               cookies = request.getCookies();
               String loggedUser ="";
-              //String orderText = "";
               UserLogin login = null;
               String result = "";
               if( cookies != null ) {
@@ -273,11 +267,6 @@
                           
                        }
                     }
-                    /*if (cookie.getName().equals("order")) {
-                       orderText = (String)cookie.getValue();
-                    }*/
-                    //out.print("Name : " + cookie.getName( ) + ",  ");
-                    //out.print("Value: " + cookie.getValue( )+" <br/>");
                  }
 
 
@@ -340,10 +329,6 @@
             </center>
 
            <% } else { %>
-           
-            <!--<center><img src="../images/PCkit-logo-trans.png" id="logoImage" alt=""></center>
-           <p id="descriptionText">Build a custom PC to play the games you want to play at the quality you want to play.</p>
-           <button id="BuildPCBuuton" onclick="location.href='selectGames.jsp';">Build your PC</button>-->
            <div id="curPageContent">
               <center><table id="orderSummaryTable">
                  <tr id="orderSummaryHeader">
@@ -408,7 +393,6 @@
            } %>
          </div> 
          <img src="../images/BackArrow.png" id="backButton" class="orderNavButton" onclick="location.href='selectBuild.jsp';"/>
-         <!--<img src="../images/NextArrow.png" id="nextButton" class="orderNavButton" onclick="location.href='orderProcess.html';"/>-->
          <div id="siteNavDiv">
             <center>
             <ul id="siteNavLinks">
@@ -421,11 +405,5 @@
 
          
       </div>
-      
-      
-      
-      <!--hidden button style = "color: transparent; background-color: transparent; border-color: transparent; cursor: default;"
-      <input id="next" type="submit" style="color: red; background-color: red; border-color: transparent; cursor: default;">
-      <input id="prev" type="submit" style="color: green; background-color: green; border-color: transparent; cursor: default;">-->
    </body>
 </html>

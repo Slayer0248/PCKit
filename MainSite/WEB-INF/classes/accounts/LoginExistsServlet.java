@@ -37,14 +37,12 @@ public class LoginExistsServlet extends HttpServlet {
          int rowCount = -1;
       
          try {
-            //byte[] encryptedPass = seTest.encryptToBytes(password, "AES");
             String encryptedPass = seTest.encryptToString(password, "AES");
             Class.forName("com.mysql.jdbc.Driver");
             connection = DriverManager.getConnection("jdbc:mysql://localhost/PCKitDB","root","Potter11a");
             String queryString = "SELECT COUNT(*) FROM PCKitAccounts WHERE email=? and password=?";
             pstatement = connection.prepareStatement(queryString);
             pstatement.setString(1, email);
-            //pstatement.setBytes(2, encryptedPass);
             pstatement.setString(2, encryptedPass); 
             rs = pstatement.executeQuery();
             rs.next();
