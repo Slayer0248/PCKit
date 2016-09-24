@@ -91,7 +91,7 @@ public class IpnInfoService {
            connection = DriverManager.getConnection("jdbc:mysql://localhost/PCKitDB","root","Potter11a");
            String queryString = "SELECT * FROM PCKitTransactions WHERE txnId=?";
            pstatement = connection.prepareStatement(queryString);
-           pstatement.setInt(1, txnId);
+           pstatement.setString(1, txnId);
            rs = pstatement.executeQuery();
            rs.next();
            ipnInfo= new IpnInfo();
