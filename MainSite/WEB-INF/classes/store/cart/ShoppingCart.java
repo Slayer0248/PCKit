@@ -147,11 +147,11 @@ public class ShoppingCart {
    
    public String getEncryptedStr() throws IOException, CertificateException, KeyStoreException, UnrecoverableKeyException,
 	InvalidAlgorithmParameterException, NoSuchAlgorithmException, NoSuchProviderException, CertStoreException, CMSException, OperatorCreationException{
-      ClientSide client_side = new ClientSide( "my-pubcert.pem", "my-prvkey.p12", "paypal_cert_pem.txt", "Potter11a" );
+      ClientSide client_side = new ClientSide( "my-pubcert2.pem", "my-prvkey2.p12", "paypal_cert_pem2.txt", "Potter11a" );
       
       //String basePath = "/Applications/tomcat/webapps/PCKitLive/OrderSection/";
       String basePath = "/home/ec2-user/pckit/MainSite/OrderSection/";
-      String rawData = "cert_id=SFTMKZFWK2YK8,cmd=_cart,upload=1,business=pckitcompany@gmail.com,custom="+orderId+",notify_url=https://www.pckit.org/OrderSection/ipn/,return=https://www.pckit.org/OrderSection/purchased.jsp,rm=2,cancel_return=https://www.pckit.org/OrderSection/canceled.jsp,";
+      String rawData = "cert_id=TMZGS29WGB8KJ,cmd=_cart,upload=1,business=cjdevtests@gmail.com,custom="+orderId+",notify_url=https://www.pckit.org/OrderSection/ipn/,return=https://www.pckit.org/OrderSection/purchased.jsp,rm=2,cancel_return=https://www.pckit.org/OrderSection/canceled.jsp,";
       for (int i=0; i<items.size(); i++) {
          CartItem curItem = items.get(i);
          int quantity = quantities.get(i);
@@ -164,7 +164,7 @@ public class ShoppingCart {
             rawData = rawData + "item_name_" + count + "=" + itemName + ",amount_" + count + "=" + curItem.getPrice() + ",quantity_"  + count + "=" + quantity + ",";
          }
       }
-      String result = client_side.getButtonEncryptionValue(rawData, basePath + "my-prvkey.p12",  basePath + "my-pubcert.pem", basePath +"paypal_cert_pem.txt", "Potter11a" );
+      String result = client_side.getButtonEncryptionValue(rawData, basePath + "my-prvkey2.p12",  basePath + "my-pubcert2.pem", basePath +"paypal_cert_pem2.txt", "Potter11a" );
       return result;
    }
    
