@@ -139,7 +139,7 @@ public class AddItemServlet extends HttpServlet {
                updateQuery2 = pstatement2.executeUpdate();
                pstatement2.close();
             
-               if (updateQuery != updates.length && updateQuery2 != 0) {
+               if (updateQuery == updates.length && updateQuery2 != 0) {
                   pageMessage="Success";
                      
                }
