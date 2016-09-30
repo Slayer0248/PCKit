@@ -23,7 +23,7 @@ public class IpnListener extends HttpServlet {
    protected void doPost(HttpServletRequest request, HttpServletResponse response)
    throws IOException, ServletException {
       String ipnUrl ="https://www.sandbox.paypal.com/cgi-bin/webscr";
-      String receiverEmail = "pckitcompany@gmail.com";
+      String receiverEmail = "cjdevtests@gmail.com";
       String paymentAmount = "0.01";
       String paymentCurrency = "USD";
       IpnConfig ipnConfig = new IpnConfig(ipnUrl, receiverEmail, paymentAmount, paymentCurrency);

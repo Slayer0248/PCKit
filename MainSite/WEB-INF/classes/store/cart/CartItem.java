@@ -75,7 +75,7 @@ public class CartItem {
    }
    
    public boolean inStock() {
-      return maxInStock==0;
+      return maxInStock!=0;
    }
    
 }
