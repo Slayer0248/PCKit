@@ -144,7 +144,7 @@ public class AuthJWTUtil {
         long lengthMillis = ((long) mins)* 60 * 1000;
         String curSessionId = loginTracker.nextSessionId(now, conn);
         userLogin = loginTracker.createLogin(userId, curSessionId, now, mins, conn);
-        outputToken =createJWT(curSessionId,"https://www.pckit.org", "PCKitData", nowMillis, lengthMillis);
+        outputToken =createJWT(curSessionId,"https://www.pckitcj.com", "PCKitData", nowMillis, lengthMillis);
         
         
         
@@ -220,7 +220,7 @@ public class AuthJWTUtil {
         // Throw an Exception if the credentials are invalid
         java.util.Date now = new java.util.Date(nowMillis);
         long lengthMillis = ((long) mins)* 60 * 1000;
-        return createJWTForCSRF(csrfValue, "https://www.pckit.org", "PCKitCSRF", nowMillis, lengthMillis, csrfValue);
+        return createJWTForCSRF(csrfValue, "https://www.pckitcj.com", "PCKitCSRF", nowMillis, lengthMillis, csrfValue);
 
     }
     

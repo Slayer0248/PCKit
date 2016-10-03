@@ -151,7 +151,7 @@ public class ShoppingCart {
       
       //String basePath = "/Applications/tomcat/webapps/PCKitLive/OrderSection/";
       String basePath = "/home/ec2-user/pckit/MainSite/OrderSection/";
-      String rawData = "cert_id=TMZGS29WGB8KJ,cmd=_cart,upload=1,business=cjdevtests@gmail.com,custom="+orderId+",notify_url=https://www.pckit.org/OrderSection/ipn/,return=https://www.pckit.org/OrderSection/purchased.jsp,rm=2,cancel_return=https://www.pckit.org/OrderSection/canceled.jsp,";
+      String rawData = "cert_id=TMZGS29WGB8KJ,cmd=_cart,upload=1,business=cjdevtests@gmail.com,custom="+orderId+",notify_url=https://www.pckitcj.com/OrderSection/ipn/,return=https://www.pckitcj.com/OrderSection/purchased.jsp,rm=2,cancel_return=https://www.pckitcj.com/OrderSection/canceled.jsp,";
       for (int i=0; i<items.size(); i++) {
          CartItem curItem = items.get(i);
          int quantity = quantities.get(i);

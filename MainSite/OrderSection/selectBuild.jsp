@@ -85,7 +85,7 @@ error: function (xhr, status, message) {
                      console.log('A jQuery error has occurred. Status: ' + status + ' - Message: ' + message);
                   }
 
-               }).done(function(data) { window.location.href = "http://www.pckit.org/OrderSection/checkout.jsp"; });
+               }).done(function(data) { window.location.href = "http://www.pckitcj.com/OrderSection/checkout.jsp"; });
                
                
            }

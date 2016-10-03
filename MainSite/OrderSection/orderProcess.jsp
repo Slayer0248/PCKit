@@ -57,8 +57,8 @@
                        type:"POST",
                        url:"./selectBuild.jsp",
                        data:JSON.stringify({"minTier": 1})
-                     }).done(function(data2) { /*window.location.href = "http://www.pckit.org/OrderSection/selectBuild.jsp";*/
-document.write(data2); history.pushState({}, null, "https://www.pckit.org/OrderSection/selectBuild.jsp"); });
+                     }).done(function(data2) { /*window.location.href = "http://www.pckitcj.com/OrderSection/selectBuild.jsp";*/
+document.write(data2); history.pushState({}, null, "https://www.pckitcj.com/OrderSection/selectBuild.jsp"); });
                   }
                });
               
@@ -81,7 +81,7 @@ document.write(data2); history.pushState({}, null, "https://www.pckit.org/OrderS
                        type:"POST",
                        url:"./checkout.jsp",
                        data:""
-                     }).done(function(data) { window.location.href = "http://www.pckit.org/OrderSection/checkout.jsp"; });
+                     }).done(function(data) { window.location.href = "http://www.pckitcj.com/OrderSection/checkout.jsp"; });
                   }
                });
            }

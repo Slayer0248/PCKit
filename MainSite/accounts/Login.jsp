@@ -78,7 +78,7 @@
      	                    data: nextData
      	                  }).done(function(outData) { console.log(outData); 
                                                       /*document.write(outData);*/
-                                                        window.location.href="https://www.pckit.org/"; });
+                                                        window.location.href="https://www.pckitcj.com/"; });
      	               }
      	               else {
      	                  if (data == "No") {

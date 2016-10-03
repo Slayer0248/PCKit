@@ -62,8 +62,8 @@
                        type:"POST",
                        url:"./selectBuild.jsp",
                        data:JSON.stringify({"minTier": 1})
-                     }).done(function(data2) { /*window.location.href = "http://www.pckit.org/OrderSection/selectBuild.jsp";*/
-document.write(data2); history.pushState({}, null, "https://www.pckit.org/OrderSection/selectBuild.jsp"); });
+                     }).done(function(data2) { /*window.location.href = "http://www.pckitcj.com/OrderSection/selectBuild.jsp";*/
+document.write(data2); history.pushState({}, null, "https://www.pckitcj.com/OrderSection/selectBuild.jsp"); });
                   }
                });
               
@@ -86,7 +86,7 @@ document.write(data2); history.pushState({}, null, "https://www.pckit.org/OrderS
                        type:"POST",
                        url:"./checkout.jsp",
                        data:""
-                     }).done(function(data) { window.location.href = "http://www.pckit.org/OrderSection/checkout.jsp"; });
+                     }).done(function(data) { window.location.href = "http://www.pckitcj.com/OrderSection/checkout.jsp"; });
                   }
                });
            }
@@ -321,8 +321,8 @@ document.write(data2); history.pushState({}, null, "https://www.pckit.org/OrderS
                      console.log(xhr.responseText );
                      console.log('A jQuery error has occurred. Status: ' + status + ' - Message: ' + message);
                   }
-               }).done(function(data3) { /*window.location.href = "http://www.pckit.org/OrderSection/selectBuild.jsp";*/
-document.write(data3); history.pushState({}, null, "https://www.pckit.org/OrderSection/selectBuild.jsp"); });
+               }).done(function(data3) { /*window.location.href = "http://www.pckitcj.com/OrderSection/selectBuild.jsp";*/
+document.write(data3); history.pushState({}, null, "https://www.pckitcj.com/OrderSection/selectBuild.jsp"); });
                   }  else {
                     //form errors'
                     
@@ -348,8 +348,8 @@ document.write(data3); history.pushState({}, null, "https://www.pckit.org/OrderS
                      console.log(xhr.responseText );
                      console.log('A jQuery error has occurred. Status: ' + status + ' - Message: ' + message);
                   }
-               }).done(function(data3) { /*window.location.href = "http://www.pckit.org/OrderSection/selectBuild.jsp";*/
-document.write(data3); history.pushState({}, null, "https://www.pckit.org/OrderSection/selectBuild.jsp"); });
+               }).done(function(data3) { /*window.location.href = "http://www.pckitcj.com/OrderSection/selectBuild.jsp";*/
+document.write(data3); history.pushState({}, null, "https://www.pckitcj.com/OrderSection/selectBuild.jsp"); });
                   //enclose in post request 
                 }
                 });
@@ -358,9 +358,9 @@ document.write(data3); history.pushState({}, null, "https://www.pckit.org/OrderS
              });
             // $.post("./selectBuild.jsp",{"minTier": adjustedTier}).done(function(data) {
      //console.log(data);
-     /*window.location.href="https://www.pckit.org/OrderSection/selectBuild.jsp";*/
+     /*window.location.href="https://www.pckitcj.com/OrderSection/selectBuild.jsp";*/
      // document.write(data);
-    /*history.pushState({}, null, "https://www.pckit.org/OrderSection/selectBuild.jsp");*/ 
+    /*history.pushState({}, null, "https://www.pckitcj.com/OrderSection/selectBuild.jsp");*/ 
     //});
              // $("html").load("selectBuild.jsp", {"minTier" : "" + adjustedTier});
                   
