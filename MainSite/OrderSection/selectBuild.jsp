@@ -320,6 +320,7 @@ error: function (xhr, status, message) {
             <ul id="siteNavLinks">
             	<li class="siteNavItem"><a class="siteNavLink" href="..">Home</a></li>
                 <li class="siteNavItem"><a class="siteNavLink" href="../forums/list.page">Forums</a></li>
+                <li class="siteNavItem"><a class="siteNavLink" href="../OrderSection/orderProcess.jsp">Store</a></li>
             	<li class="siteNavItem"><a class="siteNavLink" href="../about.jsp">About PCkit</a></li>
             	<li class="siteNavItem"><a class="siteNavLink" href="../MailingList/">Stay Notified</a></li>
             </ul>
