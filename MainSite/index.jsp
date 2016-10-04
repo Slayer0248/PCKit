@@ -167,7 +167,7 @@
         </div>
          <div class="scrollable" id="mainContentDiv">
             <center><img src="images/PCkit-logo-trans.png" id="logoImage" alt=""></center>
-           <p id="placeholderText">Coming Soon</p>
+           <p id="placeholderText">Custom PCs</p>
          </div> 
          <div id="siteNavDiv">
             <center>
